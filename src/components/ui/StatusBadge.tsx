@@ -14,6 +14,7 @@ const statusBadgeVariants = cva(
         active: 'bg-success/10 text-success border border-success/20',
         inactive: 'bg-muted text-muted-foreground border border-border',
         pending: 'bg-warning/10 text-warning border border-warning/20',
+        suspended: 'bg-destructive/10 text-destructive border border-destructive/20',
         issued: 'bg-info/10 text-info border border-info/20',
         delivered: 'bg-secondary/10 text-secondary border border-secondary/20',
         redeemed: 'bg-success/10 text-success border border-success/20',
@@ -49,7 +50,7 @@ export function StatusBadge({ children, variant, size, className, dot = true }: 
             'h-1.5 w-1.5 rounded-full',
             variant === 'success' || variant === 'active' || variant === 'redeemed' ? 'bg-success' : '',
             variant === 'warning' || variant === 'pending' || variant === 'low_liquidity' ? 'bg-warning' : '',
-            variant === 'error' || variant === 'expired' ? 'bg-destructive' : '',
+            variant === 'error' || variant === 'expired' || variant === 'suspended' ? 'bg-destructive' : '',
             variant === 'info' || variant === 'issued' ? 'bg-info' : '',
             variant === 'neutral' || variant === 'inactive' || variant === 'cancelled' ? 'bg-muted-foreground' : '',
             variant === 'delivered' ? 'bg-secondary' : ''
