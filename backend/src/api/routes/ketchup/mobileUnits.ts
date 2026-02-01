@@ -1,0 +1,233 @@
+/**
+ * SmartPay Mobile API Routes
+ *
+ * Purpose: REST endpoints for mobile units – unit detail, equipment, drivers, issue/return.
+ * Location: backend/src/api/routes/ketchup/mobileUnits.ts
+ */
+
+import { Router, Request, Response } from 'express';
+import { APIResponse } from '../../../../../shared/types';
+import { logError } from '../../../utils/logger';
+import { authenticate } from '../../middleware/auth';
+import { AgentService } from '../../../services/agents/AgentService';
+import { MobileUnitService } from '../../../services/mobileUnits/MobileUnitService';
+
+const router = Router();
+const agentService = new AgentService();
+const mobileUnitService = new MobileUnitService();
+
+/**
+ * GET /api/v1/mobile-units
+ * List mobile units (agents type=mobile_unit)
+ */
+router.get('/', authenticate, async (req: Request, res: Response<APIResponse<any>>) => {
+  try {
+    const region = req.query.region as string | undefined;
+    const status = req.query.status as string | undefined;
+    const agents = await agentService.getAll({ region, status, type: 'mobile_unit' });
+    const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : 50;
+    const offset = req.query.offset ? parseInt(req.query.offset as string, 10) : 0;
+    const page = Math.floor(offset / limit) + 1;
+    const totalPages = Math.ceil(agents.length / limit);
+    const data = agents.slice(offset, offset + limit);
+    res.json({
+      success: true,
+      data: { data, total: agents.length, page, limit, totalPages },
+    });
+  } catch (error) {
+    logError('GET /mobile-units', error);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to fetch mobile units',
+    });
+  }
+});
+
+/**
+ * GET /api/v1/mobile-units/stats
+ * Stats for mobile units only
+ */
+router.get('/stats', authenticate, async (req: Request, res: Response<APIResponse<any>>) => {
+  try {
+    const stats = await agentService.getStats('mobile_unit');
+    res.json({ success: true, data: stats });
+  } catch (error) {
+    logError('GET /mobile-units/stats', error);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to fetch stats',
+    });
+  }
+});
+
+/**
+ * GET /api/v1/mobile-units/equipment/types
+ * Reference list of equipment types (must be before /:id to avoid "equipment" as id)
+ */
+router.get('/equipment/types', authenticate, async (req: Request, res: Response<APIResponse<any>>) => {
+  try {
+    const types = await mobileUnitService.getEquipmentTypes();
+    res.json({ success: true, data: types });
+  } catch (error) {
+    logError('GET /mobile-units/equipment/types', error);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to fetch equipment types',
+    });
+  }
+});
+
+/**
+ * GET /api/v1/mobile-units/:id
+ * Single mobile unit (must be type=mobile_unit)
+ */
+router.get('/:id', authenticate, async (req: Request, res: Response<APIResponse<any>>) => {
+  try {
+    const unit = await mobileUnitService.getById(req.params.id);
+    if (!unit) {
+      return res.status(404).json({ success: false, error: 'Mobile unit not found' });
+    }
+    res.json({ success: true, data: unit });
+  } catch (error) {
+    logError('GET /mobile-units/:id', error);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to fetch mobile unit',
+    });
+  }
+});
+
+/**
+ * GET /api/v1/mobile-units/:id/equipment
+ */
+router.get('/:id/equipment', authenticate, async (req: Request, res: Response<APIResponse<any>>) => {
+  try {
+    const list = await mobileUnitService.getEquipment(req.params.id);
+    res.json({ success: true, data: list });
+  } catch (error) {
+    logError('GET /mobile-units/:id/equipment', error);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to fetch equipment',
+    });
+  }
+});
+
+/**
+ * GET /api/v1/mobile-units/:id/drivers
+ */
+router.get('/:id/drivers', authenticate, async (req: Request, res: Response<APIResponse<any>>) => {
+  try {
+    const list = await mobileUnitService.getDrivers(req.params.id);
+    res.json({ success: true, data: list });
+  } catch (error) {
+    logError('GET /mobile-units/:id/drivers', error);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to fetch drivers',
+    });
+  }
+});
+
+/**
+ * GET /api/v1/mobile-units/:id/activity
+ * Combined feed: equipment issue/return + maintenance events, sorted by date desc.
+ */
+router.get('/:id/activity', authenticate, async (req: Request, res: Response<APIResponse<any>>) => {
+  try {
+    const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : 50;
+    const list = await mobileUnitService.getActivity(req.params.id, limit);
+    res.json({ success: true, data: list });
+  } catch (error) {
+    logError('GET /mobile-units/:id/activity', error);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to fetch activity',
+    });
+  }
+});
+
+/**
+ * POST /api/v1/mobile-units/:id/equipment/issue
+ * Body: { equipmentTypeCode, assetId, notes? }
+ */
+router.post('/:id/equipment/issue', authenticate, async (req: Request, res: Response<APIResponse<any>>) => {
+  try {
+    const { equipmentTypeCode, assetId, notes } = req.body;
+    if (!equipmentTypeCode || !assetId) {
+      return res.status(400).json({
+        success: false,
+        error: 'equipmentTypeCode and assetId are required',
+      });
+    }
+    const equipment = await mobileUnitService.issueEquipment(req.params.id, {
+      equipmentTypeCode,
+      assetId,
+      notes,
+    });
+    res.status(201).json({ success: true, data: equipment });
+  } catch (error) {
+    logError('POST /mobile-units/:id/equipment/issue', error);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to issue equipment',
+    });
+  }
+});
+
+/**
+ * POST /api/v1/mobile-units/:id/equipment/return
+ * Body: { equipmentId }
+ */
+router.post('/:id/equipment/return', authenticate, async (req: Request, res: Response<APIResponse<any>>) => {
+  try {
+    const { equipmentId } = req.body;
+    if (!equipmentId) {
+      return res.status(400).json({ success: false, error: 'equipmentId is required' });
+    }
+    const equipment = await mobileUnitService.returnEquipment(req.params.id, equipmentId);
+    if (!equipment) {
+      return res.status(404).json({ success: false, error: 'Equipment not found or not assigned to this unit' });
+    }
+    res.json({ success: true, data: equipment });
+  } catch (error) {
+    logError('POST /mobile-units/:id/equipment/return', error);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to return equipment',
+    });
+  }
+});
+
+/**
+ * POST /api/v1/mobile-units/:id/maintenance
+ * Body: { type, description, partsUsed?, cost?, meterReading?, equipmentId? }
+ */
+router.post('/:id/maintenance', authenticate, async (req: Request, res: Response<APIResponse<any>>) => {
+  try {
+    const { type, description, partsUsed, cost, meterReading, equipmentId } = req.body;
+    if (!type || !description) {
+      return res.status(400).json({
+        success: false,
+        error: 'type and description are required',
+      });
+    }
+    const event = await mobileUnitService.postMaintenance(req.params.id, {
+      type,
+      description,
+      partsUsed,
+      cost: cost != null ? Number(cost) : undefined,
+      meterReading,
+      equipmentId,
+    });
+    res.status(201).json({ success: true, data: event });
+  } catch (error) {
+    logError('POST /mobile-units/:id/maintenance', error);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to create maintenance event',
+    });
+  }
+});
+
+export default router;

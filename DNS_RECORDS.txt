@@ -1,0 +1,93 @@
+═══════════════════════════════════════════════════════════════
+  KETCHUP.CC DNS CONFIGURATION - COPY & PASTE TO NAMECHEAP
+═══════════════════════════════════════════════════════════════
+
+STEP 1: DELETE EXISTING RECORDS
+───────────────────────────────
+Delete these records:
+✗ CNAME Record - www → parkingpage.namecheap.com.
+✗ URL Redirect Record - @ → http://www.ketchup.cc/
+
+STEP 2: ADD NEW RECORDS
+───────────────────────────────
+Add these records one by one:
+
+1. A RECORD (Root Domain)
+   Type: A Record
+   Host: @
+   Value: 76.76.21.21
+   TTL: Automatic
+
+2. CNAME RECORD (Main Website)
+   Type: CNAME Record
+   Host: www
+   Value: cname.vercel-dns.com.
+   TTL: Automatic
+
+3. CNAME RECORD (API)
+   Type: CNAME Record
+   Host: api
+   Value: cname.vercel-dns.com.
+   TTL: Automatic
+
+4. CNAME RECORD (App Portal)
+   Type: CNAME Record
+   Host: app
+   Value: cname.vercel-dns.com.
+   TTL: Automatic
+
+5. CNAME RECORD (Government Portal)
+   Type: CNAME Record
+   Host: gov
+   Value: cname.vercel-dns.com.
+   TTL: Automatic
+
+6. CNAME RECORD (Admin Dashboard)
+   Type: CNAME Record
+   Host: admin
+   Value: cname.vercel-dns.com.
+   TTL: Automatic
+
+7. CNAME RECORD (Development)
+   Type: CNAME Record
+   Host: dev
+   Value: cname.vercel-dns.com.
+   TTL: Automatic
+
+8. CNAME RECORD (Staging)
+   Type: CNAME Record
+   Host: staging
+   Value: cname.vercel-dns.com.
+   TTL: Automatic
+
+9. TXT RECORD (SPF - Keep existing)
+   Type: TXT Record
+   Host: @
+   Value: v=spf1 include:spf.efwd.registrar-servers.com ~all
+   TTL: Automatic
+
+═══════════════════════════════════════════════════════════════
+  EXPECTED SUBDOMAINS AFTER CONFIGURATION
+═══════════════════════════════════════════════════════════════
+
+🌐 https://ketchup.cc         → Main domain
+🌐 https://www.ketchup.cc     → Main website (ketchup-portal)
+🌐 https://api.ketchup.cc     → Backend API
+🌐 https://app.ketchup.cc     → Application portal
+🌐 https://gov.ketchup.cc     → Government portal
+🌐 https://admin.ketchup.cc   → Admin dashboard
+🌐 https://dev.ketchup.cc     → Development environment
+🌐 https://staging.ketchup.cc → Staging environment
+
+═══════════════════════════════════════════════════════════════
+  NEXT STEPS AFTER DNS UPDATE
+═══════════════════════════════════════════════════════════════
+
+1. Wait 5-30 minutes for DNS propagation
+2. Deploy to Vercel:
+   - Deploy ketchup-portal to www.ketchup.cc
+   - Deploy government-portal to gov.ketchup.cc
+3. Update .env files with new URLs
+4. Test all endpoints
+
+═══════════════════════════════════════════════════════════════

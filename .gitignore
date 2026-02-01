@@ -12,6 +12,37 @@ dist
 dist-ssr
 *.local
 
+# Environment variables and secrets (SECURITY: Never commit!)
+.env
+.env.*
+.env.local
+.env.*.local
+*.env
+backend/.env
+backend/.env.*
+apps/*/.env
+apps/*/.env.*
+buffr/.env
+buffr/.env.*
+buffr/**/.env
+buffr/**/.env.*
+
+# Env backups (often contain real credentials – do not commit)
+.env*.bak
+.env*.backup
+.env.local.bak
+.env.local.backup
+
+# Monorepo
+.turbo
+.pnpm-store
+
+# Testing
+coverage
+
+# Vercel
+.vercel
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
