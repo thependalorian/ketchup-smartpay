@@ -81,7 +81,7 @@ government-portal/
 
 **Vercel:**
 - Project: `smartpay-government-portal`
-- Domain: `gov.smartpay-connect.com`
+- Domain: `gov.ketchup.cc`
 - CI/CD: GitHub Actions (`.github/workflows/government-portal.yml`)
 
 **Environment Variables:**
@@ -91,7 +91,7 @@ See `.env.example` for required variables.
 
 ## 📝 API Endpoints
 
-**Base URL:** `https://api.smartpay-connect.com/api/v1/government`
+**Base URL:** `https://api.ketchup.cc/api/v1/government`
 
 **Authentication:** X-API-Key header
 

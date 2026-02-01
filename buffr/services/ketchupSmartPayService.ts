@@ -25,7 +25,7 @@ import { log } from '@/utils/logger';
 // CONFIGURATION
 // ============================================================================
 
-const KETCHUP_SMARTPAY_API_URL = process.env.KETCHUP_SMARTPAY_API_URL || 'https://api.ketchup-smartpay.com';
+const KETCHUP_SMARTPAY_API_URL = process.env.KETCHUP_SMARTPAY_API_URL || 'https://api.ketchup.cc';
 const KETCHUP_SMARTPAY_API_KEY = process.env.KETCHUP_SMARTPAY_API_KEY || '';
 const KETCHUP_SMARTPAY_TIMEOUT = 30000; // 30 seconds
 

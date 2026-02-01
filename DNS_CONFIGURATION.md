@@ -98,6 +98,7 @@ Based on Namecheap DNS management, the current records are:
 | CNAME | docs | cname.vercel-dns.com | 1 hour | Documentation |
 | CNAME | status | cname.vercel-dns.com | 1 hour | Status Page |
 | CNAME | * | cname.vercel-dns.com | 1 hour | Wildcard (future) |
+| CNAME | buffr | cname.vercel-dns.com | 1 hour | Buffr Mobile Landing |
 
 #### 3. TXT Records
 
@@ -220,6 +221,7 @@ Based on Namecheap DNS management, the current records are:
 | **agents** | Agent Portal | React/Vite | Vercel | Agent operations |
 | **api** | REST API | Node.js | Railway | Backend services |
 | **docs** | Documentation | Docusaurus | Vercel | API docs, guides |
+| **buffr** | Buffr Landing | Next.js | Vercel | Mobile app landing page |
 | **status** | Status Page | Statusfy | Vercel | Uptime monitoring |
 
 ---

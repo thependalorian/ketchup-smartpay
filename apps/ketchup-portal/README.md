@@ -83,7 +83,7 @@ ketchup-portal/
 
 **Vercel:**
 - Project: `smartpay-ketchup-portal`
-- Domain: `ketchup.smartpay-connect.com`
+- Domain: `app.ketchup.cc`
 - CI/CD: GitHub Actions (`.github/workflows/ketchup-portal.yml`)
 
 **Environment Variables:**
@@ -93,7 +93,7 @@ See `.env.example` for required variables.
 
 ## 📝 API Endpoints
 
-**Base URL:** `https://api.smartpay-connect.com/api/v1/ketchup`
+**Base URL:** `https://api.ketchup.cc/api/v1/ketchup`
 
 **Authentication:** X-API-Key header
 
