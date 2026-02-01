@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements. See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership. The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License. You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    KIND, either express or implied. See the License for the
+    specific language governing permissions and limitations
+    under the License.
+
+    Create m_wallet_audit_log table for security audit tracking
+-->
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.1.xsd">
+    <changeSet author="fineract" id="4006-1">
+        <createTable tableName="m_wallet_audit_log">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="wallet_id" type="BIGINT">
+                <constraints nullable="false" foreignKeyName="fk_wallet_audit_log_wallet" references="m_wallet(id)"/>
+            </column>
+            <column name="action_type_enum" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="reason_code_enum" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="description" type="VARCHAR(1000)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="freeze_duration_days" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="unfreeze_approved_by" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="unfreeze_approved_at" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
+            <column name="risk_score_before" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="risk_score_after" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="kyc_level_before" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="kyc_level_after" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="transaction_id" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="alert_severity_enum" type="INT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="resolved" type="BOOLEAN" defaultValueBoolean="false">
+                <constraints nullable="false"/>
+            </column>
+            <column name="resolved_at" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
+            <column name="resolved_by" type="BIGINT">
+                <constraints nullable="true"/>
+            </column>
+            <column name="resolution_notes" type="VARCHAR(1000)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_date" type="DATETIME">
+                <constraints nullable="false"/>
+            </column>
+            <column name="lastmodified_date" type="DATETIME">
+                <constraints nullable="true"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="lastmodified_by" type="VARCHAR(50)">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+        
+        <createIndex indexName="idx_wallet_audit_log_wallet_id" tableName="m_wallet_audit_log">
+            <column name="wallet_id"/>
+        </createIndex>
+        <createIndex indexName="idx_wallet_audit_log_action_type" tableName="m_wallet_audit_log">
+            <column name="action_type_enum"/>
+        </createIndex>
+        <createIndex indexName="idx_wallet_audit_log_resolved" tableName="m_wallet_audit_log">
+            <column name="resolved"/>
+        </createIndex>
+        <createIndex indexName="idx_wallet_audit_log_created_date" tableName="m_wallet_audit_log">
+            <column name="created_date"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

@@ -26,8 +26,6 @@ buffr/.env
 buffr/.env.*
 buffr/**/.env
 buffr/**/.env.*
-# Third-party Fineract clone (embedded repo; exclude from buffr add)
-buffr/fineract
 
 # Env backups (often contain real credentials – do not commit)
 .env*.bak
