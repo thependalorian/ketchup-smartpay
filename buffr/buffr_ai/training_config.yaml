@@ -1,0 +1,97 @@
+# Buffr ML Models Training Configuration
+
+# Data Configuration
+data:
+  directory: "./data"
+  transactions_file: "transactions.csv"
+  credit_file: "credit_data.csv"
+  min_samples: 1000
+  days_back: 90
+  limit: null  # null = no limit
+
+# Model Configuration
+models:
+  directory: "./models"
+  save_format: "joblib"  # joblib or pickle
+  
+  # Fraud Detection
+  fraud_detection:
+    enabled: true
+    epochs: 50
+    batch_size: 32
+    test_size: 0.2
+    ensemble_weights:
+      logistic: 0.25
+      neural_network: 0.30
+      random_forest: 0.30
+      gmm: 0.15
+    
+  # Credit Scoring
+  credit_scoring:
+    enabled: true
+    test_size: 0.2
+    ensemble_weights:
+      logistic: 0.25
+      decision_tree: 0.10
+      random_forest: 0.30
+      gradient_boosting: 0.35
+    credit_tiers:
+      EXCELLENT: 700
+      GOOD: 650
+      FAIR: 600
+      POOR: 550
+      DECLINED: 0
+  
+  # Spending Analysis
+  spending_analysis:
+    enabled: true
+    n_personas: 6
+    n_clusters: 6
+    
+  # Transaction Classification
+  transaction_classification:
+    enabled: true
+    test_size: 0.2
+    categories:
+      - GROCERIES
+      - DINING
+      - FUEL
+      - HEALTH
+      - ELECTRONICS
+      - RETAIL
+      - ONLINE
+      - FOOD
+      - ENTERTAINMENT
+      - EDUCATION
+
+# Training Configuration
+training:
+  random_seed: 42
+  validation_split: 0.2
+  early_stopping: false
+  early_stopping_patience: 10
+  verbose: true
+  
+# Evaluation Configuration
+evaluation:
+  metrics:
+    - accuracy
+    - precision
+    - recall
+    - f1_score
+    - roc_auc
+    - confusion_matrix
+  save_predictions: true
+  save_plots: true
+
+# Logging Configuration
+logging:
+  level: "INFO"
+  file: "training.log"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+# Database Configuration (for data export)
+database:
+  url: null  # Set via DATABASE_URL env var
+  connection_pool_size: 5
+  query_timeout: 300

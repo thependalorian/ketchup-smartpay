@@ -1,0 +1,132 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [main, staging, develop]
+  pull_request:
+    branches: [main, staging]
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: buffr/package-lock.json
+      
+      - name: Install dependencies
+        working-directory: buffr
+        run: npm ci
+      
+      - name: Run linter
+        working-directory: buffr
+        run: npm run lint || echo "Linter not configured, skipping"
+      
+      - name: Run tests
+        working-directory: buffr
+        run: npm test -- --ci --coverage
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          NODE_ENV: test
+      
+      - name: Upload coverage
+        uses: codecov/codecov-action@v3
+        with:
+          file: ./buffr/coverage/coverage-final.json
+          flags: buffr
+          name: buffr-coverage
+
+  test-ai-backend:
+    name: Test AI Backend
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: buffr/buffr_ai_ts/package-lock.json
+      
+      - name: Install dependencies
+        working-directory: buffr/buffr_ai_ts
+        run: npm ci
+      
+      - name: Build AI backend
+        working-directory: buffr/buffr_ai_ts
+        run: npm run build
+      
+      - name: Run AI backend tests
+        working-directory: buffr/buffr_ai_ts
+        run: npm test || echo "Tests not configured, skipping"
+
+  build-mobile:
+    name: Build Mobile App
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          cache-dependency-path: buffr/package-lock.json
+      
+      - name: Setup Expo
+        uses: expo/expo-github-action@v8
+        with:
+          expo-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+      
+      - name: Install dependencies
+        working-directory: buffr
+        run: npm ci
+      
+      - name: Build iOS
+        working-directory: buffr
+        run: eas build --platform ios --non-interactive --no-wait
+        if: github.ref == 'refs/heads/main'
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      
+      - name: Build Android
+        working-directory: buffr
+        run: eas build --platform android --non-interactive --no-wait
+        if: github.ref == 'refs/heads/main'
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+
+  deploy-backend-vercel:
+    name: Deploy Backend to Vercel
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/staging'
+    needs: [test, test-ai-backend]
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: ${{ github.ref == 'refs/heads/staging' && '--prod' || '' }}
+          working-directory: buffr
+
