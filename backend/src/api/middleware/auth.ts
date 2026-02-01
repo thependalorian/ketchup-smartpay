@@ -1,8 +1,13 @@
 /**
  * Authentication Middleware
- * 
+ *
  * Location: backend/src/api/middleware/auth.ts
  * Purpose: Authentication and authorization middleware
+ *
+ * Enhancements (PRD): Device attestation and enhanced session security can be added:
+ * - Validate device fingerprint / attestation header (X-Device-Id, X-Device-Signature)
+ * - Bind session to device; reject if device changed without re-auth
+ * - Optional: HSM-signed device certificate for POS/ATM
  */
 
 import { Request, Response, NextFunction } from 'express';

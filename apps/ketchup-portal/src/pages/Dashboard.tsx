@@ -1,7 +1,7 @@
 /**
  * Dashboard Page - Ketchup Portal
- * 
- * Purpose: Main dashboard showing real-time metrics
+ *
+ * Purpose: Main dashboard showing real-time metrics, adoption and training metrics (PRD GTM)
  * Location: apps/ketchup-portal/src/pages/Dashboard.tsx
  */
 
@@ -60,6 +60,16 @@ const Dashboard = () => {
           loading={isLoading}
         />
       </div>
+
+      {/* Adoption & training metrics (PRD GTM) – backend can expose digitalAdoptionRate, trainingCompletionRate */}
+      {(metrics as Record<string, unknown>)?.digitalAdoptionRate != null && (
+        <div className="grid gap-4 md:grid-cols-2 mb-4">
+          <div className="rounded-lg border bg-card p-4">
+            <p className="text-sm text-muted-foreground">Digital adoption rate</p>
+            <p className="text-2xl font-semibold">{Number((metrics as Record<string, unknown>).digitalAdoptionRate).toFixed(1)}%</p>
+          </div>
+        </div>
+      )}
 
       {/* Requires Attention (failed, expired, expiring soon) */}
       <RequiresAttentionAlerts />

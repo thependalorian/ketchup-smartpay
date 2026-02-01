@@ -804,6 +804,97 @@ async function seedVouchersAndEvents() {
   console.log(`✅ vouchers: +${vCount}, status_events: +${sCount}, webhook_events: +${wCount}, reconciliation_records: +${rCount}`);
 }
 
+/**
+ * Seed beneficiary_consents (PRD FR4.5) – sample essential + data_sharing for first beneficiaries.
+ * Idempotent: skips if table already has rows.
+ */
+async function seedBeneficiaryConsents() {
+  try {
+    const existing = await sql`SELECT COUNT(*) as c FROM beneficiary_consents`;
+    if (Number((existing[0] as { c: string })?.c ?? 0) > 0) {
+      console.log('⏭ beneficiary_consents already seeded, skipping');
+      return;
+    }
+    const beneficiaries = await sql`SELECT id FROM beneficiaries ORDER BY created_at ASC LIMIT 25`;
+    if (beneficiaries.length === 0) return;
+    const consentTypes = ['essential', 'data_sharing'] as const;
+    for (const b of beneficiaries as Array<{ id: string }>) {
+      for (const consentType of consentTypes) {
+        try {
+          await sql`
+            INSERT INTO beneficiary_consents (beneficiary_id, consent_type, granted, granted_at, version)
+            VALUES (${b.id}, ${consentType}, true, NOW(), '1.0')
+            ON CONFLICT (beneficiary_id, consent_type) DO NOTHING
+          `;
+        } catch (_) {}
+      }
+    }
+    const count = await sql`SELECT COUNT(*) as c FROM beneficiary_consents`;
+    console.log(`✅ beneficiary_consents: ${(count[0] as { c: string })?.c ?? 0} rows`);
+  } catch (e) {
+    console.warn('⚠️ beneficiary_consents seed skipped (run migrate first):', (e as Error).message);
+  }
+}
+
+/**
+ * Seed agent_float (PRD FR7.4) from agents: current_float = liquidity_balance, threshold = min_liquidity_required.
+ * Idempotent: uses ON CONFLICT DO NOTHING.
+ */
+async function seedAgentFloat() {
+  try {
+    await sql`
+      INSERT INTO agent_float (agent_id, current_float, float_threshold, overdraft_limit, updated_at)
+      SELECT id, liquidity_balance, min_liquidity_required, 0, NOW()
+      FROM agents
+      ON CONFLICT (agent_id) DO NOTHING
+    `;
+    const count = await sql`SELECT COUNT(*) as c FROM agent_float`;
+    console.log(`✅ agent_float: ${(count[0] as { c: string })?.c ?? 0} rows`);
+  } catch (e) {
+    console.warn('⚠️ agent_float seed skipped (run migrate first):', (e as Error).message);
+  }
+}
+
+/**
+ * Seed agent_coverage_by_region (PRD FR7.9): one row per region with first agent and beneficiary count.
+ * Idempotent: skips if table already has rows.
+ */
+async function seedAgentCoverageByRegion() {
+  try {
+    const existing = await sql`SELECT COUNT(*) as c FROM agent_coverage_by_region`;
+    if (Number((existing[0] as { c: string })?.c ?? 0) > 0) {
+      console.log('⏭ agent_coverage_by_region already seeded, skipping');
+      return;
+    }
+    const byRegion = await sql`
+      SELECT region, COUNT(*) as beneficiary_count FROM beneficiaries WHERE status != 'deceased' GROUP BY region
+    `;
+    const agentsByLocation = await sql`
+      SELECT id, location FROM agents WHERE type IN ('pos_agent', 'mobile_agent', 'mobile_unit') AND status = 'active'
+    `;
+    const regionToAgent: Record<string, string> = {};
+    for (const a of agentsByLocation as Array<{ id: string; location: string }>) {
+      if (!regionToAgent[a.location]) regionToAgent[a.location] = a.id;
+    }
+    let inserted = 0;
+    for (const row of byRegion as Array<{ region: string; beneficiary_count: string }>) {
+      const agentId = regionToAgent[row.region];
+      if (!agentId) continue;
+      try {
+        await sql`
+          INSERT INTO agent_coverage_by_region (region, agent_id, beneficiary_count, updated_at)
+          VALUES (${row.region}, ${agentId}::uuid, ${Number(row.beneficiary_count) || 0}, NOW())
+          ON CONFLICT (region, agent_id) DO NOTHING
+        `;
+        inserted++;
+      } catch (_) {}
+    }
+    console.log(`✅ agent_coverage_by_region: ${inserted} rows`);
+  } catch (e) {
+    console.warn('⚠️ agent_coverage_by_region seed skipped (run migrate first):', (e as Error).message);
+  }
+}
+
 async function seedNotifications() {
   try {
     const notificationsService = new NotificationsService();
@@ -857,6 +948,9 @@ async function main() {
   await seedMobileUnits();
   await seedLocations();
   await seedVouchersAndEvents();
+  await seedBeneficiaryConsents();
+  await seedAgentFloat();
+  await seedAgentCoverageByRegion();
   await seedNotifications();
   await validate();
 

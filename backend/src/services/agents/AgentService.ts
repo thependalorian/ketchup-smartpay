@@ -1,8 +1,13 @@
 /**
  * Agent Service
- * 
+ *
  * Purpose: Agent network management and statistics
  * Location: backend/src/services/agents/AgentService.ts
+ *
+ * Enhancements (PRD FR7): Churn prediction and incentive management can be added:
+ * - Churn risk score from transaction/float patterns (e.g. declining volume, low liquidity)
+ * - Incentive rules (commission tiers, bonuses for rural coverage, training completion)
+ * - AgentCoveragePlanner for density; AgentLiquidityService for float/overdraft
  */
 
 import { sql } from '../../database/connection';

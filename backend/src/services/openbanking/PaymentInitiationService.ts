@@ -1,16 +1,33 @@
 /**
  * Payment Initiation Service (PIS)
- * 
+ *
  * Location: backend/src/services/openbanking/PaymentInitiationService.ts
  * Purpose: Implementation of Payment Initiation Services per Namibian Open Banking Standards v1.0
- * 
+ *
  * Standards Compliance:
  * - Section 9.2.5: Supported PIS API Use Cases
  * - Section 9.2.4: Supported Payment Types (on-us, eft-enhanced, eft-nrtc)
+ *
+ * Multi-bank and fintech support (PRD FR2.2, interoperability):
+ * - creditorBankCode routes to participant (bank/fintech) via BANK_CODE_TO_PARTICIPANT / IPS participant directory
+ * - IPS used for instant when both parties support it
+ *
+ * Webhook: Notify Buffr/Ketchup on payment status change (OPEN_BANKING_ARCHIVE, PSDIR-11).
  */
 
 import { sql } from '../../database/connection';
 import { log, logError } from '../../utils/logger';
+
+const PAYMENT_STATUS_WEBHOOK_URL = process.env.PAYMENT_STATUS_WEBHOOK_URL || '';
+
+/** Map bank code to participant ID for multi-bank/fintech routing */
+const BANK_CODE_TO_PARTICIPANT: Record<string, string> = {
+  'SWNANANX': process.env.BON_PARTICIPANT_ID || 'BON',
+  'FIRST': process.env.FIRST_NAMIBIA_PARTICIPANT_ID || 'FNB',
+  'NEDBANK': process.env.NEDBANK_PARTICIPANT_ID || 'NED',
+  'STANDARD': process.env.STANDARD_BANK_PARTICIPANT_ID || 'SBN',
+  ...(process.env.EXTRA_BANK_CODES ? JSON.parse(process.env.EXTRA_BANK_CODES) : {}),
+};
 
 export interface Payment {
   paymentId: string;
@@ -317,6 +334,7 @@ export class PaymentInitiationService {
         }
 
         log('Payment completed successfully', { paymentId, endToEndId });
+        await this.notifyPaymentStatusChange(paymentId, 'completed', endToEndId);
       } else {
         await sql`
           UPDATE open_banking_payments
@@ -328,10 +346,11 @@ export class PaymentInitiationService {
         `;
 
         log('Payment processing failed', { paymentId });
+        await this.notifyPaymentStatusChange(paymentId, 'failed', undefined, 'Payment processing error');
       }
     } catch (error) {
       logError('Failed to process payment', error, { paymentId });
-      
+
       await sql`
         UPDATE open_banking_payments
         SET status = 'failed', 
@@ -340,6 +359,60 @@ export class PaymentInitiationService {
             updated_at = NOW()
         WHERE payment_id = ${paymentId}
       `;
+      await this.notifyPaymentStatusChange(paymentId, 'failed', undefined, 'Internal processing error');
+    }
+  }
+
+  /**
+   * Notify external systems (Buffr, Ketchup Portal) on payment status change.
+   * Per Namibian Open Banking / PSDIR-11; webhook URL from PAYMENT_STATUS_WEBHOOK_URL.
+   */
+  private async notifyPaymentStatusChange(
+    paymentId: string,
+    status: string,
+    endToEndId?: string,
+    statusReason?: string
+  ): Promise<void> {
+    if (!PAYMENT_STATUS_WEBHOOK_URL) return;
+    try {
+      const [payment] = await sql`
+        SELECT payment_id, participant_id, beneficiary_id, debtor_account_id, creditor_name, creditor_account,
+               amount, currency, status, initiated_at, completed_at, failed_at
+        FROM open_banking_payments WHERE payment_id = ${paymentId} LIMIT 1
+      `;
+      if (!payment) return;
+      const payload = {
+        event: 'payment.status_changed',
+        timestamp: new Date().toISOString(),
+        data: {
+          paymentId: payment.payment_id,
+          participantId: payment.participant_id,
+          beneficiaryId: payment.beneficiary_id,
+          debtorAccountId: payment.debtor_account_id,
+          creditorName: payment.creditor_name,
+          creditorAccount: payment.creditor_account,
+          amount: payment.amount,
+          currency: payment.currency,
+          status,
+          endToEndId: endToEndId ?? null,
+          statusReason: statusReason ?? null,
+          initiatedAt: payment.initiated_at,
+          completedAt: payment.completed_at ?? null,
+          failedAt: payment.failed_at ?? null,
+        },
+      };
+      const res = await fetch(PAYMENT_STATUS_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) {
+        logError('Payment status webhook failed', new Error(await res.text()), { paymentId, status: res.status });
+      } else {
+        log('Payment status webhook sent', { paymentId, status });
+      }
+    } catch (e) {
+      logError('Notify payment status failed', e, { paymentId, status });
     }
   }
 }

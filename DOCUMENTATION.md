@@ -12,6 +12,8 @@
 - [PSD Compliance](#psd-compliance)
 - [Open Banking](#open-banking)
 - [API Reference](#api-reference)
+- [Security & Compliance](#security--compliance)
+- [New APIs (IPS, NAMQR, Impact)](#new-apis-ips-namqr-impact)
 - [Development Guide](#development-guide)
 
 ---
@@ -60,7 +62,23 @@ npm run dev
 - Frontend:    http://localhost:5173
 - Backend API: http://localhost:3001
 - Compliance:  http://localhost:5173/compliance
+- Impact:      http://localhost:5174/impact (government portal)
 ```
+
+### New APIs (IPS, NAMQR, Impact)
+- **IPS:** `backend/src/services/ips/IPSIntegrationService.ts` – Namibia Instant Payment System; `initiatePayment`, `sendPayment` (ISO 20022 pain.001), `receivePayment` (pain.002), `getParticipantDirectory()`, real-time settlement and standardized error codes (`IPSErrorCodes.ts`, `IPSParticipantDirectory.ts`).
+- **ISO 20022:** `backend/src/services/openbanking/ISO20022Adapter.ts` – pain.001/pain.002, camt.052/camt.053 (account statement), pacs.008 (interbank), `jsonToXml`/`xmlToJson`, `validatePain001`.
+- **NAMQR:** `backend/src/services/namqr/NAMQRService.ts` – Generate, validate, redeem NAMQR merchant codes; QR interoperability (POS, ATM, USSD, app); device attestation via `deviceId` (DeviceManagementService); anti-replay via `redeemed_at`.
+- **PIS Webhooks:** Payment status change notifications to Buffr/Ketchup via `PAYMENT_STATUS_WEBHOOK_URL` (see PaymentInitiationService).
+- **Impact:** `backend/src/services/analytics/ImpactAnalyticsService.ts` – Financial inclusion, social impact, adoption KPIs; consumed by government Impact dashboard.
+- **Security:** DeviceManagementService (kill-switch, firmware), HardwareSecurityModule, PCIDSSCompliance, ConsentManagementService, APIGateway (rate limit, developer onboarding).
+
+### Security & Compliance
+- **Device:** Remote device management and kill-switch for Ketchup POS/ATM (`DeviceManagementService`).
+- **HSM:** HSM integration for POS/ATM crypto (`HardwareSecurityModule`).
+- **PCI DSS:** Compliance checks (`PCIDSSCompliance.runPCIDSSChecks()`).
+- **Privacy:** Consent management (`ConsentManagementService`); privacy breach reporting in `IncidentResponseService` (incidentType: `privacy_breach`).
+- **API:** Rate limiting and developer onboarding (`APIGateway`); device attestation placeholders in `auth` middleware.
 
 ---
 

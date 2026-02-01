@@ -22,12 +22,14 @@ import { neon } from '@neondatabase/serverless';
 const sql = neon(process.env.DATABASE_URL!);
 
 interface IncidentReport {
-  incidentType: 'cyberattack' | 'fraud' | 'data_breach' | 'system_failure' | 'unauthorized_access';
+  incidentType: 'cyberattack' | 'fraud' | 'data_breach' | 'system_failure' | 'unauthorized_access' | 'privacy_breach';
   severity: 'critical' | 'high' | 'medium' | 'low';
   title: string;
   description: string;
   affectedSystems?: string[];
   detectedBy?: string;
+  /** For privacy_breach: affected beneficiary count, data types (e.g. PII), regulatory notification done */
+  privacyBreachDetails?: { affectedCount?: number; dataTypes?: string[]; notifiedBoN?: boolean };
 }
 
 interface IncidentDetails {

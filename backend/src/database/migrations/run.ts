@@ -430,6 +430,127 @@ async function runMigrations() {
     await sql`CREATE INDEX IF NOT EXISTS idx_notifications_source ON notifications(source_type, source_id)`;
     log('✅ notifications table created');
 
+    // 11) Interoperability, Privacy, Agent Expansion (012: PRD Sections 6–7)
+    log('Creating beneficiary_consents table...');
+    await sql`
+      CREATE TABLE IF NOT EXISTS beneficiary_consents (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        beneficiary_id VARCHAR(50) NOT NULL REFERENCES beneficiaries(id) ON DELETE CASCADE,
+        consent_type VARCHAR(50) NOT NULL,
+        granted BOOLEAN NOT NULL DEFAULT true,
+        granted_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+        withdrawn_at TIMESTAMP WITH TIME ZONE,
+        version VARCHAR(20) NOT NULL DEFAULT '1.0',
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+        UNIQUE(beneficiary_id, consent_type)
+      )
+    `;
+    await sql`CREATE INDEX IF NOT EXISTS idx_beneficiary_consents_beneficiary_id ON beneficiary_consents(beneficiary_id)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_beneficiary_consents_consent_type ON beneficiary_consents(consent_type)`;
+    log('✅ beneficiary_consents table created');
+
+    log('Creating namqr_codes table...');
+    await sql`
+      CREATE TABLE IF NOT EXISTS namqr_codes (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        qr_id UUID NOT NULL UNIQUE,
+        merchant_id VARCHAR(100) NOT NULL,
+        amount VARCHAR(20) NOT NULL,
+        currency VARCHAR(3) NOT NULL DEFAULT 'NAD',
+        reference VARCHAR(255),
+        expires_at TIMESTAMP WITH TIME ZONE NOT NULL,
+        payload_hash VARCHAR(64),
+        redeemed_at TIMESTAMP WITH TIME ZONE,
+        redeemed_by_beneficiary_id VARCHAR(50),
+        transaction_id UUID,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+      )
+    `;
+    await sql`CREATE INDEX IF NOT EXISTS idx_namqr_codes_qr_id ON namqr_codes(qr_id)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_namqr_codes_merchant_id ON namqr_codes(merchant_id)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_namqr_codes_expires_at ON namqr_codes(expires_at)`;
+    log('✅ namqr_codes table created');
+
+    log('Creating ips_transactions table...');
+    await sql`
+      CREATE TABLE IF NOT EXISTS ips_transactions (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        request_id VARCHAR(100) NOT NULL,
+        payment_id VARCHAR(100) NOT NULL,
+        debtor_participant_id VARCHAR(50) NOT NULL,
+        debtor_account_id VARCHAR(50) NOT NULL,
+        creditor_participant_id VARCHAR(50) NOT NULL,
+        creditor_account_id VARCHAR(50) NOT NULL,
+        amount VARCHAR(20) NOT NULL,
+        currency VARCHAR(3) NOT NULL DEFAULT 'NAD',
+        reference VARCHAR(255),
+        end_to_end_id VARCHAR(100),
+        status VARCHAR(20) NOT NULL,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+        completed_at TIMESTAMP WITH TIME ZONE,
+        status_reason TEXT
+      )
+    `;
+    await sql`CREATE INDEX IF NOT EXISTS idx_ips_transactions_payment_id ON ips_transactions(payment_id)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_ips_transactions_request_id ON ips_transactions(request_id)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_ips_transactions_created_at ON ips_transactions(created_at)`;
+    log('✅ ips_transactions table created');
+
+    log('Creating agent_float table...');
+    await sql`
+      CREATE TABLE IF NOT EXISTS agent_float (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        agent_id UUID NOT NULL REFERENCES agents(id) ON DELETE CASCADE,
+        current_float DECIMAL(15, 2) NOT NULL DEFAULT 0,
+        float_threshold DECIMAL(15, 2) NOT NULL DEFAULT 10000,
+        overdraft_limit DECIMAL(15, 2) NOT NULL DEFAULT 0,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+        UNIQUE(agent_id)
+      )
+    `;
+    await sql`CREATE INDEX IF NOT EXISTS idx_agent_float_agent_id ON agent_float(agent_id)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_agent_float_current_float ON agent_float(current_float) WHERE current_float >= 0`;
+    log('✅ agent_float table created');
+
+    log('Creating agent_coverage_by_region table...');
+    await sql`
+      CREATE TABLE IF NOT EXISTS agent_coverage_by_region (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        region VARCHAR(50) NOT NULL,
+        agent_id UUID NOT NULL REFERENCES agents(id) ON DELETE CASCADE,
+        beneficiary_count INTEGER NOT NULL DEFAULT 0,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+        UNIQUE(region, agent_id)
+      )
+    `;
+    await sql`CREATE INDEX IF NOT EXISTS idx_agent_coverage_by_region_region ON agent_coverage_by_region(region)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_agent_coverage_by_region_agent_id ON agent_coverage_by_region(agent_id)`;
+    log('✅ agent_coverage_by_region table created');
+
+    // 12) IPS participants and NAMQR offline (013)
+    log('Creating ips_participants table...');
+    await sql`
+      CREATE TABLE IF NOT EXISTS ips_participants (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        participant_id VARCHAR(50) NOT NULL UNIQUE,
+        name VARCHAR(255) NOT NULL,
+        bic VARCHAR(20),
+        endpoint VARCHAR(500),
+        status VARCHAR(20) NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'suspended', 'inactive')),
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+      )
+    `;
+    await sql`CREATE INDEX IF NOT EXISTS idx_ips_participants_bic ON ips_participants(bic) WHERE bic IS NOT NULL`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_ips_participants_status ON ips_participants(status)`;
+    log('✅ ips_participants table created');
+
+    log('Adding namqr_codes.offline column...');
+    await sql`ALTER TABLE namqr_codes ADD COLUMN IF NOT EXISTS offline BOOLEAN NOT NULL DEFAULT false`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_namqr_codes_offline ON namqr_codes(offline) WHERE offline = true`.catch(() => {});
+    log('✅ namqr_codes.offline column added');
+
     log('✅ Database migrations completed successfully');
   } catch (error) {
     logError('Failed to run migrations', error);

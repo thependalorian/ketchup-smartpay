@@ -12,6 +12,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 // Pages
 import Dashboard from './pages/Dashboard';
 import Compliance from './pages/Compliance';
+import ImpactDashboard from './pages/ImpactDashboard';
 import VoucherMonitoring from './pages/VoucherMonitoring';
 import BeneficiaryRegistry from './pages/BeneficiaryRegistry';
 import AuditReports from './pages/AuditReports';
@@ -43,6 +44,7 @@ const App = () => {
           {/* Main Routes */}
           <Route path="/" element={<Dashboard />} />
           <Route path="/compliance" element={<Compliance />} />
+          <Route path="/impact" element={<ImpactDashboard />} />
           <Route path="/vouchers" element={<VoucherMonitoring />} />
           <Route path="/beneficiaries" element={<BeneficiaryRegistry />} />
           <Route path="/audit" element={<AuditReports />} />

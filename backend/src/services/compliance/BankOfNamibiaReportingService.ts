@@ -58,6 +58,14 @@ interface MonthlyReportData {
   
   // Compliance
   complianceStatus: string;
+
+  // Interoperability metrics (PRD Section 6, multi-bank/IPS/NAMQR)
+  ipsTransactionVolume?: number;
+  ipsTransactionValue?: number;
+  namqrMerchantPaymentsVolume?: number;
+  namqrMerchantPaymentsValue?: number;
+  multiBankPaymentVolume?: number;
+  multiBankParticipantCount?: number;
 }
 
 interface AgentAnnualReturn {

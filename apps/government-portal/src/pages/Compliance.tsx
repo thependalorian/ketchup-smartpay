@@ -48,6 +48,12 @@ export default function Compliance() {
             </ul>
           )}
         </Card>
+        <Card className="p-6">
+          <h3 className="font-semibold mb-2">Privacy & inclusion metrics</h3>
+          <p className="text-sm text-muted-foreground">
+            Privacy breach reports: reported via Incident (type: data_breach). Inclusion: see Impact dashboard for rural %, NPS, and adoption.
+          </p>
+        </Card>
       </div>
     </Layout>
   );

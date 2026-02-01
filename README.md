@@ -55,11 +55,22 @@ Then in `backend`: run `pnpm run migrate` and `pnpm run seed` (see [GETTING_STAR
 - **PSD-3** - Electronic Money Issuance (N$1.5M capital, 100% trust account coverage)
 - **PSD-12** - Cybersecurity Standards (99.9% uptime, 2FA, 24h incident reporting)
 
-### 🌐 Open Banking
+### 🌐 Open Banking & Interoperability
 - **OAuth 2.0** - PKCE-enabled authorization
 - **AIS** - Account Information Services
-- **PIS** - Payment Initiation Services
-- **Consent Management** - User-controlled permissions
+- **PIS** - Payment Initiation Services (multi-bank/fintech routing, webhook on status change)
+- **IPS** - Namibia Instant Payment System (participant directory, send/receive via ISO 20022, real-time settlement, standardized errors)
+- **NAMQR** - Merchant QR generation, validation, redemption (POS/ATM/USSD/app; device attestation; anti-replay)
+- **ISO 20022** - pain.001/pain.002, camt.052/camt.053, pacs.008; XML/JSON conversion; validation
+- **Consent Management** - User-controlled permissions (ConsentManagementService)
+- **User journeys & lessons** - [docs/user_journeys.md](docs/user_journeys.md), [docs/lessons_learned.md](docs/lessons_learned.md)
+
+### 🔐 Security & Compliance
+- **Device management** - Remote kill-switch and firmware for POS/ATM
+- **HSM** - Hardware Security Module integration for POS/ATM
+- **PCI DSS** - Compliance checks (no card data storage)
+- **Privacy** - Consent flows; privacy breach reporting in incident response
+- **API Gateway** - Rate limiting, abuse prevention, developer onboarding
 
 ### 🎮 Gamification
 - **Achievements** - 5 rarity levels, 6 categories

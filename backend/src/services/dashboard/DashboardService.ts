@@ -1,8 +1,12 @@
 /**
  * Dashboard Service
- * 
+ *
  * Purpose: Generate dashboard metrics from database
  * Location: backend/src/services/dashboard/DashboardService.ts
+ *
+ * Analytics endpoints (PRD Section 9): Impact KPIs exposed via government API:
+ * - GET /api/government/impact – ImpactAnalyticsService.getImpactKPIs (financial inclusion, social impact, adoption, NPS)
+ * - GET /api/government/analytics – existing analytics; can add adoption and training metrics
  */
 
 import { sql } from '../../database/connection';

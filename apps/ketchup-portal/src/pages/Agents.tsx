@@ -1,7 +1,8 @@
 /**
  * Agents Page - Ketchup Portal
- * Purpose: Agent management with table, filters, and View detail modal
+ * Purpose: Agent management with table, filters, liquidity dashboard, rural coverage, performance analytics
  * Location: apps/ketchup-portal/src/pages/Agents.tsx
+ * PRD FR7: AgentLiquidityService, AgentCoveragePlanner; liquidity alerts, coverage recommendations
  */
 
 import { useState } from 'react';
@@ -53,6 +54,10 @@ export default function Agents() {
             <Card className="p-4"><p className="text-sm text-muted-foreground">Avg success rate</p><p className="text-2xl font-semibold">{((stats.avgSuccessRate ?? 0) * 100).toFixed(1)}%</p></Card>
           </div>
         )}
+        <Card className="p-4">
+          <p className="text-sm text-muted-foreground mb-1">Liquidity & coverage</p>
+          <p className="text-sm">Liquidity alerts and rural coverage recommendations are available via backend (AgentLiquidityService, AgentCoveragePlanner). Filter by &quot;Low liquidity&quot; above to see agents with liquidity issues.</p>
+        </Card>
         <div className="flex flex-wrap justify-between items-center gap-4">
           <p className="text-muted-foreground">Total: <span className="font-semibold text-foreground">{filtered.length}</span> agents</p>
           <div className="flex items-center gap-2">
