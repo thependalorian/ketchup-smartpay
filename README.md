@@ -23,8 +23,10 @@ npm run dev
 Then in `backend`: run `pnpm run migrate` and `pnpm run seed` (see [GETTING_STARTED.md](./GETTING_STARTED.md) and [backend/MIGRATION_ORDER.md](./backend/MIGRATION_ORDER.md)).
 
 **Access Points:**
-- **Production:** https://www.ketchup.cc (Ketchup Portal), https://gov.ketchup.cc (Government Portal), https://api.ketchup.cc (API)
+- **Production:** https://app.ketchup.cc (Ketchup Portal), https://gov.ketchup.cc (Government Portal), https://api.ketchup.cc (API)
 - **Development:** http://localhost:5173 (Ketchup Portal), http://localhost:5174 (Government Portal), http://localhost:3001 (Backend API)
+
+**Projects in this directory:** The repo contains three deployable projects. See **[PROJECTS.md](./PROJECTS.md)**. Deploy from here: `./scripts/deploy.sh backend | ketchup-portal | government-portal`.
 
 ---
 
@@ -34,6 +36,7 @@ Then in `backend`: run `pnpm run migrate` and `pnpm run seed` (see [GETTING_STAR
 
 ### Quick Links
 
+- **[PROJECTS.md](./PROJECTS.md)** - The three projects in this directory (backend, ketchup-portal, government-portal) and how to deploy
 - **[PROJECT_STRUCTURE.md](./PROJECT_STRUCTURE.md)** - Project structure and file organization
 - **[DOCUMENTATION.md](./DOCUMENTATION.md)** - Complete technical documentation
 - **[DNS_CONFIGURATION.md](./DNS_CONFIGURATION.md)** - Domain and DNS setup guide

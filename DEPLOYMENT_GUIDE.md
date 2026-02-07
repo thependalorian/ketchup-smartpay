@@ -1,7 +1,12 @@
 # Ketchup SmartPay – Deployment Guide
 
-- **Portals:** Deploy to **Vercel** (ketchup-portal → app.ketchup.cc, government-portal → gov.ketchup.cc).
-- **Backend:** Deploy to **Railway** (api.ketchup.cc). See **[RAILWAY_DEPLOY.md](./RAILWAY_DEPLOY.md)** for step-by-step and env vars.
+**All three projects live in this directory.** See **[PROJECTS.md](./PROJECTS.md)** for the list and how to deploy from here:
+
+- **ketchup-smartpay-backend** → `backend/` → api.ketchup.cc (Railway)
+- **ketchup-portal** → `apps/ketchup-portal/` → app.ketchup.cc (Vercel)
+- **government-portal** → `apps/government-portal/` → gov.ketchup.cc (Vercel)
+
+Quick deploy from repo root: `./scripts/deploy.sh backend | ketchup-portal | government-portal`
 
 **Vercel + file tree:** See [VERCEL_ALIGNMENT.md](./VERCEL_ALIGNMENT.md) for how the repo layout maps to Vercel docs (monorepo, build, rewrites, functions, env) with 98% confidence.
 

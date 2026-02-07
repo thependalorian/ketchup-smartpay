@@ -30,8 +30,8 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build backend
-        run: pnpm --filter ketchup-smartpay-backend run build
+      - name: Build backend for Vercel
+        run: pnpm --filter ketchup-smartpay-backend run build:vercel
 
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25
