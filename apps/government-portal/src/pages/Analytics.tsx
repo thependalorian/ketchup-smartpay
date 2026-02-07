@@ -332,8 +332,8 @@ export default function Analytics() {
                   </TableBody>
                 </Table>
                 {transactionsTotalPages > 1 && (
-                  <div className="p-2 flex justify-between items-center border-t">
-                    <span className="text-sm text-muted-foreground">
+                  <div className="p-2 flex flex-col sm:flex-row justify-between items-center gap-4 border-t">
+                    <span className="text-xs sm:text-sm text-muted-foreground">
                       Page {transactionsPage} of {transactionsTotalPages} ({transactionsTotal} total)
                     </span>
                     <div className="flex gap-2">

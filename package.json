@@ -13,7 +13,7 @@
     "dev:ketchup": "turbo run dev --filter=ketchup-portal",
     "dev:government": "turbo run dev --filter=government-portal",
     "dev:backend": "turbo run dev --filter=backend",
-    "start": "cd backend && pnpm run start:prod",
+    "start": "cd backend && pnpm run start:railway",
     "build": "turbo run build",
     "build:ketchup": "turbo run build --filter=ketchup-portal",
     "build:government": "turbo run build --filter=government-portal",

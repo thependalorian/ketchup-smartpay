@@ -1,1 +1,1 @@
-web: cd backend && pnpm run start:prod
+web: cd backend && pnpm run start:railway

@@ -124,31 +124,31 @@ export function Sidebar() {
       )}
     >
       {/* Logo - Ketchup / Government SmartPay branding */}
-      <div className="flex h-16 items-center justify-between border-b px-4">
+      <div className="flex h-16 items-center justify-between border-b border-border bg-card px-4">
         {!isCollapsed ? (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            className="flex items-center gap-2"
+            className="flex items-center gap-3"
           >
-            <div className="relative">
+            <div className="ketchup-logo-wrap shrink-0">
               <img
                 src="/ketchup-logo.png"
                 alt="Ketchup SmartPay"
-                className="h-9 w-9 shrink-0 rounded-lg object-contain bg-background"
+                className="h-9 w-9 rounded-lg object-contain"
               />
             </div>
             <div>
-              <p className="font-display font-semibold text-foreground">SmartPay</p>
+              <p className="font-display text-sm font-semibold tracking-tight text-foreground">SmartPay</p>
               <p className="text-[10px] text-muted-foreground">Government Portal</p>
             </div>
           </motion.div>
         ) : (
-          <div className="relative mx-auto">
+          <div className="ketchup-logo-wrap mx-auto shrink-0">
             <img
               src="/ketchup-logo.png"
               alt="Ketchup SmartPay"
-              className="h-9 w-9 shrink-0 rounded-lg object-contain bg-background"
+              className="h-9 w-9 rounded-lg object-contain"
             />
           </div>
         )}
@@ -208,17 +208,17 @@ export function Sidebar() {
             className="fixed left-0 top-0 z-50 h-screen w-[280px] flex-col border-r bg-card lg:hidden"
           >
             {/* Mobile header with close button */}
-            <div className="flex h-16 items-center justify-between border-b px-4">
-              <div className="flex items-center gap-2">
-                <div className="relative">
+            <div className="flex h-16 items-center justify-between border-b border-border bg-card px-4">
+              <div className="flex items-center gap-3">
+                <div className="ketchup-logo-wrap shrink-0">
                   <img
                     src="/ketchup-logo.png"
                     alt="Ketchup SmartPay"
-                    className="h-9 w-9 shrink-0 rounded-lg object-contain bg-background"
+                    className="h-9 w-9 rounded-lg object-contain"
                   />
                 </div>
                 <div>
-                  <p className="font-display font-semibold text-foreground">SmartPay</p>
+                  <p className="font-display text-sm font-semibold tracking-tight text-foreground">SmartPay</p>
                   <p className="text-[10px] text-muted-foreground">Government Portal</p>
                 </div>
               </div>

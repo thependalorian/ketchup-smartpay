@@ -2,7 +2,6 @@
   "name": "ketchup-smartpay-backend",
   "version": "1.0.0",
   "description": "Backend API for Ketchup SmartPay - Modular Architecture",
-  "type": "module",
   "main": "dist/backend/src/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
@@ -10,6 +9,7 @@
     "build:vercel": "tsc && esbuild --bundle --platform=node --format=cjs --outfile=dist/backend/src/vercel-entry.cjs src/vercel-entry.ts",
     "start": "tsx src/index.ts",
     "start:prod": "node dist/backend/src/index.js",
+    "start:railway": "node railway-start.cjs",
     "migrate": "tsx src/database/migrations/run.ts",
     "seed": "tsx scripts/seed.ts",
     "validate": "tsx scripts/validate-seed.ts",

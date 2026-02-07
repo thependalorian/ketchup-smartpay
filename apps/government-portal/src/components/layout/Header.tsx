@@ -17,7 +17,7 @@ interface HeaderProps {
 
 export function Header({ title, subtitle, onMenuClick }: HeaderProps) {
   return (
-    <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b bg-background/95 px-4 md:px-6 backdrop-blur-sm">
+    <header className="sticky top-0 z-20 flex h-16 items-center justify-between border-b border-border bg-background/95 px-4 md:px-6 backdrop-blur-sm shadow-sm">
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
@@ -34,7 +34,7 @@ export function Header({ title, subtitle, onMenuClick }: HeaderProps) {
         </button>
         
         <div>
-          <h1 className="font-display text-lg md:text-xl font-semibold text-foreground">{title}</h1>
+          <h1 className="font-display text-lg md:text-xl font-semibold tracking-tight text-foreground">{title}</h1>
           {subtitle && <p className="text-xs md:text-sm text-muted-foreground hidden sm:block">{subtitle}</p>}
         </div>
       </motion.div>
@@ -46,18 +46,18 @@ export function Header({ title, subtitle, onMenuClick }: HeaderProps) {
           <span className="text-xs font-semibold">Government Portal</span>
         </div>
 
-        {/* Search - hidden on mobile, visible on lg and up */}
-        <div className="relative hidden lg:block">
+        {/* Search - hidden on mobile, visible on md and up */}
+        <div className="relative hidden md:block">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <input
             type="text"
             placeholder="Search..."
-            className="h-10 w-48 xl:w-64 rounded-lg border bg-muted/50 pl-10 pr-4 text-sm transition-all placeholder:text-muted-foreground focus:bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
+            className="h-10 w-48 lg:w-64 rounded-lg border bg-muted/50 pl-10 pr-4 text-sm transition-all placeholder:text-muted-foreground focus:bg-background focus:outline-none focus:ring-2 focus:ring-primary/50"
           />
         </div>
 
         {/* Mobile search button */}
-        <Button variant="ghost" size="icon" className="lg:hidden h-9 w-9">
+        <Button variant="ghost" size="icon" className="md:hidden h-9 w-9">
           <Search className="h-5 w-5" />
         </Button>
 

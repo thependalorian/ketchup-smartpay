@@ -78,21 +78,27 @@ railway link   # still need to pass project/environment; or use railway link --p
 
 ## 2. Build and start settings
 
-In the service → **Settings** (or **Variables** → **Settings**):
+**Critical:** Set **Root Directory** to **empty** (repo root). If it is set to `backend`, Railway will run `node dist/backend/src/index.js` and crash with `ERR_MODULE_NOT_FOUND`.
+
+### Option A: Dockerfile (recommended)
+
+Repo root has a **`Dockerfile`** that builds the backend bundle and runs `node railway-start.cjs`. Railway uses it automatically when Root Directory is empty.
+
+- **Root Directory:** *(empty)*
+- **Build / Start:** Leave default — Railway builds from the Dockerfile and runs the CMD.
+
+### Option B: railway.toml or manual commands
+
+If you prefer Nixpacks/Railpack instead of Docker:
 
 | Setting | Value |
 |--------|--------|
 | **Root Directory** | *(empty – use repo root)* |
-| **Build Command** | `pnpm install && pnpm run build:backend` (or `pnpm install && cd backend && pnpm run build`) |
-| **Start Command** | *(optional)* `pnpm run start` or `cd backend && pnpm run start:prod` — repo root has a `start` script and a `Procfile` so Railpack can auto-detect. |
-| **Watch Paths** | `backend/**` (optional; for redeploy on backend changes) |
+| **Build Command** | `pnpm install && cd backend && pnpm run build:vercel` |
+| **Start Command** | `pnpm run start` or `cd backend && pnpm run start:railway` |
+| **Watch Paths** | `backend/**` (optional) |
 
-- **Build:** From repo root, `pnpm install` installs workspace deps (including `shared/`); `cd backend && pnpm run build` runs `tsc` and outputs to `backend/dist/`.
-- **Start:** `cd backend && pnpm run start:prod` runs `node dist/backend/src/index.js` (long-running Express + compliance schedulers).
-
-**Important:** In Railway → your service → **Settings** → **Build**, set **Build Command** to:
-`pnpm install && cd backend && pnpm run build`
-so `backend/dist` is created. The root `package.json` has a **start** script and a **Procfile** so Railpack finds the start command; if it still fails, set **Start Command** to `pnpm run start`.
+**Do not use** `start:prod` or `node dist/backend/src/index.js` — that path hits ESM resolution errors. The app must start via `railway-start.cjs` (bundle).
 
 ---
 
@@ -212,4 +218,4 @@ Portal UI (app.ketchup.cc / gov.ketchup.cc)  [Vercel]
 
 - **Dashboards show "—":** Check that `api.ketchup.cc` resolves to Railway and that Railway env has `DATABASE_URL`, `KETCHUP_API_KEY`, `GOVERNMENT_API_KEY`. Confirm portal `VITE_API_KEY` matches backend keys.
 - **401/403 on API:** Portal `VITE_API_KEY` must equal backend `KETCHUP_API_KEY` (Ketchup) or `GOVERNMENT_API_KEY` (Government). Redeploy portals after changing env in Vercel.
-- **Build fails on Railway:** Use **Root Directory** empty (repo root), **Build Command** `pnpm install && cd backend && pnpm run build`, **Start Command** `cd backend && pnpm run start:prod`. The backend compiles `shared/` so it must run from repo root.
+- **Build fails / crash on start (ERR_MODULE_NOT_FOUND):** Set **Root Directory** to **empty** (repo root). Railway will then use the root **Dockerfile** (recommended) or **railway.toml**. If Root Directory was `backend`, Railway was running `node dist/backend/src/index.js` and crashing — the app must start via `railway-start.cjs` (bundle).

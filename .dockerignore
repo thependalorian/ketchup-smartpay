@@ -1,0 +1,17 @@
+node_modules
+.git
+.vercel
+.railway
+*.log
+.env*
+!.env.example
+dist
+.next
+coverage
+*.md
+!README.md
+.github
+docs
+*.pdf
+Screenshot*
+.DS_Store

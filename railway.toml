@@ -1,0 +1,9 @@
+# Railway config: backend uses Dockerfile (recommended) or build/start below.
+# Root Directory must be empty. See RAILWAY_DEPLOY.md.
+
+[build]
+builder = "DOCKERFILE"
+
+# If not using Dockerfile, use these instead (and set builder to RAILPACK):
+# buildCommand = "pnpm install && cd backend && pnpm run build:vercel"
+# startCommand = "cd backend && pnpm run start:railway"
