@@ -1,0 +1,210 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Ketchup brand tokens (brand.md) */
+    --ketchup-midnight: #001818;
+    --ketchup-forest: #226644;
+    --ketchup-lime: #84cc16;
+    --ketchup-magenta: #c026d3;
+    --ketchup-royal: #2563eb;
+    --ketchup-yellow: #eab308;
+    --ketchup-accent: #10b981;
+    --ketchup-sand: #ebe9e1;
+    --ketchup-seafoam: #e0ffff;
+    --ketchup-k-black: #000000;
+
+    /* Namibian-inspired warm palette – updated to use Ketchup brand */
+    --background: 40 15% 98%;
+    --foreground: 180 100% 5%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 180 100% 5%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 180 100% 5%;
+
+    /* Primary – Accent Green #10b981 (Ketchup brand) */
+    --primary: 160 84% 39%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary – Forest #226644 (Ketchup brand) */
+    --secondary: 150 50% 27%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 40 15% 94%;
+    --muted-foreground: 180 10% 45%;
+
+    /* Accent – Lime #84cc16 (Ketchup brand) */
+    --accent: 84 71% 45%;
+    --accent-foreground: 180 100% 5%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Success – Accent Green (Ketchup brand) */
+    --success: 160 84% 39%;
+    --success-foreground: 0 0% 100%;
+
+    /* Warning – Sunny Yellow (Ketchup brand) */
+    --warning: 48 96% 47%;
+    --warning-foreground: 180 100% 5%;
+
+    /* Info – Royal Blue (Ketchup brand) */
+    --info: 221 83% 53%;
+    --info-foreground: 0 0% 100%;
+
+    --border: 40 15% 90%;
+    --input: 40 15% 90%;
+    --ring: 160 84% 39%;
+
+    --radius: 0.75rem;
+
+    /* Ketchup brand gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(var(--primary)) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--primary)) 100%);
+    --gradient-warm: linear-gradient(135deg, hsl(var(--secondary) / 0.1) 0%, hsl(var(--primary) / 0.1) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(180 100% 5%) 0%, hsl(150 50% 27%) 50%, hsl(160 84% 39%) 100%);
+    
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(180 100% 5% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(180 100% 5% / 0.08), 0 2px 4px -2px hsl(180 100% 5% / 0.05);
+    --shadow-lg: 0 10px 15px -3px hsl(180 100% 5% / 0.1), 0 4px 6px -4px hsl(180 100% 5% / 0.05);
+    --shadow-ketchup: 0 4px 14px 0 rgb(16 185 129 / 0.2);
+    --shadow-ketchup-glow: 0 0 40px rgb(16 185 129 / 0.15);
+
+    --sidebar-background: 40 15% 98%;
+    --sidebar-foreground: 180 100% 5%;
+    --sidebar-primary: 160 84% 39%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 84 71% 45%;
+    --sidebar-accent-foreground: 180 100% 5%;
+    --sidebar-border: 40 15% 90%;
+    --sidebar-ring: 160 84% 39%;
+  }
+
+  .dark {
+    --background: 180 100% 5%;
+    --foreground: 40 15% 98%;
+
+    --card: 180 100% 7%;
+    --card-foreground: 40 15% 98%;
+
+    --popover: 180 100% 7%;
+    --popover-foreground: 40 15% 98%;
+
+    --primary: 160 84% 45%;
+    --primary-foreground: 180 100% 5%;
+
+    --secondary: 150 30% 22%;
+    --secondary-foreground: 40 15% 98%;
+
+    --muted: 180 20% 12%;
+    --muted-foreground: 40 10% 65%;
+
+    --accent: 84 71% 50%;
+    --accent-foreground: 180 100% 5%;
+
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 160 84% 45%;
+    --success-foreground: 180 100% 5%;
+
+    --warning: 48 96% 50%;
+    --warning-foreground: 180 100% 5%;
+
+    --info: 221 83% 55%;
+    --info-foreground: 0 0% 100%;
+
+    --border: 180 20% 18%;
+    --input: 180 20% 18%;
+    --ring: 160 84% 45%;
+
+    --sidebar-background: 180 100% 5%;
+    --sidebar-foreground: 40 15% 98%;
+    --sidebar-primary: 160 84% 45%;
+    --sidebar-primary-foreground: 180 100% 5%;
+    --sidebar-accent: 84 71% 55%;
+    --sidebar-accent-foreground: 180 100% 5%;
+    --sidebar-border: 180 20% 18%;
+    --sidebar-ring: 160 84% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Helvetica Neue', Helvetica, 'Inter', system-ui, sans-serif;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: 'Helvetica Neue', Helvetica, 'Inter', system-ui, sans-serif;
+  }
+
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .gradient-accent {
+    background: var(--gradient-accent);
+  }
+
+  .gradient-warm {
+    background: var(--gradient-warm);
+  }
+
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  .shadow-ketchup {
+    box-shadow: var(--shadow-ketchup);
+  }
+
+  .shadow-ketchup-glow {
+    box-shadow: var(--shadow-ketchup-glow);
+  }
+
+  .text-gradient {
+    background: var(--gradient-accent);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Ketchup brand – subtle sphere gradient (brand.md) */
+  .gradient-sphere-subtle {
+    background: linear-gradient(135deg,
+      rgb(132 204 22 / 0.08) 0%,
+      rgb(192 38 211 / 0.04) 33%,
+      rgb(37 99 235 / 0.04) 66%,
+      rgb(234 179 8 / 0.08) 100%
+    );
+  }
+
+  /* Logo sphere – four quadrants (brand.md) */
+  .gradient-sphere {
+    background: linear-gradient(135deg,
+      var(--ketchup-lime) 0%,
+      var(--ketchup-magenta) 25%,
+      var(--ketchup-royal) 50%,
+      var(--ketchup-yellow) 75%,
+      var(--ketchup-lime) 100%
+    );
+  }
+}

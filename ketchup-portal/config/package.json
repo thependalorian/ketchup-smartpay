@@ -1,0 +1,13 @@
+{
+  "name": "@smartpay/config",
+  "version": "1.0.0",
+  "description": "SmartPay Configuration",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}

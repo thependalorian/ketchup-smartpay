@@ -10,11 +10,11 @@
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
-    "@smartpay/ui": "workspace:*",
-    "@smartpay/types": "workspace:*",
-    "@smartpay/api-client": "workspace:*",
-    "@smartpay/utils": "workspace:*",
-    "@smartpay/config": "workspace:*",
+    "@smartpay/ui": "file:ui",
+    "@smartpay/types": "file:types",
+    "@smartpay/api-client": "file:api-client",
+    "@smartpay/utils": "file:utils",
+    "@smartpay/config": "file:config",
     "@tanstack/react-query": "^5.83.0",
     "framer-motion": "^12.29.2",
     "lucide-react": "^0.462.0",

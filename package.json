@@ -3,42 +3,17 @@
   "version": "2.0.0",
   "private": true,
   "type": "module",
-  "description": "Ketchup SmartPay - Modular Architecture",
-  "workspaces": [
-    "backend",
-    "ketchup-portal",
-    "government-portal",
-    "packages/*"
-  ],
+  "description": "Ketchup SmartPay - 3 Project Structure",
   "scripts": {
-    "dev": "turbo run dev",
-    "dev:ketchup": "turbo run dev --filter=ketchup-portal",
-    "dev:government": "turbo run dev --filter=government-portal",
-    "dev:backend": "turbo run dev --filter=backend",
-    "start": "cd backend && pnpm run start:railway",
-    "build": "turbo run build",
-    "build:ketchup": "turbo run build --filter=ketchup-portal",
-    "build:government": "turbo run build --filter=government-portal",
-    "build:backend": "turbo run build --filter=backend",
-    "deploy:ketchup": "./scripts/deploy-ketchup-portal.sh",
-    "deploy:ketchup:no-sync": "./scripts/deploy-ketchup-portal.sh --no-sync",
-    "deploy:government": "./scripts/deploy-government-portal.sh",
-    "deploy:government:no-sync": "./scripts/deploy-government-portal.sh --no-sync",
-    "deploy:backend": "./scripts/deploy-backend.sh",
-    "add-backend-domain": "./scripts/add-backend-domain.sh",
-    "deploy:buffr": "./scripts/deploy-buffr.sh",
-    "deploy:buffr:no-sync": "./scripts/deploy-buffr.sh --no-sync",
-    "test": "turbo run test",
-    "lint": "turbo run lint",
-    "clean": "turbo run clean && rm -rf node_modules"
-  },
-  "devDependencies": {
-    "turbo": "^1.13.0",
-    "typescript": "^5.8.3"
+    "dev:ketchup": "cd ketchup-portal && pnpm run dev",
+    "dev:government": "cd government-portal && pnpm run dev",
+    "dev:backend": "cd backend && pnpm run dev",
+    "build:ketchup": "cd ketchup-portal && pnpm run build",
+    "build:government": "cd government-portal && pnpm run build",
+    "build:backend": "cd backend && pnpm run build",
+    "install:all": "cd ketchup-portal && pnpm install && cd ../government-portal && pnpm install && cd ../backend && pnpm install"
   },
   "engines": {
-    "node": ">=18.0.0",
-    "pnpm": ">=8.0.0"
-  },
-  "packageManager": "pnpm@8.15.0"
+    "node": ">=18.0.0"
+  }
 }

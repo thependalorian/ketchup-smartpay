@@ -1,0 +1,24 @@
+{
+  "name": "@smartpay/api-client",
+  "version": "1.0.0",
+  "description": "SmartPay API Client",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./ketchup": "./src/ketchup/index.ts",
+    "./government": "./src/government/index.ts"
+  },
+  "scripts": {
+    "build": "echo ok",
+    "lint": "eslint src/**/*.ts"
+  },
+  "dependencies": {
+    "@smartpay/types": "workspace:*",
+    "@tanstack/react-query": "^5.83.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.16.5",
+    "typescript": "^5.8.3"
+  }
+}
