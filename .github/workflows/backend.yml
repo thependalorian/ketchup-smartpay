@@ -33,11 +33,12 @@ jobs:
       - name: Build backend for Vercel
         run: pnpm --filter ketchup-smartpay-backend run build:vercel
 
+      # Backend Vercel config (api/, rewrites) lives at repo root; deploy from root.
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25
         with:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_BACKEND_PROJECT_ID }}
-          working-directory: ./backend
+          working-directory: .
           vercel-args: '--prod'

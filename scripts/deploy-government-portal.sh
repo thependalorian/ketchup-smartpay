@@ -11,7 +11,7 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 VERCEL_DIR="$REPO_ROOT/.vercel"
-ENV_FILE="$REPO_ROOT/apps/government-portal/.env.local"
+ENV_FILE="$REPO_ROOT/government-portal/.env.local"
 
 # Vercel project IDs (buffr team)
 GOV_PROJECT_ID="prj_N1WNHJMWTE7sXqmEXxAIZDZaKWA8"
@@ -80,7 +80,7 @@ if [[ "$SYNC_ENV" == true && -f "$ENV_FILE" ]]; then
   echo "Env sync done."
 else
   if [[ "$SYNC_ENV" == true && ! -f "$ENV_FILE" ]]; then
-    echo "No apps/government-portal/.env.local found; using existing Vercel env."
+    echo "No government-portal/.env.local found; using existing Vercel env."
   fi
 fi
 

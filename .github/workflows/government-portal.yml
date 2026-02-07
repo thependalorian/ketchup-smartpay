@@ -5,7 +5,7 @@ on:
     branches:
       - main
     paths:
-      - 'apps/government-portal/**'
+      - 'government-portal/**'
       - 'packages/**'
       - 'pnpm-workspace.yaml'
       - 'turbo.json'
@@ -45,5 +45,5 @@ jobs:
           vercel-token: ${{ secrets.VERCEL_TOKEN }}
           vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
           vercel-project-id: ${{ secrets.VERCEL_GOVERNMENT_PROJECT_ID }}
-          working-directory: ./apps/government-portal
+          working-directory: ./government-portal
           vercel-args: '--prod'

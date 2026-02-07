@@ -5,7 +5,9 @@
   "type": "module",
   "description": "Ketchup SmartPay - Modular Architecture",
   "workspaces": [
-    "apps/*",
+    "backend",
+    "ketchup-portal",
+    "government-portal",
     "packages/*"
   ],
   "scripts": {
