@@ -7,7 +7,9 @@
 import { createGovernmentClient } from '../client';
 import type { Beneficiary, Agent } from '@smartpay/types';
 
-const client = createGovernmentClient({});
+const client = createGovernmentClient({
+  apiKey: (import.meta.env?.VITE_API_KEY as string)?.trim() || undefined,
+});
 
 function unwrap<T>(r: { success?: boolean; data?: unknown }): T {
   if (!r?.success || r.data == null) return undefined as T;

@@ -37,6 +37,7 @@ const Dashboard = () => {
           icon={Users}
           trend={+5.2}
           loading={isLoading}
+          variant="ketchup"
         />
         <MetricCard
           title="Vouchers Distributed"
@@ -44,6 +45,7 @@ const Dashboard = () => {
           icon={Ticket}
           trend={+12.8}
           loading={isLoading}
+          variant="primary"
         />
         <MetricCard
           title="Total Amount"
@@ -51,6 +53,7 @@ const Dashboard = () => {
           icon={BadgeDollarSign}
           trend={+8.3}
           loading={isLoading}
+          variant="primary"
         />
         <MetricCard
           title="Active Agents"
@@ -58,6 +61,7 @@ const Dashboard = () => {
           icon={Building2}
           trend={+2.1}
           loading={isLoading}
+          variant="ketchup"
         />
       </div>
 

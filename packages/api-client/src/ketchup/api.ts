@@ -5,8 +5,8 @@
  * Purpose: Base API client for frontend API calls
  */
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
-const API_KEY = import.meta.env.VITE_API_KEY;
+const API_BASE_URL = (import.meta.env.VITE_API_URL as string) || 'http://localhost:3001';
+const API_KEY = (import.meta.env.VITE_API_KEY as string)?.trim() || undefined;
 
 export interface APIResponse<T> {
   success: boolean;
@@ -119,6 +119,10 @@ export class APIClient {
     if (!response.ok) {
       const error = await response.json().catch(() => ({ error: response.statusText }));
       throw new Error(error.error || `HTTP ${response.status}: ${response.statusText}`);
+    }
+
+    if (response.status === 204) {
+      return undefined as T;
     }
 
     const data: APIResponse<T> = await response.json();

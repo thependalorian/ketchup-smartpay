@@ -1,7 +1,7 @@
-# SmartPay Connect – cURL API Validation
+# Ketchup SmartPay – cURL API Validation
 
 **Purpose:** Validate backend API endpoints with curl.  
-**Location:** `smartpay-connect/docs/CURL_VALIDATION.md`  
+**Location:** `ketchup-smartpay/docs/CURL_VALIDATION.md`  
 **Prerequisite:** Backend running on `http://localhost:3001` (or set `BASE_URL`).
 
 ---

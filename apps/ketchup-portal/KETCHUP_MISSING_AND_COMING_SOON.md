@@ -1,7 +1,7 @@
 # Ketchup Portal – Missing Interfaces & “Coming Soon” Pages
 
 **Purpose:** List of placeholder (“coming soon”) pages and any missing or newly added types in the Ketchup portal.  
-**Location:** `smartpay-connect/apps/ketchup-portal/`
+**Location:** `ketchup-smartpay/apps/ketchup-portal/`
 
 ---
 

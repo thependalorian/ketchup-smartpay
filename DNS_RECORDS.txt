@@ -6,7 +6,7 @@
 # DOMAIN: ketchup.cc
 # Registrar: Namecheap
 # Hosting: Vercel (Frontend), Railway (Backend)
-# Purpose: SmartPay Connect G2P Voucher Platform
+# Purpose: Ketchup SmartPay G2P Voucher Platform
 ================================================================================
 
 ## A Records (Apex Domain)

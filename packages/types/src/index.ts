@@ -1,7 +1,7 @@
 /**
  * @smartpay/types - Shared TypeScript Types
  * 
- * Central type definitions for SmartPay Connect
+ * Central type definitions for Ketchup SmartPay
  */
 
 // Core business types

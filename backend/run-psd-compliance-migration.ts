@@ -123,7 +123,7 @@ async function runMigration() {
       console.log('  • backup_recovery_logs (PSD-12)');
       console.log('  • compliance_audit_trail (All PSDs)');
       console.log('  • compliance_dashboard_metrics (Dashboard)');
-      console.log('\n🏛️  SmartPay Connect is now PSD-compliant ready!');
+      console.log('\n🏛️  Ketchup SmartPay is now PSD-compliant ready!');
     } else {
       console.log('\n⚠️  Migration completed with some errors. Please review above.');
     }

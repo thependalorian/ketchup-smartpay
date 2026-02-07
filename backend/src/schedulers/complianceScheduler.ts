@@ -20,6 +20,7 @@ import { SystemUptimeMonitorService } from '../services/compliance/SystemUptimeM
 import { BankOfNamibiaReportingService } from '../services/compliance/BankOfNamibiaReportingService';
 import { IncidentResponseService } from '../services/compliance/IncidentResponseService';
 import { log, logError } from '../utils/logger';
+import { sql } from '../database/connection';
 
 export class ComplianceScheduler {
   private static dailyReconciliationInterval: NodeJS.Timeout | null = null;
@@ -194,15 +195,29 @@ export class ComplianceScheduler {
     const runCapitalTracking = async () => {
       try {
         log('Running daily capital tracking (PSD-3 §11.5)');
-        
-        // TODO: In production, get actual liquid assets from accounting system
+
+        // Liquid assets from database: agent_float + agents.liquidity_balance; other buckets from env or 0
+        let cashFromDb = 0;
+        try {
+          const floatRows = await sql`SELECT COALESCE(SUM(current_float), 0)::numeric AS total_float FROM agent_float`;
+          const agentsRows = await sql`SELECT COALESCE(SUM(liquidity_balance), 0)::numeric AS total_liquidity FROM agents`;
+          const totalFloat = floatRows[0] ? Number((floatRows[0] as { total_float: string }).total_float) : 0;
+          const totalLiquidity = agentsRows[0] ? Number((agentsRows[0] as { total_liquidity: string }).total_liquidity) : 0;
+          cashFromDb = totalFloat + totalLiquidity;
+        } catch (e) {
+          logError('Capital tracking: failed to read liquid assets from DB', e as Error);
+        }
+        const govBonds = Number(process.env.CAPITAL_GOVERNMENT_BONDS ?? 0);
+        const shortTerm = Number(process.env.CAPITAL_SHORT_TERM_INSTRUMENTS ?? 0);
+        const otherApproved = Number(process.env.CAPITAL_OTHER_APPROVED ?? 0);
+
         const liquidAssets = {
-          cash: 1_000_000,
-          governmentBonds: 500_000,
-          shortTermInstruments: 250_000,
-          otherApprovedAssets: 100_000,
+          cash: cashFromDb,
+          governmentBonds: govBonds,
+          shortTermInstruments: shortTerm,
+          otherApprovedAssets: otherApproved,
         };
-        const initialCapitalHeld = 1_500_000;
+        const initialCapitalHeld = Number(process.env.CAPITAL_INITIAL_HELD ?? 1_500_000);
 
         const report = await CapitalRequirementsService.trackDailyCapital(
           liquidAssets,

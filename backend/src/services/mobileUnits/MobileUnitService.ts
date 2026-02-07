@@ -281,4 +281,76 @@ export class MobileUnitService {
       createdAt: r.created_at,
     };
   }
+
+  async addDriver(
+    mobileUnitId: string,
+    body: { name: string; idNumber?: string; phone?: string; role?: string }
+  ): Promise<MobileUnitDriver> {
+    const unit = await this.getById(mobileUnitId);
+    if (!unit) throw new Error('Mobile unit not found');
+    const [row] = await sql`
+      INSERT INTO mobile_unit_drivers (mobile_unit_id, name, id_number, phone, role, status)
+      SELECT ${mobileUnitId}::uuid, ${body.name}, ${body.idNumber ?? null}, ${body.phone ?? null}, ${body.role ?? 'driver'}, 'active'
+      WHERE EXISTS (SELECT 1 FROM agents WHERE id = ${mobileUnitId}::uuid AND type = ${MOBILE_UNIT_TYPE})
+      RETURNING id::text, mobile_unit_id::text, name, id_number, phone, role, assigned_at::text, status
+    `;
+    if (!row) throw new Error('Failed to add driver');
+    const r = row as any;
+    return {
+      id: r.id,
+      mobileUnitId: r.mobile_unit_id,
+      name: r.name,
+      idNumber: r.id_number ?? null,
+      phone: r.phone ?? null,
+      role: r.role,
+      assignedAt: r.assigned_at,
+      status: r.status,
+    };
+  }
+
+  async updateDriver(
+    mobileUnitId: string,
+    driverId: string,
+    body: { name?: string; idNumber?: string; phone?: string; role?: string; status?: string }
+  ): Promise<MobileUnitDriver | null> {
+    const unit = await this.getById(mobileUnitId);
+    if (!unit) return null;
+    const drivers = await this.getDrivers(mobileUnitId);
+    const existing = drivers.find((d) => d.id === driverId);
+    if (!existing) return null;
+    const name = body.name ?? existing.name;
+    const idNumber = body.idNumber !== undefined ? body.idNumber : existing.idNumber;
+    const phone = body.phone !== undefined ? body.phone : existing.phone;
+    const role = body.role ?? existing.role;
+    const status = body.status && ['active', 'off', 'replaced'].includes(body.status) ? body.status : existing.status;
+    const [row] = await sql`
+      UPDATE mobile_unit_drivers
+      SET name = ${name}, id_number = ${idNumber}, phone = ${phone}, role = ${role}, status = ${status}, updated_at = NOW()
+      WHERE id::text = ${driverId} AND mobile_unit_id::text = ${mobileUnitId}
+      RETURNING id::text, mobile_unit_id::text, name, id_number, phone, role, assigned_at::text, status
+    `;
+    if (!row) return null;
+    const r = row as any;
+    return {
+      id: r.id,
+      mobileUnitId: r.mobile_unit_id,
+      name: r.name,
+      idNumber: r.id_number ?? null,
+      phone: r.phone ?? null,
+      role: r.role,
+      assignedAt: r.assigned_at,
+      status: r.status,
+    };
+  }
+
+  async removeDriver(mobileUnitId: string, driverId: string): Promise<boolean> {
+    const unit = await this.getById(mobileUnitId);
+    if (!unit) return false;
+    const [deleted] = await sql`
+      DELETE FROM mobile_unit_drivers
+      WHERE id::text = ${driverId} AND mobile_unit_id::text = ${mobileUnitId}
+      RETURNING id
+    `;
+    return !!deleted;
+  }
 }

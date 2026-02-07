@@ -1,6 +1,6 @@
 # 🚀 GETTING STARTED
 
-**SmartPay Connect - Modular Architecture**
+**Ketchup SmartPay - Modular Architecture**
 
 Complete setup guide for the new architecture.
 
@@ -22,7 +22,7 @@ All 6 phases have been successfully implemented:
 
 ### Monorepo Structure
 ```
-smartpay-connect/
+ketchup-smartpay/
 ├── .github/workflows/           # CI/CD: backend.yml, government-portal.yml, ketchup-portal.yml
 ├── apps/
 │   ├── government-portal/       # Government dashboard (React + Vite)
@@ -264,8 +264,7 @@ Ketchup User                    Government User
      │                               │
      ▼                               ▼
 Ketchup Portal              Government Portal
-(ketchup.smartpay-          (gov.smartpay-
- connect.com)                connect.com)
+(ketchup.ketchup-smartpay.com)   (gov.ketchup-smartpay.com)
      │                               │
      │  Uses: @smartpay/*            │  Uses: @smartpay/*
      │                               │
@@ -273,7 +272,7 @@ Ketchup Portal              Government Portal
                  │
                  ▼
          Backend API (Unified)
-         (api.smartpay-connect.com)
+         (api.ketchup-smartpay.com)
                  │
      ┌───────────┼───────────┐
      │           │           │
@@ -399,9 +398,9 @@ vercel --prod
 ```
 
 ### Custom Domains
-- Ketchup: `ketchup.smartpay-connect.com`
-- Government: `gov.smartpay-connect.com`
-- Backend: `api.smartpay-connect.com`
+- Ketchup: `ketchup.ketchup-smartpay.com`
+- Government: `gov.ketchup-smartpay.com`
+- Backend: `api.ketchup-smartpay.com`
 
 Configure these in Vercel project settings.
 

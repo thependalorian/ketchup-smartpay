@@ -1,5 +1,9 @@
 import type { Config } from 'tailwindcss';
 
+/**
+ * Ketchup Portal Tailwind config – brand from brand.md
+ * Semantic colors use CSS vars (index.css); ketchup-* are direct brand tokens.
+ */
 export default {
   darkMode: ['class'],
   content: [
@@ -43,11 +47,35 @@ export default {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
         },
+        success: 'hsl(var(--success))',
+        warning: 'hsl(var(--warning))',
+        info: 'hsl(var(--info))',
+        // Ketchup brand (brand.md) – logo sphere + UI
+        ketchup: {
+          midnight: 'var(--ketchup-midnight)',
+          forest: 'var(--ketchup-forest)',
+          lime: 'var(--ketchup-lime)',
+          magenta: 'var(--ketchup-magenta)',
+          royal: 'var(--ketchup-royal)',
+          yellow: 'var(--ketchup-yellow)',
+          accent: 'var(--ketchup-accent)',
+          sand: 'var(--ketchup-sand)',
+          seafoam: 'var(--ketchup-seafoam)',
+          'k-black': 'var(--ketchup-k-black)',
+        },
+      },
+      fontFamily: {
+        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['Helvetica Neue', 'Helvetica', 'Inter', 'system-ui', 'sans-serif'],
       },
       borderRadius: {
         lg: 'var(--radius)',
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
+      },
+      boxShadow: {
+        'ketchup': 'var(--shadow-ketchup)',
+        'ketchup-glow': 'var(--shadow-ketchup-glow)',
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',

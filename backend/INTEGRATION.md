@@ -1,120 +1,314 @@
-# Integration Guide: buffr, g2p, and smartpay-connect
+/**
+ * Ketchup-SmartPay + Buffr Integration Guide
+ * 
+ * Location: backend/INTEGRATION.md
+ * Purpose: Document integration points between Ketchup-SmartPay backend and Buffr mobile app
+ * 
+ * Topics:
+ * - Database sharing
+ * - API communication
+ * - Idempotency for duplicate prevention
+ * - Reconciliation
+ * - Environment configuration
+ */
 
-This document explains how the three projects work together and how to set them up for development.
+# Ketchup-SmartPay + Buffr Integration Guide
 
-## Architecture Overview
+## Overview
 
-| Project | Type | Purpose |
-|---------|------|---------|
-| **smartpay-connect** | Backend (Express) + Portals (Vite) | Ketchup SmartPay API - voucher lifecycle, beneficiaries, agents, distribution, reconciliation, webhooks |
-| **buffr** | Expo App + API Routes | Beneficiary/agent mobile app - voucher disbursement, wallet management, external integrations (Fineract, NamPost, USSD) |
-| **g2p** | Expo App + API Routes | Alternative beneficiary/agent mobile app - same conceptual flows as buffr |
+Ketchup-SmartPay (backend) and Buffr (mobile app) are designed to work together as an integrated G2P voucher distribution system. This document describes how the two systems integrate.
 
-## Data Flow
+## Architecture
 
 ```
-┌─────────────────────┐     ┌─────────────────────┐     ┌─────────────────────┐
-│   smartpay-connect  │     │       buffr         │     │        g2p          │
-│     (Backend)       │     │    (Mobile App)     │     │    (Mobile App)     │
-└─────────┬───────────┘     └──────────┬──────────┘     └──────────┬──────────┘
-          │                           │                           │
-          │    VITE_API_URL           │                           │
-          │    /api/v1/ketchup        │                           │
-          │◄──────────────────────────┤                           │
-          │                           │                           │
-          │    BUFFR_API_URL          │    KETCHUP_SMARTPAY_      │
-          │    POST .../disburse      │    API_URL               │
-          ├──────────────────────────►│◄──────────────────────────┤
-          │                           │                           │
-          │        DATABASE_URL (shared Neon database)            │
-          └───────────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────────────────┐
+│                      Ketchup-SmartPay Backend                     │
+│  (API Server + PostgreSQL Database + Distribution Engine)         │
+├─────────────────────────────────────────────────────────────────┤
+│  • Voucher management and distribution                           │
+│  • Beneficiary registry                                         │
+│  • Reconciliation with Buffr                                    │
+│  • Compliance reporting                                         │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+         ┌────────────────────┼────────────────────┐
+         │                    │                    │
+         ▼                    ▼                    ▼
+┌──────────────┐    ┌──────────────┐    ┌──────────────┐
+│   Buffr      │    │   Buffr      │    │   Buffr      │
+│   Mobile     │    │   API        │    │   Notify     │
+│   App        │    │   Server     │    │   Service    │
+└──────────────┘    └──────────────┘    └──────────────┘
 ```
 
-## Shared Database Schema
+## 1. Database Integration
 
-All three projects share the same PostgreSQL database (via Neon). **Single entry point:** from `smartpay-connect/backend` run `pnpm run migrate`. The `run.ts` script creates beneficiaries, beneficiary_dependants, vouchers, status_events, webhook_events, reconciliation_records, and agents (beneficiaries include proxy_* and deceased_at). See [MIGRATION_ORDER.md](./MIGRATION_ORDER.md). Buffr may add extra tables (wallets, agent_liquidity_logs, etc.) with `IF NOT EXISTS` in its own SQL migrations.
+### Shared Tables
 
-## Environment Variables
+Both systems can share the same PostgreSQL database (Neon):
 
-### smartpay-connect (Backend)
-- `DATABASE_URL` - PostgreSQL connection string (shared)
-- `VITE_API_URL` - Portal → Backend URL (e.g., `http://localhost:3001`)
-- `BUFFR_API_URL` - URL of the Buffr app when backend pushes disbursements (e.g. Expo dev server or deployed Buffr API)
-- `BUFFR_API_KEY` - API key for Buffr authentication
+| Table | Purpose | Access |
+|-------|---------|--------|
+| `vouchers` | Main voucher registry | Ketchup (RW), Buffr (R) |
+| `beneficiaries` | Beneficiary registry | Ketchup (RW), Buffr (R) |
+| `webhook_events` | Webhook delivery log | Ketchup (RW) |
+| `reconciliation_records` | Status reconciliation | Ketchup (RW) |
+| `idempotency_keys` | Duplicate prevention | Both (W) |
 
-### buffr / g2p (Mobile Apps)
-- `KETCHUP_SMARTPAY_API_URL` - Point to smartpay-connect backend
-  - **Production:** `https://api.ketchup.cc`
-  - **Development:** `http://localhost:3001` (or your local backend URL)
-- `KETCHUP_SMARTPAY_API_KEY` - API key for SmartPay authentication
-- `DATABASE_URL` - PostgreSQL connection (shared with smartpay-connect)
+### Environment
 
-## Setting Up for Development
+```env
+# In buffr/.env.local
+DATABASE_URL=postgresql://user:password@host/dbname?sslmode=require
+```
 
-### 1. Start smartpay-connect Backend
+## 2. API Communication
+
+### Buffr API (from Ketchup)
+
+Ketchup-SmartPay calls Buffr API for voucher distribution:
+
+```typescript
+// backend/src/services/distribution/BuffrAPIClient.ts
+
+const BUFFR_API_URL = process.env.BUFFR_API_URL || 'https://api.buffr.com';
+const BUFFR_API_KEY = process.env.BUFFR_API_KEY || '';
+
+// Endpoints used:
+const BUFFR_DISBURSE_ENDPOINT = '/api/utilities/vouchers/disburse';
+const BUFFR_STATUS_ENDPOINT = '/api/v1/vouchers/{voucherId}';
+```
+
+### Ketchup API (from Buffr)
+
+Buffr calls Ketchup API for beneficiary verification:
+
+```typescript
+// buffr/app/api/v1/distribution/receive/route.ts
+
+const KETCHUP_SMARTPAY_API_URL = process.env.KETCHUP_SMARTPAY_API_URL;
+const KETCHUP_SMARTPAY_API_KEY = process.env.KETCHUP_SMARTPAY_API_KEY;
+
+// Endpoints:
+const KETCHUP_BENEFICIARY_ENDPOINT = '/api/v1/beneficiaries';
+```
+
+## 3. Idempotency (Duplicate Prevention)
+
+Both systems implement idempotency to prevent duplicate processing:
+
+### Ketchup-SmartPay Implementation
+
+```typescript
+// backend/src/services/idempotency/IdempotencyService.ts
+
+export class IdempotencyService {
+  async getCachedResponse(
+    idempotencyKey: string,
+    endpointPrefix: string = ENDPOINT_DISTRIBUTION
+  ): Promise<{ status: number; body: unknown } | null>
+  
+  async setCachedResponse(
+    idempotencyKey: string,
+    status: number,
+    body: unknown,
+    endpointPrefix: string = ENDPOINT_DISTRIBUTION
+  ): Promise<void>
+}
+```
+
+### Buffr Implementation
+
+```typescript
+// buffr/utils/idempotency.ts
+
+export async function getCachedIdempotencyResponse(
+  idempotencyKey: string,
+  endpointPrefix: string = 'distribution'
+): Promise<{ status: number; body: unknown } | null>
+
+export async function setCachedIdempotencyResponse(
+  idempotencyKey: string,
+  status: number,
+  body: unknown,
+  endpointPrefix: string = 'distribution'
+): Promise<void>
+```
+
+### Usage in API Routes
+
+```typescript
+// Both systems support these headers:
+Idempotency-Key: <unique-key>
+idempotency-key: <unique-key>  
+x-idempotency-key: <unique-key>
+```
+
+### Idempotency Key Generation
+
+```typescript
+// SHA-256 hash of: voucher_id:status:timestamp
+function generateIdempotencyKey(voucherId: string, status: string, timestamp?: string): string {
+  const ts = timestamp || new Date().toISOString();
+  return crypto.createHash('sha256').update(`${voucherId}:${status}:${ts}`).digest('hex');
+}
+```
+
+## 4. Voucher Distribution Flow
+
+```
+1. Ketchup creates voucher
+   └─→ INSERT INTO vouchers
+
+2. Ketchup sends to Buffr
+   └─→ POST /api/utilities/vouchers/disburse
+       ├─ voucher_id, amount, beneficiary_id_number
+       └─ Returns: deliveryId
+
+3. Buffr notifies beneficiary
+   └─→ In-app notification + SMS
+
+4. Buffr sends status webhook to Ketchup
+   └─→ POST /api/v1/webhooks/buffr
+       ├─ event: voucher.redeemed
+       └─ Idempotency-Key header
+
+5. Ketchup updates status
+   └─→ UPDATE vouchers SET status = 'redeemed'
+```
+
+## 5. Reconciliation
+
+Ketchup periodically reconciles voucher status with Buffr:
+
+```typescript
+// backend/src/services/reconciliation/ReconciliationService.ts
+
+async reconcileAll() {
+  // For each voucher in Ketchup
+  const buffrStatus = await buffrAPIClient.checkStatus(voucher.id);
+  
+  // Compare and log discrepancies
+  if (ketchupStatus !== buffrStatus.status) {
+    await sql`
+      INSERT INTO reconciliation_records (
+        voucher_id, ketchup_status, buffr_status, match
+      ) VALUES (...)
+    `;
+  }
+}
+```
+
+## 6. Environment Configuration
+
+### Ketchup-SmartPay Backend
+
+```env
+# backend/.env.local
+
+# Database (can be shared with buffr)
+DATABASE_URL=postgresql://user:password@host/dbname?sslmode=require
+
+# Buffr API (for distribution)
+BUFFR_API_URL=https://api.buffr.com
+BUFFR_API_KEY=your_buffr_api_key
+
+# Idempotency (optional - can share with buffr)
+# Use same DATABASE_URL for shared idempotency_keys table
+```
+
+### Buffr Mobile App
+
+```env
+# buffr/.env.local
+
+# Database (can be shared with ketchup)
+DATABASE_URL=postgresql://user:password@host/dbname?sslmode=require
+
+# Ketchup API (for beneficiary verification)
+KETCHUP_SMARTPAY_API_URL=http://localhost:3001
+KETCHUP_SMARTPAY_API_KEY=your_ketchup_api_key
+
+# Idempotency (optional - can share with ketchup)
+# Use same DATABASE_URL for shared idempotency_keys table
+```
+
+## 7. Common Integration Issues
+
+### 1. Duplicate Distribution
+
+**Problem**: Same voucher sent to Buffr twice due to network retry.
+
+**Solution**: Use idempotency keys:
+```typescript
+const idempotencyKey = generateIdempotencyKey(voucher.id, 'disburse');
+const cached = await idempotencyService.getCachedResponse(idempotencyKey, 'distribution');
+if (cached) return cached;
+await distributionEngine.distribute(voucher);
+await idempotencyService.setCachedResponse(idempotencyKey, 200, response, 'distribution');
+```
+
+### 2. Status Mismatch
+
+**Problem**: Ketchup shows 'active' but Buffr shows 'redeemed'.
+
+**Solution**: Run reconciliation:
 ```bash
-cd smartpay-connect/backend
-cp .env.example .env.local  # if needed
-# Edit .env.local with your DATABASE_URL
-pnpm install
-pnpm run dev  # Starts on port 3001
+cd backend && npm run reconcile
 ```
 
-### 2. Run Migrations and Seed Development Data
+### 3. Webhook Duplicates
+
+**Problem**: Buffr retries webhook, causing duplicate processing.
+
+**Solution**: Use idempotency in webhook handler:
+```typescript
+router.post('/buffr', async (req, res) => {
+  const idempotencyKey = req.headers['Idempotency-Key'];
+  const cached = await idempotencyService.getCachedResponse(idempotencyKey, 'webhook');
+  if (cached) return res.status(cached.status).json(cached.body);
+  // ... process webhook
+  await idempotencyService.setCachedResponse(idempotencyKey, 200, response, 'webhook');
+});
+```
+
+## 8. Testing Integration
+
+### Unit Tests
+
 ```bash
-cd smartpay-connect/backend
-pnpm run migrate  # Creates beneficiaries, beneficiary_dependants, vouchers, status_events, webhook_events, reconciliation_records, agents
-pnpm run seed     # Seeds agents, beneficiaries, status_events (see scripts/seed.ts)
+# Backend
+cd backend && npm test -- --run tests/IdempotencyService.test.ts
+
+# Buffr
+cd buffr && npm test -- --testPathPattern="idempotency"
 ```
 
-### 3. Start buffr App
+### Integration Tests
+
 ```bash
-cd buffr
-cp .env.example .env.local  # Created from audit fixes
-# Edit .env.local:
-#   KETCHUP_SMARTPAY_API_URL=http://localhost:3001
-#   DATABASE_URL=same as backend
-pnpm install
-pnpm start
+# Run full reconciliation test
+cd backend && npm run test:reconciliation
+
+# Run Buffr API integration
+cd buffr && npm run test:integration
 ```
 
-### 4. Start g2p App
+## 9. Monitoring
+
+### Key Metrics
+
+- Distribution success rate
+- Reconciliation discrepancy count
+- Idempotency cache hit rate
+- Webhook delivery latency
+
+### Logs
+
 ```bash
-cd g2p
-cp .env.example .env.local
-# Edit .env.local:
-#   KETCHUP_SMARTPAY_API_URL=http://localhost:3001
-#   DATABASE_URL=same as backend
-pnpm install
-pnpm start
+# Backend logs
+tail -f backend/logs/combined.log | grep -E "(Buffr|distribution|reconciliation)"
+
+# Buffr logs  
+tail -f buffr/logs/combined.log | grep -E "(Ketchup|webhook|idempotency)"
 ```
-
-## Integration Points
-
-| From | To | Endpoint | Purpose |
-|------|-----|----------|---------|
-| ketchup-portal | smartpay-connect | `POST /api/v1/ketchup/...` | Voucher management |
-| government-portal | smartpay-connect | `POST /api/v1/government/...` | Government reporting |
-| smartpay-connect | buffr | `POST /api/utilities/vouchers/disburse` | Push vouchers to buffr |
-| buffr | smartpay-connect | `KETCHUP_SMARTPAY_API_URL` | Beneficiary/voucher sync |
-| g2p | smartpay-connect | `KETCHUP_SMARTPAY_API_URL` | Beneficiary/voucher sync |
-
-## Migration Order
-
-When setting up a fresh database:
-
-**Recommended:** From `smartpay-connect/backend` run `pnpm run migrate` then `pnpm run seed`. This creates beneficiaries, beneficiary_dependants, vouchers, status_events, webhook_events, reconciliation_records, and agents. If you also use the Buffr schema (wallets, etc.), run SmartPay migrate first, then Buffr SQL migrations. See [MIGRATION_ORDER.md](./MIGRATION_ORDER.md). Do not run 001–007 SQL files by hand; `run.ts` applies the needed logic.
-
-## Troubleshooting
-
-### "agents table not found"
-`run.ts` creates the `agents` table (008). If it’s missing, run `pnpm run migrate` from `smartpay-connect/backend`.
-
-### "voucher_id UUID mismatch"
-The `status_events` table uses `VARCHAR(100)` for `voucher_id`. Do not use `UUID` type.
-
-### KETCHUP_SMARTPAY_API_URL not connecting
-For local development, ensure:
-1. smartpay-connect backend is running on port 3001
-2. buffr/g2p `.env.local` has `KETCHUP_SMARTPAY_API_URL=http://localhost:3001`
-3. CORS is configured to allow the app's origin

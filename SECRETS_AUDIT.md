@@ -1,7 +1,7 @@
-# SmartPay Connect – Exposed Secrets Audit
+# Ketchup SmartPay – Exposed Secrets Audit
 
 **Date:** 2025-02-01  
-**Scope:** `smartpay-connect/` (backend, buffr, scripts, docs, fineract)
+**Scope:** `ketchup-smartpay/` (backend, buffr, scripts, docs, fineract)
 
 ---
 

@@ -12,7 +12,7 @@ import { logError } from '../../../utils/logger';
 import { ketchupAuth } from '../../middleware/ketchupAuth';
 import { sql } from '../../../database/connection';
 
-const router = Router();
+const router: Router = Router();
 
 export type LocationTypeDb = 'nampost_office' | 'atm' | 'warehouse';
 

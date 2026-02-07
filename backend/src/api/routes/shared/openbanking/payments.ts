@@ -15,7 +15,7 @@ import { PaymentInitiationService } from '../../../../services/openbanking/Payme
 import { authenticateOpenBanking, requireScope, logAPIAccess } from '../../../middleware/openBankingAuth';
 import { log, logError } from '../../../../utils/logger';
 
-const router = Router();
+const router: Router = Router();
 const pisService = new PaymentInitiationService();
 
 // Apply authentication and logging to all routes

@@ -1,9 +1,9 @@
 #!/bin/bash
 
-# Dev All - SmartPay Connect Monorepo
+# Dev All - Ketchup SmartPay Monorepo
 # Starts all services in development mode
 
-echo "🚀 Starting SmartPay Connect Development..."
+echo "🚀 Starting Ketchup SmartPay Development..."
 echo ""
 echo "This will start:"
 echo "  • Ketchup Portal (http://localhost:5173)"

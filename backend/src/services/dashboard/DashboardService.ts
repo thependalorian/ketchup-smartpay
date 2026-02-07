@@ -18,18 +18,35 @@ export class DashboardService {
    * Get dashboard metrics
    */
   async getMetrics(): Promise<DashboardMetrics> {
+    const emptyBeneficiary = { total: 0, active: 0, deceased: 0 };
+    const emptyVoucher = {
+      total_issued: 0,
+      redeemed: 0,
+      expired: 0,
+      total_disbursement: 0,
+      monthly_disbursement: 0,
+    };
+    const emptyAgent = { total: 0, active: 0 };
+
+    let beneficiaryStats = emptyBeneficiary;
+    let voucherStats = emptyVoucher;
+    let agentStats = emptyAgent;
+
     try {
-      // Get beneficiary counts (active excludes deceased/suspended/pending; deceased count for reporting)
-      const [beneficiaryStats] = await sql`
+      const [b] = await sql`
         SELECT 
           COUNT(*) as total,
           COUNT(*) FILTER (WHERE status = 'active') as active,
           COUNT(*) FILTER (WHERE status = 'deceased') as deceased
         FROM beneficiaries
       `;
+      if (b) beneficiaryStats = { total: Number(b.total), active: Number(b.active), deceased: Number(b.deceased) };
+    } catch (e) {
+      logError('Dashboard getMetrics: beneficiaries query failed (table may not exist)', e);
+    }
 
-      // Get voucher statistics
-      const [voucherStats] = await sql`
+    try {
+      const [v] = await sql`
         SELECT 
           COUNT(*) as total_issued,
           COUNT(*) FILTER (WHERE status = 'redeemed') as redeemed,
@@ -40,36 +57,48 @@ export class DashboardService {
           ), 0) as monthly_disbursement
         FROM vouchers
       `;
+      if (v)
+        voucherStats = {
+          total_issued: Number(v.total_issued),
+          redeemed: Number(v.redeemed),
+          expired: Number(v.expired),
+          total_disbursement: Number(v.total_disbursement),
+          monthly_disbursement: Number(v.monthly_disbursement),
+        };
+    } catch (e) {
+      logError('Dashboard getMetrics: vouchers query failed (table may not exist)', e);
+    }
 
-      // Get agent statistics (assuming agents table exists)
-      const [agentStats] = await sql`
+    try {
+      const [a] = await sql`
         SELECT 
           COUNT(*) as total,
           COUNT(*) FILTER (WHERE status = 'active') as active
         FROM agents
-      `.catch(() => [{ total: 0, active: 0 }]); // Fallback if agents table doesn't exist
+      `;
+      if (a) agentStats = { total: Number(a.total), active: Number(a.active) };
+    } catch (e) {
+      logError('Dashboard getMetrics: agents query failed (table may not exist)', e);
+    }
 
-      const networkHealthScore = agentStats.active > 0 
+    const networkHealthScore =
+      agentStats.active > 0 && agentStats.total > 0
         ? Math.min(100, (agentStats.active / agentStats.total) * 100)
         : 100;
 
-      return {
-        totalBeneficiaries: Number(beneficiaryStats?.total || 0),
-        activeBeneficiaries: Number(beneficiaryStats?.active || 0),
-        deceasedBeneficiaries: Number(beneficiaryStats?.deceased || 0),
-        totalVouchersIssued: Number(voucherStats?.total_issued || 0),
-        vouchersRedeemed: Number(voucherStats?.redeemed || 0),
-        vouchersExpired: Number(voucherStats?.expired || 0),
-        totalDisbursement: Number(voucherStats?.total_disbursement || 0),
-        monthlyDisbursement: Number(voucherStats?.monthly_disbursement || 0),
-        activeAgents: Number(agentStats?.active || 0),
-        totalAgents: Number(agentStats?.total || 0),
-        networkHealthScore: Number(networkHealthScore.toFixed(1)),
-      };
-    } catch (error) {
-      logError('Failed to get dashboard metrics', error);
-      throw error;
-    }
+    return {
+      totalBeneficiaries: beneficiaryStats.total,
+      activeBeneficiaries: beneficiaryStats.active,
+      deceasedBeneficiaries: beneficiaryStats.deceased,
+      totalVouchersIssued: voucherStats.total_issued,
+      vouchersRedeemed: voucherStats.redeemed,
+      vouchersExpired: voucherStats.expired,
+      totalDisbursement: voucherStats.total_disbursement,
+      monthlyDisbursement: voucherStats.monthly_disbursement,
+      activeAgents: agentStats.active,
+      totalAgents: agentStats.total,
+      networkHealthScore: Number(networkHealthScore.toFixed(1)),
+    };
   }
 
   /**

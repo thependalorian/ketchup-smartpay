@@ -1,5 +1,5 @@
 /**
- * Extended Entity Types for SmartPay Connect
+ * Extended Entity Types for Ketchup SmartPay
  * 
  * Location: shared/types/entities.ts
  * Purpose: Additional TypeScript types for entities not covered in index.ts

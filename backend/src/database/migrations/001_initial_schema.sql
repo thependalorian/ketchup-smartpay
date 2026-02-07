@@ -1,4 +1,4 @@
--- Initial Database Schema for SmartPay Connect
+-- Initial Database Schema for Ketchup SmartPay
 -- Migration: 001_initial_schema.sql
 
 -- Beneficiaries Table

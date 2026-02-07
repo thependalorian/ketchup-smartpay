@@ -25,7 +25,7 @@
 
 ### Overview
 
-SmartPay Connect successfully implemented **complete Namibian Open Banking Standards v1.0**:
+Ketchup SmartPay successfully implemented **complete Namibian Open Banking Standards v1.0**:
 
 **Services Implemented:**
 - ✅ **Account Information Services (AIS)** - Access to account data
@@ -820,7 +820,7 @@ OAuth Flows/Minute:          100+
 
 ## 🎯 Summary
 
-SmartPay Connect has successfully implemented **complete Namibian Open Banking Standards v1.0**:
+Ketchup SmartPay has successfully implemented **complete Namibian Open Banking Standards v1.0**:
 
 ✅ **OAuth 2.0 with PKCE** - Secure authorization  
 ✅ **Account Information Services** - Real-time data access  

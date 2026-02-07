@@ -1,10 +1,10 @@
 # Lessons Learned from Global G2P Implementations
 
-## SmartPay Connect Namibia G2P Voucher Platform
+## BUFFR G2P Voucher Platform (Ketchup SmartPay + BUFFR)
 
 **Version:** 1.0  
 **Date:** February 1, 2026  
-**Purpose:** Document lessons from global G2P implementations and apply to SmartPay Connect
+**Purpose:** Document lessons from global G2P implementations and apply to the platform (Ketchup SmartPay = G2P engine; BUFFR = beneficiary platform). Architecture: [CONSOLIDATED_PRD.md](../buffr/docs/CONSOLIDATED_PRD.md).
 
 ---
 
@@ -18,7 +18,7 @@
 6. [Bangladesh: Mobile Financial Services](#bangladesh-mobile-financial-services)
 7. [Common Pitfalls](#common-pitfalls)
 8. [Success Factors](#success-factors)
-9. [Mitigation Strategies for SmartPay Connect](#mitigation-strategies-for-smartpay-connect)
+9. [Mitigation Strategies for Ketchup SmartPay](#mitigation-strategies-for-ketchup-smartpay)
 10. [Recommendations](#recommendations)
 
 ---
@@ -27,7 +27,7 @@
 
 ### Purpose
 
-This document analyzes lessons learned from successful G2P and digital payment implementations worldwide to inform SmartPay Connect's strategy and avoid common pitfalls.
+This document analyzes lessons learned from successful G2P and digital payment implementations worldwide to inform Ketchup SmartPay's strategy and avoid common pitfalls.
 
 ### Key Takeaways
 
@@ -418,7 +418,7 @@ This document analyzes lessons learned from successful G2P and digital payment i
 
 ---
 
-## Mitigation Strategies for SmartPay Connect
+## Mitigation Strategies for Ketchup SmartPay
 
 ### Identified Risks & Mitigations
 

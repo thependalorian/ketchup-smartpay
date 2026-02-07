@@ -1,6 +1,6 @@
 # User Journey Maps
 
-This document provides detailed user journey maps for all key personas in the SmartPay Connect Namibia G2P Voucher Platform.
+This document provides detailed user journey maps for all key personas in the **BUFFR G2P Voucher Platform** (Ketchup SmartPay = G2P engine; BUFFR = beneficiary platform). For production-grade architecture and flows, see [buffr/docs/CONSOLIDATED_PRD.md](../buffr/docs/CONSOLIDATED_PRD.md).
 
 ## Table of Contents
 

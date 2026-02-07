@@ -402,7 +402,7 @@ export class DormantWalletService {
     // In production:
     // await smsProvider.send({
     //   to: wallet.phone,
-    //   message: `SmartPay Connect: Your e-wallet (N$${wallet.wallet_balance}) will become dormant on [date]. Make a transaction to keep it active.`
+    //   message: `Ketchup SmartPay: Your e-wallet (N$${wallet.wallet_balance}) will become dormant on [date]. Make a transaction to keep it active.`
     // });
   }
 

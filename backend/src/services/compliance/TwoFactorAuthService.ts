@@ -314,7 +314,7 @@ export class TwoFactorAuthService {
     // In production:
     // if (method === 'sms_otp') {
     //   await twilioClient.messages.create({
-    //     body: `Your SmartPay Connect OTP: ${otpCode}. Valid for 5 minutes.`,
+    //     body: `Your Ketchup SmartPay OTP: ${otpCode}. Valid for 5 minutes.`,
     //     to: userPhoneNumber,
     //     from: TWILIO_PHONE_NUMBER
     //   });

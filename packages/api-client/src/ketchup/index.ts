@@ -6,6 +6,8 @@
 
 export * from './agentAPI';
 export * from './mobileUnitsAPI';
+export * from './atmsAPI';
+export * from './posTerminalsAPI';
 export * from './beneficiaryAPI';
 export * from './voucherAPI';
 export * from './distributionAPI';
@@ -17,3 +19,4 @@ export * from './statusEventsAPI';
 export * from './mapAPI';
 export * from './locationsAPI';
 export * from './openBankingAPI';
+export * from './adminAPI';

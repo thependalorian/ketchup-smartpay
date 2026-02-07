@@ -19,6 +19,8 @@ import WebhookMonitoring from './pages/WebhookMonitoring';
 import Reconciliation from './pages/Reconciliation';
 import Agents from './pages/Agents';
 import MobileUnits from './pages/MobileUnits';
+import ATMManagement from './pages/ATMManagement';
+import POSTerminals from './pages/POSTerminals';
 import Regions from './pages/Regions';
 import Analytics from './pages/Analytics';
 import Reports from './pages/Reports';
@@ -27,6 +29,10 @@ import Settings from './pages/Settings';
 import Help from './pages/Help';
 import Notifications from './pages/Notifications';
 import NotFound from './pages/NotFound';
+import SmartPayMonitoring from './pages/SmartPayMonitoring';
+import AuditLogs from './pages/AuditLogs';
+import TrustAccount from './pages/TrustAccount';
+import ComplianceAdmin from './pages/ComplianceAdmin';
 
 // Open Banking Pages
 import OpenBankingDashboard from './pages/OpenBankingDashboard';
@@ -60,10 +66,16 @@ const App = () => {
           <Route path="/reconciliation" element={<Reconciliation />} />
           <Route path="/agents" element={<Agents />} />
           <Route path="/mobile-units" element={<MobileUnits />} />
+          <Route path="/atms" element={<ATMManagement />} />
+          <Route path="/pos-terminals" element={<POSTerminals />} />
           <Route path="/regions" element={<Regions />} />
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/reports" element={<Reports />} />
           <Route path="/map" element={<MapPage />} />
+          <Route path="/admin/smartpay-monitoring" element={<SmartPayMonitoring />} />
+          <Route path="/admin/audit-logs" element={<AuditLogs />} />
+          <Route path="/admin/trust-account" element={<TrustAccount />} />
+          <Route path="/admin/compliance" element={<ComplianceAdmin />} />
 
           {/* Open Banking Routes */}
           <Route path="/open-banking" element={<OpenBankingDashboard />} />

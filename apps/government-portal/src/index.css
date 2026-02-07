@@ -1,53 +1,81 @@
+/**
+ * Government Portal – Brand styles (brand.md)
+ * Uses Ketchup brand colors and semantic tokens
+ */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Ketchup brand tokens (brand.md) – hex mapped to HSL for CSS vars */
+    --ketchup-midnight: #001818;
+    --ketchup-forest: #226644;
+    --ketchup-lime: #84cc16;
+    --ketchup-magenta: #c026d3;
+    --ketchup-royal: #2563eb;
+    --ketchup-yellow: #eab308;
+    --ketchup-accent: #10b981;
+    --ketchup-sand: #ebe9e1;
+    --ketchup-seafoam: #e0ffff;
+    --ketchup-k-black: #000000;
+
+    /* Semantic (map to brand) */
+    --background: 40 15% 98%;
+    --foreground: 180 100% 5%;
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 180 100% 5%;
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    
-    /* Government color scheme - Professional blue/gray */
-    --primary: 213 94% 28%; /* Dark blue for government */
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 213 94% 28%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 213 94% 28%;
-    --radius: 0.5rem;
+    --popover-foreground: 180 100% 5%;
+    --primary: 160 84% 39%; /* Accent Green #10b981 */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 150 50% 27%; /* Forest #226644 */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 40 15% 94%;
+    --muted-foreground: 180 10% 45%;
+    --accent: 84 71% 45%; /* Lime #84cc16 */
+    --accent-foreground: 180 100% 5%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 40 15% 90%;
+    --input: 40 15% 90%;
+    --ring: 160 84% 39%;
+    --radius: 0.75rem;
+
+    /* Status colors */
+    --success: 160 84% 39%;
+    --warning: 48 96% 47%;
+    --info: 221 83% 53%;
+
+    /* Shadows */
+    --shadow-ketchup: 0 4px 14px 0 rgb(16 185 129 / 0.2);
+    --shadow-ketchup-glow: 0 0 32px rgb(16 185 129 / 0.15);
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 48%;
+    --background: 180 100% 5%;
+    --foreground: 40 15% 98%;
+    --card: 180 100% 7%;
+    --card-foreground: 40 15% 98%;
+    --popover: 180 100% 7%;
+    --popover-foreground: 40 15% 98%;
+    --primary: 160 84% 45%;
+    --primary-foreground: 180 100% 5%;
+    --secondary: 150 30% 22%;
+    --secondary-foreground: 40 15% 98%;
+    --muted: 180 20% 12%;
+    --muted-foreground: 40 10% 65%;
+    --accent: 84 71% 50%;
+    --accent-foreground: 180 100% 5%;
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 180 20% 18%;
+    --input: 180 20% 18%;
+    --ring: 160 84% 45%;
+    --success: 160 84% 45%;
+    --warning: 48 96% 50%;
+    --info: 221 83% 55%;
   }
 }
 
@@ -56,25 +84,69 @@
     @apply border-border;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
   }
 }
 
-/* Government Portal Custom Styles */
-.gradient-primary {
-  background: linear-gradient(135deg, #003a70 0%, #005aa7 100%);
+@layer components {
+  /* Logo container – optional ring to match brand */
+  .ketchup-logo-wrap {
+    @apply rounded-lg bg-background p-0.5 ring-1 ring-border;
+  }
+
+  /* Primary CTA block */
+  .ketchup-cta {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2;
+  }
+
+  /* Government badge/indicator */
+  .gov-badge {
+    @apply flex items-center gap-2 rounded-full bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary;
+  }
 }
 
-.gradient-accent {
-  background: linear-gradient(135deg, #005aa7 0%, #0088cc 100%);
-}
+@layer utilities {
+  .font-display {
+    font-family: 'Helvetica Neue', Helvetica, Inter, system-ui, sans-serif;
+  }
 
-/* Government badge/indicator */
-.gov-badge {
-  background: linear-gradient(135deg, #003a70 0%, #005aa7 100%);
-  color: white;
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 600;
+  /* Brand gradient – primary (Forest → Accent Green) */
+  .gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(var(--primary)) 100%);
+  }
+
+  /* Accent gradient (Lime → Accent Green) */
+  .gradient-accent {
+    background: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--primary)) 100%);
+  }
+
+  /* Logo sphere – four quadrants (brand.md) */
+  .gradient-sphere {
+    background: linear-gradient(135deg,
+      var(--ketchup-lime) 0%,
+      var(--ketchup-magenta) 25%,
+      var(--ketchup-royal) 50%,
+      var(--ketchup-yellow) 75%,
+      var(--ketchup-lime) 100%);
+  }
+
+  /* Subtle sphere accent for cards/headers */
+  .gradient-sphere-subtle {
+    background: linear-gradient(135deg,
+      rgb(132 204 22 / 0.08) 0%,
+      rgb(192 38 211 / 0.06) 33%,
+      rgb(37 99 235 / 0.06) 66%,
+      rgb(234 179 8 / 0.08) 100%);
+  }
+
+  .shadow-ketchup {
+    box-shadow: var(--shadow-ketchup);
+  }
+
+  .shadow-ketchup-glow {
+    box-shadow: var(--shadow-ketchup-glow);
+  }
 }

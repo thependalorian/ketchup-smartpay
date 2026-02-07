@@ -8,7 +8,7 @@
 import { Router } from 'express';
 import { sql } from '../../../database/connection';
 
-const router = Router();
+const router: Router = Router();
 
 // Get beneficiary audit trail (aligned with beneficiaries schema: id_number, no email)
 router.get('/beneficiaries', async (req, res) => {

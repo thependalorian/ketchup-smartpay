@@ -5,7 +5,7 @@
 
 ---
 
-## Backend (smartpay-connect/backend)
+## Backend (ketchup-smartpay/backend)
 
 - **Runner:** Vitest (`pnpm test`).
 - **Database:** Real Neon PostgreSQL via `DATABASE_URL` (from `.env.local` or `.env.test`). No DB mocks.
@@ -29,7 +29,7 @@
 
 ---
 
-## API client (smartpay-connect/packages/api-client)
+## API client (ketchup-smartpay/packages/api-client)
 
 - **Runner:** Vitest.
 - **Behavior:** Unit tests mock `fetch`; they assert request URL/body/headers. Base URL matches actual backend: `http://localhost:3001/api/v1` (from `VITE_API_URL` default `http://localhost:3001`).
@@ -41,7 +41,7 @@
 
 - **Runner:** Jest.
 - **Setup:** `__tests__/setup.ts` uses real `DATABASE_URL` when set (e.g. `.env.local` or CI); otherwise falls back to a mock URL for unit-only runs.
-- **Backend:** For tests that call the SmartPay Connect backend, set `KETCHUP_SMARTPAY_API_URL` (e.g. `http://localhost:3001`).
+- **Backend:** For tests that call the Ketchup SmartPay backend, set `KETCHUP_SMARTPAY_API_URL` (e.g. `http://localhost:3001`).
 - **Tests:** Many buffr tests validate Open Banking response shape and contracts (no live DB/API); integration tests that hit DB or backend should set the env vars above.
 
 ---

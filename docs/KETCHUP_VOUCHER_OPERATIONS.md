@@ -1,7 +1,7 @@
 # Ketchup – Voucher Operations (Assign, Generate, Issue, Buffr, USSD)
 
-**Purpose:** Reference for Ketchup CRUD and distribution: assign vouchers to beneficiaries, generate codes, issue vouchers, distribute to Buffr app and USSD.  
-**Location:** `smartpay-connect/docs/KETCHUP_VOUCHER_OPERATIONS.md`
+**Purpose:** Reference for the **Ketchup SmartPay G2P engine** CRUD and distribution: assign vouchers to beneficiaries, generate codes, issue vouchers, distribute to BUFFR (app/USSD). Aligned with [CONSOLIDATED_PRD.md](../buffr/docs/CONSOLIDATED_PRD.md) (Token Vault, universal SMS, key flows).  
+**Location:** `ketchup-smartpay/docs/KETCHUP_VOUCHER_OPERATIONS.md`
 
 ---
 

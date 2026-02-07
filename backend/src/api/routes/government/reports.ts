@@ -11,7 +11,7 @@ import { log, logError } from '../../../utils/logger';
 import { authenticate } from '../../middleware/auth';
 import { ReportService } from '../../../services/reports/ReportService';
 
-const router = Router();
+const router: Router = Router();
 const reportService = new ReportService();
 
 /**

@@ -2,10 +2,11 @@
  * Layout Component
  * 
  * Purpose: Main layout wrapper with sidebar and header
+ * Mobile responsive with collapsible sidebar and hamburger menu
  * Location: apps/ketchup-portal/src/components/layout/Layout.tsx
  */
 
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import { Sidebar } from './Sidebar';
 import { Header } from './Header';
 
@@ -16,12 +17,15 @@ interface LayoutProps {
 }
 
 export function Layout({ children, title, subtitle }: LayoutProps) {
+  // Mobile sidebar state is managed within Sidebar component
   return (
-    <div className="flex h-screen">
+    <div className="flex min-h-screen bg-background">
       <Sidebar />
-      <div className="flex-1 overflow-auto" style={{ marginLeft: '260px' }}>
+      
+      {/* Main content area - responsive margins */}
+      <div className="flex flex-1 flex-col lg:ml-[260px] min-h-screen transition-all duration-300">
         <Header title={title} subtitle={subtitle} />
-        <main className="p-6">
+        <main className="flex-1 p-4 md:p-6 lg:p-6">
           {children}
         </main>
       </div>

@@ -1,8 +1,10 @@
-# SmartPay Connect Backend API
+# Ketchup SmartPay Backend API
 
 ## Overview
 
-Modular backend architecture for SmartPay Connect, aligned with PRD requirements.
+This backend is the **Ketchup SmartPay G2P engine**: system of record for voucher lifecycle, beneficiary registry, Token Vault, compliance, and admin/government portals. It is not a wallet or user-facing app. BUFFR is the beneficiary platform (wallet, app, USSD, agents). For full production-grade architecture (separate DBs, universal SMS, key flows), see [buffr/docs/CONSOLIDATED_PRD.md](../buffr/docs/CONSOLIDATED_PRD.md).
+
+Modular backend architecture aligned with PRD requirements.
 
 ## Architecture
 

@@ -1,7 +1,7 @@
-# File Tree: SmartPay Connect
+# File Tree: Ketchup SmartPay
 
 **Generated:** 1/31/2026  
-**Root Path:** `smartpay-connect`  
+**Root Path:** `ketchup-smartpay`  
 **Purpose:** Single reference for repo structure. Update when adding apps, packages, or backend routes.
 
 ---

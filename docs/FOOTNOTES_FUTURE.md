@@ -1,7 +1,7 @@
 # Footnotes & Future Work
 
 **Purpose:** Items noted for later implementation.  
-**Location:** `smartpay-connect/docs/FOOTNOTES_FUTURE.md`
+**Location:** `ketchup-smartpay/docs/FOOTNOTES_FUTURE.md`
 
 ---
 
@@ -159,7 +159,7 @@ Do not implement redirect logic until dependants and death status are in place a
 
 Before implementing proxy/dependants/death/redirect, create the following. **Proxy** (columns on beneficiaries) is already implemented; UI and optional “proxy = dependant” link are pending.
 
-### Backend (smartpay-connect/backend)
+### Backend (ketchup-smartpay/backend)
 
 | Component | Purpose | Status / Notes |
 |-----------|---------|----------------|

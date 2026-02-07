@@ -1,5 +1,5 @@
 /**
- * Shared Types for SmartPay Connect
+ * Shared Types for Ketchup SmartPay
  *
  * Location: shared/types/index.ts
  * Purpose: Common TypeScript types shared between frontend and backend

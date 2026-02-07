@@ -9,11 +9,11 @@ import { Router, Request, Response } from 'express';
 import { VoucherService } from '../../../services/voucher/VoucherService';
 import { validateIssueVoucherDTO } from '../../../services/voucher/validateIssueVoucher';
 import { StatusMonitor } from '../../../services/status/StatusMonitor';
-import { IssueVoucherDTO, IssueBatchDTO, VoucherFilters } from '../../../../../shared/types';
+import { IssueVoucherDTO, IssueBatchDTO, VoucherFilters, VoucherStatus, NAMIBIAN_REGIONS, Region } from '../../../../../shared/types';
 import { APIResponse } from '../../../../../shared/types';
 import { log, logError } from '../../../utils/logger';
 
-const router = Router();
+const router: Router = Router();
 const voucherService = new VoucherService();
 const statusMonitor = new StatusMonitor();
 
@@ -28,11 +28,12 @@ router.get('/', async (req: Request, res: Response<APIResponse<any>>) => {
     const grantType = req.query.grantType as string | undefined;
     const status = req.query.status as string | undefined;
     const search = req.query.search as string | undefined;
+    const validStatuses: VoucherStatus[] = ['issued', 'delivered', 'redeemed', 'expired', 'cancelled', 'failed'];
     const filters: VoucherFilters = {
       ...(beneficiaryId != null && beneficiaryId !== '' && { beneficiaryId }),
-      ...(region != null && region !== '' && { region }),
+      ...(region != null && region !== '' && NAMIBIAN_REGIONS.includes(region as Region) && { region: region as Region }),
       ...(grantType != null && grantType !== '' && { grantType }),
-      ...(status != null && status !== '' && { status }),
+      ...(status != null && status !== '' && validStatuses.includes(status as VoucherStatus) && { status: status as VoucherStatus }),
       ...(search != null && search !== '' && { search }),
     };
 

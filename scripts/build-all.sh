@@ -1,11 +1,11 @@
 #!/bin/bash
 
-# Build All - SmartPay Connect Monorepo
+# Build All - Ketchup SmartPay Monorepo
 # Builds all packages and applications
 
 set -e
 
-echo "🏗️  Building SmartPay Connect..."
+echo "🏗️  Building Ketchup SmartPay..."
 echo ""
 
 # Build shared packages first

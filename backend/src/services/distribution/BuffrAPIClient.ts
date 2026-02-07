@@ -27,7 +27,7 @@ export interface BuffrBatchResponse {
   results: BuffrResponse[];
 }
 
-/** Enrichment for Buffr disburse: beneficiary numbers and Buffr wallet ID so voucher is issued to the right recipient. */
+/** Enrichment for Buffr disburse: beneficiary numbers, Buffr wallet ID, and Token Vault token for redemption. */
 export interface BuffrDisburseEnrichment {
   /** Beneficiary national ID number (e.g. Namibian 11-digit). */
   beneficiaryIdNumber?: string;
@@ -35,6 +35,10 @@ export interface BuffrDisburseEnrichment {
   beneficiaryPhone?: string;
   /** Buffr wallet/user UUID – voucher is credited to this Buffr account. */
   buffrUserId?: string;
+  /** Token Vault token ID (for NAMQR/API resolve). */
+  tokenId?: string;
+  /** Opaque token for redemption (validate via Token Vault). */
+  token?: string;
 }
 
 export class BuffrAPIClient {
@@ -61,6 +65,8 @@ export class BuffrAPIClient {
       if (enrichment?.buffrUserId != null || voucher.buffrUserId != null) {
         body.buffr_user_id = enrichment?.buffrUserId ?? voucher.buffrUserId ?? null;
       }
+      if (enrichment?.tokenId != null) body.token_id = enrichment.tokenId;
+      if (enrichment?.token != null) body.token = enrichment.token;
 
       const response = await fetch(`${BUFFR_API_URL}/api/utilities/vouchers/disburse`, {
         method: 'POST',

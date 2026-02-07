@@ -15,7 +15,7 @@ import { Router, Request, Response } from 'express';
 import { OAuthService } from '../../../../services/openbanking/OAuthService';
 import { log, logError } from '../../../../utils/logger';
 
-const router = Router();
+const router: Router = Router();
 const oauthService = new OAuthService();
 
 /**

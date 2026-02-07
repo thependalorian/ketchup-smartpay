@@ -19,6 +19,7 @@ import ketchupReconciliation from './ketchup/reconciliation';
 import ketchupWebhooks from './ketchup/webhooks';
 import ketchupMap from './ketchup/map';
 import ketchupLocations from './ketchup/locations';
+import ketchupAdmin from './ketchup/admin';
 
 import governmentCompliance from './government/compliance';
 import governmentMonitoring from './government/monitoring';
@@ -30,7 +31,7 @@ import sharedDashboard from './shared/dashboard';
 import sharedStatusEvents from './shared/statusEvents';
 import sharedOpenBanking from './shared/openbanking';
 
-const router = Router();
+const router: Router = Router();
 
 // Health check (no auth required)
 router.get('/health', (req, res) => {
@@ -55,6 +56,7 @@ router.use('/v1/ketchup/reconciliation', ketchupAuth, ketchupReconciliation);
 router.use('/v1/ketchup/webhooks', rateLimit(), ketchupWebhooks); // No auth for webhooks (uses signature)
 router.use('/v1/map', ketchupMap); // NamibiaMap: agents + fixed locations
 router.use('/v1/ketchup/locations', ketchupAuth, ketchupLocations); // Fixed locations: NamPost, ATM, warehouse (map)
+router.use('/v1/ketchup/admin', ketchupAuth, ketchupAdmin); // Admin UI: SmartPay, audit logs, trust account, compliance (Ketchup Portal)
 
 // ============================================================
 // GOVERNMENT ROUTES - Read-Only Access

@@ -3,11 +3,22 @@
  *
  * Location: backend/src/services/beneficiary/BeneficiaryRepository.ts
  * Purpose: Data access layer for beneficiary operations (real DB, no mocks).
+ * PRD Requirement: National ID Numbers with hash for duplicate detection
  */
 
+import crypto from 'crypto';
 import { sql } from '../../database/connection';
 import type { Beneficiary, BeneficiaryFilters } from '../../../../shared/types';
 import { log, logError } from '../../utils/logger';
+
+/**
+ * Generate a one-way hash of the ID number for duplicate detection.
+ * Uses SHA-256 and returns the first 64 characters (128 hex chars total).
+ */
+export function hashIdNumber(idNumber: string): string {
+  const trimmed = idNumber.trim();
+  return crypto.createHash('sha256').update(trimmed).digest('hex');
+}
 
 function rowToBeneficiary(row: Record<string, unknown>): Beneficiary {
   const proxyRelationship = row.proxy_relationship != null && String(row.proxy_relationship).trim() !== ''
@@ -89,23 +100,105 @@ export class BeneficiaryRepository {
   }
 
   /**
+   * Find beneficiary by national ID number (exact match).
+   * PRD Requirement: Detect duplicate beneficiaries by ID number
+   */
+  async findByIdNumber(idNumber: string): Promise<Beneficiary | null> {
+    try {
+      const trimmedId = idNumber.trim();
+      const rows = await sql`
+        SELECT id, name, phone, id_number, region, grant_type, status, enrolled_at, last_payment, created_at, updated_at,
+          proxy_name, proxy_id_number, proxy_phone, proxy_relationship, proxy_authorised_at, deceased_at
+        FROM beneficiaries
+        WHERE id_number = ${trimmedId}
+        LIMIT 1
+      `;
+      const row = (rows as Record<string, unknown>[])[0];
+      if (!row) return null;
+      return rowToBeneficiary(row);
+    } catch (error) {
+      logError('BeneficiaryRepository.findByIdNumber failed', error, { idNumber });
+      throw error;
+    }
+  }
+
+  /**
+   * Find beneficiary by national ID hash (for duplicate detection).
+   * Uses the hashed version of ID number to prevent duplicate registration.
+   * PRD Requirement: Hash for duplicate detection
+   */
+  async findByIdNumberHash(hash: string): Promise<Beneficiary | null> {
+    try {
+      const rows = await sql`
+        SELECT id, name, phone, id_number, region, grant_type, status, enrolled_at, last_payment, created_at, updated_at,
+          proxy_name, proxy_id_number, proxy_phone, proxy_relationship, proxy_authorised_at, deceased_at
+        FROM beneficiaries
+        WHERE national_id_hash = ${hash}
+        LIMIT 1
+      `;
+      const row = (rows as Record<string, unknown>[])[0];
+      if (!row) return null;
+      return rowToBeneficiary(row);
+    } catch (error) {
+      logError('BeneficiaryRepository.findByIdNumberHash failed', error, { hash });
+      throw error;
+    }
+  }
+
+  /**
+   * Check if a beneficiary with the given ID number already exists.
+   * Returns the existing beneficiary if found, null otherwise.
+   * PRD Requirement: Prevent duplicate beneficiaries by ID number
+   */
+  async checkDuplicate(idNumber: string): Promise<{ isDuplicate: boolean; existing?: Beneficiary }> {
+    try {
+      const hash = hashIdNumber(idNumber);
+      const existing = await this.findByIdNumberHash(hash);
+      
+      if (existing) {
+        log('BeneficiaryRepository.checkDuplicate: duplicate detected', { idNumber: idNumber.slice(0, 4) + '****', existingId: existing.id });
+        return { isDuplicate: true, existing };
+      }
+      
+      return { isDuplicate: false };
+    } catch (error) {
+      logError('BeneficiaryRepository.checkDuplicate failed', error, { idNumber });
+      throw error;
+    }
+  }
+
+  /**
    * Create a new beneficiary (real DB insert).
+   * Checks for duplicates by ID number hash before creating.
+   * PRD Requirement: Prevent duplicate beneficiaries
    */
   async create(data: Omit<Beneficiary, 'enrolledAt' | 'lastPayment'> & { idNumber?: string; proxyName?: string; proxyIdNumber?: string; proxyPhone?: string; proxyRelationship?: string }): Promise<Beneficiary> {
     try {
+      // Check for duplicate before creating
+      if (data.idNumber) {
+        const duplicateCheck = await this.checkDuplicate(data.idNumber);
+        if (duplicateCheck.isDuplicate && duplicateCheck.existing) {
+          log('BeneficiaryRepository.create: prevented duplicate', { idNumber: data.idNumber.slice(0, 4) + '****', existingId: duplicateCheck.existing.id });
+          throw new Error('Beneficiary with this ID number already exists');
+        }
+      }
+
       const now = new Date().toISOString();
       const idNumber = data.idNumber != null && String(data.idNumber).trim() !== '' ? String(data.idNumber).trim() : null;
+      const idNumberHash = idNumber ? hashIdNumber(idNumber) : null;
       const proxyName = data.proxyName != null && String(data.proxyName).trim() !== '' ? String(data.proxyName).trim() : null;
       const proxyIdNumber = data.proxyIdNumber != null && String(data.proxyIdNumber).trim() !== '' ? String(data.proxyIdNumber).trim() : null;
       const proxyPhone = data.proxyPhone != null && String(data.proxyPhone).trim() !== '' ? String(data.proxyPhone).trim() : null;
       const proxyRelationship = data.proxyRelationship != null && String(data.proxyRelationship).trim() !== '' ? String(data.proxyRelationship).trim() : null;
+      
       await sql`
-        INSERT INTO beneficiaries (id, name, phone, id_number, region, grant_type, status, enrolled_at, last_payment, created_at, updated_at, proxy_name, proxy_id_number, proxy_phone, proxy_relationship, proxy_authorised_at)
+        INSERT INTO beneficiaries (id, name, phone, id_number, national_id_hash, region, grant_type, status, enrolled_at, last_payment, created_at, updated_at, proxy_name, proxy_id_number, proxy_phone, proxy_relationship, proxy_authorised_at)
         VALUES (
           ${data.id},
           ${data.name},
           ${data.phone},
           ${idNumber},
+          ${idNumberHash},
           ${data.region},
           ${data.grantType},
           ${data.status},
@@ -125,6 +218,10 @@ export class BeneficiaryRepository {
       log('BeneficiaryRepository.create', { id: data.id });
       return created;
     } catch (error) {
+      // Re-throw duplicate error as-is, log other errors
+      if (error instanceof Error && error.message.includes('already exists')) {
+        throw error;
+      }
       logError('BeneficiaryRepository.create failed', error, { data: { id: data.id, name: data.name } });
       throw error;
     }
@@ -138,9 +235,18 @@ export class BeneficiaryRepository {
       const existing = await this.findById(id);
       if (!existing) throw new Error(`Beneficiary with ID ${id} not found`);
 
+      // Check for duplicate if idNumber is being updated
+      if (data.idNumber && data.idNumber !== existing.idNumber) {
+        const duplicateCheck = await this.checkDuplicate(data.idNumber);
+        if (duplicateCheck.isDuplicate && duplicateCheck.existing && duplicateCheck.existing.id !== id) {
+          throw new Error('Another beneficiary with this ID number already exists');
+        }
+      }
+
       const name = data.name ?? existing.name;
       const phone = data.phone ?? existing.phone;
       const idNumber = data.idNumber !== undefined ? (data.idNumber != null && String(data.idNumber).trim() !== '' ? String(data.idNumber).trim() : null) : (existing.idNumber ?? null);
+      const idNumberHash = idNumber ? hashIdNumber(idNumber) : null;
       const region = data.region ?? existing.region;
       const grantType = data.grantType ?? existing.grantType;
       const status = data.status ?? existing.status;
@@ -154,7 +260,7 @@ export class BeneficiaryRepository {
 
       await sql`
         UPDATE beneficiaries
-        SET name = ${name}, phone = ${phone}, id_number = ${idNumber}, region = ${region}, grant_type = ${grantType}, status = ${status},
+        SET name = ${name}, phone = ${phone}, id_number = ${idNumber}, national_id_hash = ${idNumberHash}, region = ${region}, grant_type = ${grantType}, status = ${status},
             proxy_name = ${proxyName}, proxy_id_number = ${proxyIdNumber}, proxy_phone = ${proxyPhone}, proxy_relationship = ${proxyRelationship},
             proxy_authorised_at = ${proxyAuthorisedAt}::timestamptz,
             deceased_at = ${deceasedAt}::timestamptz,
@@ -166,6 +272,9 @@ export class BeneficiaryRepository {
       log('BeneficiaryRepository.update', { id });
       return updated;
     } catch (error) {
+      if (error instanceof Error && error.message.includes('already exists')) {
+        throw error;
+      }
       logError('BeneficiaryRepository.update failed', error, { id });
       throw error;
     }

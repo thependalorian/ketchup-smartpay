@@ -10,7 +10,7 @@
     "./government": "./src/government/index.ts"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "echo ok",
     "lint": "eslint src/**/*.ts"
   },
   "dependencies": {

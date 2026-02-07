@@ -15,7 +15,7 @@ import { AccountInformationService } from '../../../../services/openbanking/Acco
 import { authenticateOpenBanking, requireScope, logAPIAccess } from '../../../middleware/openBankingAuth';
 import { log, logError } from '../../../../utils/logger';
 
-const router = Router();
+const router: Router = Router();
 const aisService = new AccountInformationService();
 
 // Apply authentication and logging to all routes

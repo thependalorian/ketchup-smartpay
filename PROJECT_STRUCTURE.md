@@ -1,4 +1,6 @@
-# Project Structure - SmartPay Connect
+# Project Structure - Ketchup SmartPay
+
+**Architecture:** This repo is the **Ketchup SmartPay G2P engine** (voucher lifecycle, Token Vault, compliance, admin/gov portals). BUFFR is the beneficiary platform. See [buffr/docs/CONSOLIDATED_PRD.md](buffr/docs/CONSOLIDATED_PRD.md) for production-grade architecture and flows.
 
 ## Domain Configuration
 **Production URLs:**
@@ -12,7 +14,7 @@
 ## Project Root Structure
 
 ```
-smartpay-connect/
+ketchup-smartpay/
 ├── 📄 .env.local                    # Root environment config
 ├── 📄 package.json                  # Workspace root
 ├── 📄 pnpm-workspace.yaml           # PNPM workspace config

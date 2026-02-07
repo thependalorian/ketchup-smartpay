@@ -1,7 +1,7 @@
-# SmartPay Connect – SmartPay Mobile: Management, Tracking & NamPost Reporting Plan
+# Ketchup SmartPay – SmartPay Mobile: Management, Tracking & NamPost Reporting Plan
 
 **Purpose:** Plan for the SmartPay Mobile page (similar to Agent Network) covering fleet management, equipment/inventory, activity tracking, procurement insights, and NamPost reporting.  
-**Location:** `smartpay-connect/docs/MOBILE_UNITS_PLAN.md`  
+**Location:** `ketchup-smartpay/docs/MOBILE_UNITS_PLAN.md`  
 **References:** Agent Network (`/agents`), PAGES_AND_API_REFERENCE.md, FILE_STRUCTURE.md.
 
 ---
@@ -20,7 +20,7 @@
 - Reporting expectations: operational performance, network coverage, and financial/agency metrics (aligned with annual reports and agency information).
 - Mobile units act as an extension of the cash/payment delivery network; reporting to NamPost should cover unit availability, coverage, volumes, and incidents/maintenance where relevant.
 
-### 1.3 SmartPay Connect today
+### 1.3 Ketchup SmartPay today
 
 - **Agents:** `agents` table; types include `pos_agent`, `mobile_agent`, `mobile_unit`; Ketchup page “Agent Network” at `/agents` with list, filters, stats, view-detail.
 - **30 mobile units:** Seeded as agents with `type = 'mobile_unit'` (29 active, 1 down).

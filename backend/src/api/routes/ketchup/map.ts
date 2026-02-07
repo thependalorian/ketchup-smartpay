@@ -14,7 +14,7 @@ import { ketchupAuth } from '../../middleware/ketchupAuth';
 import { AgentService } from '../../../services/agents/AgentService';
 import { sql } from '../../../database/connection';
 
-const router = Router();
+const router: Router = Router();
 const agentService = new AgentService();
 
 /** Map DB location type to mapAPI LocationType (nampost-office, bank-branch, atm, warehouse). */

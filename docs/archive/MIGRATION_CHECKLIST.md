@@ -1,6 +1,6 @@
 # ✅ MIGRATION CHECKLIST
 
-**SmartPay Connect - Modular Architecture Migration**
+**Ketchup SmartPay - Modular Architecture Migration**
 
 ---
 
@@ -372,11 +372,11 @@
 - [ ] Link projects to GitHub repository
 
 ### Domain Configuration
-- [ ] Purchase/configure domain: smartpay-connect.com
+- [ ] Purchase/configure domain: ketchup-smartpay.com
 - [ ] Add DNS records for subdomains
-- [ ] Configure Vercel custom domain: ketchup.smartpay-connect.com
-- [ ] Configure Vercel custom domain: gov.smartpay-connect.com
-- [ ] Configure Vercel custom domain: api.smartpay-connect.com
+- [ ] Configure Vercel custom domain: ketchup.ketchup-smartpay.com
+- [ ] Configure Vercel custom domain: gov.ketchup-smartpay.com
+- [ ] Configure Vercel custom domain: api.ketchup-smartpay.com
 - [ ] Setup SSL certificates (automatic via Vercel)
 - [ ] Test domains resolve correctly
 

@@ -8,7 +8,7 @@
 import { Router } from 'express';
 import { sql } from '../../../database/connection';
 
-const router = Router();
+const router: Router = Router();
 
 // Get financial summary
 router.get('/financial', async (req, res) => {

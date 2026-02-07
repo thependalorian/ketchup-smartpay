@@ -1,4 +1,4 @@
-# 🏗️ SMARTPAY CONNECT - MODULAR ARCHITECTURE REFACTORING PLAN
+# 🏗️ KETCHUP SMARTPAY - MODULAR ARCHITECTURE REFACTORING PLAN
 
 **Version:** 1.0  
 **Date:** January 29, 2026  
@@ -55,7 +55,7 @@
 ### Existing Project Structure
 
 ```
-smartpay-connect/
+ketchup-smartpay/
 ├── src/                          # Monolithic frontend
 │   ├── components/
 │   │   ├── dashboard/           # Mixed dashboard components
@@ -121,7 +121,7 @@ smartpay-connect/
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                       SMARTPAY CONNECT                          │
+│                       KETCHUP SMARTPAY                          │
 │                    MODULAR ARCHITECTURE                         │
 └─────────────────────────────────────────────────────────────────┘
 
@@ -172,9 +172,9 @@ smartpay-connect/
 - API Client: Unified backend communication
 
 **3. Independent Deployments:**
-- Ketchup: https://ketchup.smartpay-connect.com
-- Government: https://gov.smartpay-connect.com
-- Backend: https://api.smartpay-connect.com
+- Ketchup: https://ketchup.ketchup-smartpay.com
+- Government: https://gov.ketchup-smartpay.com
+- Backend: https://api.ketchup-smartpay.com
 
 **4. Unified Backend:**
 - Single database
@@ -188,7 +188,7 @@ smartpay-connect/
 ### Proposed Directory Structure
 
 ```
-smartpay-connect/                       # Root monorepo
+ketchup-smartpay/                       # Root monorepo
 ├── apps/                               # Applications
 │   ├── ketchup-portal/                 # Ketchup frontend (NEW)
 │   │   ├── src/
@@ -380,7 +380,7 @@ smartpay-connect/                       # Root monorepo
 ```json
 // Root package.json
 {
-  "name": "smartpay-connect",
+  "name": "ketchup-smartpay",
   "private": true,
   "workspaces": [
     "apps/*",
@@ -420,7 +420,7 @@ smartpay-connect/                       # Root monorepo
 Actor: Ketchup Operations Staff
 
 1. LOGIN
-   └─► Navigate to: https://ketchup.smartpay-connect.com
+   └─► Navigate to: https://ketchup.ketchup-smartpay.com
        └─► Enter credentials (email + password)
            └─► 2FA verification
                └─► Dashboard
@@ -625,7 +625,7 @@ Actor: Beneficiary (end user)
 Actor: Ministry of Finance Compliance Officer
 
 1. LOGIN
-   └─► Navigate to: https://gov.smartpay-connect.com
+   └─► Navigate to: https://gov.ketchup-smartpay.com
        └─► Enter government credentials
            └─► Multi-factor authentication (MFA)
                └─► Government Dashboard
@@ -929,7 +929,7 @@ Actor: Ministry of Finance Agent Oversight Officer
 
 ```
 ┌───────────────────────────────────────────────────────────────────────────────┐
-│                          SMARTPAY CONNECT ARCHITECTURE                        │
+│                          KETCHUP SMARTPAY ARCHITECTURE                        │
 └───────────────────────────────────────────────────────────────────────────────┘
 
                                   INTERNET
@@ -953,8 +953,8 @@ Actor: Ministry of Finance Agent Oversight Officer
 ┌─────────────────┐      ┌──────────────────┐      ┌─────────────────┐
 │ KETCHUP PORTAL  │      │ GOVERNMENT PORTAL│      │  PUBLIC PORTAL  │
 │                 │      │                  │      │                 │
-│ ketchup.smart-  │      │ gov.smartpay-    │      │ pay.smartpay-   │
-│ pay-connect.com │      │ connect.com      │      │ connect.com     │
+│ ketchup.ketchup-│      │ gov.ketchup-     │      │ pay.ketchup-    │
+│ smartpay.com    │      │ smartpay.com     │      │ smartpay.com    │
 ├─────────────────┤      ├──────────────────┤      ├─────────────────┤
 │ • Dashboard     │      │ • Compliance     │      │ • Redeem Voucher│
 │ • Beneficiaries │      │ • Monitoring     │      │ • Check Balance │
@@ -981,7 +981,7 @@ Actor: Ministry of Finance Agent Oversight Officer
                       ▼
          ┌────────────────────────────────────┐
          │         BACKEND API                │
-         │  api.smartpay-connect.com          │
+         │  api.ketchup-smartpay.com          │
          ├────────────────────────────────────┤
          │  Node.js + Express + TypeScript    │
          ├────────────────────────────────────┤
@@ -1635,18 +1635,18 @@ vercel --name=smartpay-backend-api
 ```
 
 **6.2 Configure custom domains:**
-- Ketchup: https://ketchup.smartpay-connect.com
-- Government: https://gov.smartpay-connect.com
-- Backend: https://api.smartpay-connect.com
+- Ketchup: https://ketchup.ketchup-smartpay.com
+- Government: https://gov.ketchup-smartpay.com
+- Backend: https://api.ketchup-smartpay.com
 
 **6.3 Setup environment variables:**
 ```env
 # Ketchup Portal
-VITE_API_URL=https://api.smartpay-connect.com/api/v1/ketchup
+VITE_API_URL=https://api.ketchup-smartpay.com/api/v1/ketchup
 VITE_APP_NAME=Ketchup SmartPay
 
 # Government Portal
-VITE_API_URL=https://api.smartpay-connect.com/api/v1/government
+VITE_API_URL=https://api.ketchup-smartpay.com/api/v1/government
 VITE_APP_NAME=Ministry of Finance Portal
 
 # Backend
@@ -1914,9 +1914,9 @@ Week 9:    Go-Live & Monitoring
 - Database: Neon PostgreSQL (Serverless)
 
 **Domains:**
-- Ketchup: ketchup.smartpay-connect.com
-- Government: gov.smartpay-connect.com
-- Backend: api.smartpay-connect.com
+- Ketchup: ketchup.ketchup-smartpay.com
+- Government: gov.ketchup-smartpay.com
+- Backend: api.ketchup-smartpay.com
 
 **CI/CD:**
 - GitHub Actions for automated testing
@@ -1994,4 +1994,4 @@ Week 9:    Go-Live & Monitoring
 
 ---
 
-**🏛️ SmartPay Connect - Modular Architecture for the Future**
+**🏛️ Ketchup SmartPay - Modular Architecture for the Future**

@@ -14,7 +14,7 @@ import { APIResponse } from '../../../../../shared/types';
 import { log, logError } from '../../../utils/logger';
 import { authenticate } from '../../middleware/auth';
 
-const router = Router();
+const router: Router = Router();
 const beneficiaryService = new BeneficiaryService();
 const voucherService = new VoucherService();
 const dependantService = new DependantService();

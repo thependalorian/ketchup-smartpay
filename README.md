@@ -1,8 +1,8 @@
-# 🏛️ SmartPay Connect
+# 🏛️ Ketchup SmartPay
 
-**Namibian Payment System with Full PSD Compliance & Open Banking**
+**Namibian G2P Engine with Full PSD Compliance & Open Banking**
 
-A production-ready e-wallet and payment platform compliant with Namibian Payment System Determinations (PSD-1, PSD-3, PSD-12) and Open Banking Standards v1.0.
+Ketchup SmartPay is the **G2P engine** at the heart of the BUFFR G2P Voucher ecosystem: system of record for voucher lifecycle, beneficiary registry, Token Vault, compliance, and admin/government portals. It is not a wallet or user-facing app—it is a production-grade, compliance-first orchestration platform aligned with PSD-1, ETA, NAMQR, and Open Banking. BUFFR is the beneficiary-facing platform (wallet, app, USSD, agents). See [buffr/docs/CONSOLIDATED_PRD.md](buffr/docs/CONSOLIDATED_PRD.md) for the full production-grade architecture and flows.
 
 ---
 
@@ -219,7 +219,7 @@ npx tsx test-webhooks.ts           # Webhook tests
 ## 📁 Project Structure
 
 ```
-smartpay-connect/
+ketchup-smartpay/
 ├── .github/workflows/           # CI/CD
 │   ├── backend.yml
 │   ├── government-portal.yml
@@ -394,7 +394,7 @@ cd backend && npm run dev
 
 ## 📄 License
 
-Proprietary - SmartPay Connect
+Proprietary - Ketchup SmartPay
 
 ---
 

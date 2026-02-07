@@ -1,6 +1,6 @@
 # Agent Onboarding Guide
 
-## SmartPay Connect Namibia G2P Voucher Platform
+## Ketchup SmartPay Namibia G2P Voucher Platform
 
 **Version:** 1.0  
 **Date:** February 1, 2026  
@@ -27,7 +27,7 @@
 
 ### Purpose
 
-This guide provides a comprehensive onboarding process for new agents joining the SmartPay Connect network.
+This guide provides a comprehensive onboarding process for new agents joining the Ketchup SmartPay network.
 
 ### Agent Network Goals
 
@@ -453,7 +453,7 @@ This guide provides a comprehensive onboarding process for new agents joining th
 
 | Topic | Content |
 |-------|---------|
-| What is SmartPay Connect? | Mission, vision, impact |
+| What is Ketchup SmartPay? | Mission, vision, impact |
 | How it works | 4-party model overview |
 | Agent role | Key responsibilities |
 | Benefits | Commission structure |

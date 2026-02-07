@@ -9,7 +9,7 @@ import consentRouter from './consent';
 import accountsRouter from './accounts';
 import paymentsRouter from './payments';
 
-const router = Router();
+const router: Router = Router();
 router.use('/common', consentRouter);
 router.use('/banking', accountsRouter);
 router.use('/banking', paymentsRouter);

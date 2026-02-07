@@ -1,13 +1,15 @@
 {
-  "name": "smartpay-connect-backend",
+  "name": "ketchup-smartpay-backend",
   "version": "1.0.0",
-  "description": "Backend API for SmartPay Connect - Modular Architecture",
+  "description": "Backend API for Ketchup SmartPay - Modular Architecture",
   "type": "module",
-  "main": "dist/index.js",
+  "main": "dist/backend/src/index.js",
   "scripts": {
     "dev": "tsx watch src/index.ts",
-    "build": "tsc",
-    "start": "node dist/index.js",
+    "build": "tsc && echo 'Build complete'",
+    "build:vercel": "tsc && esbuild --bundle --platform=node --format=cjs --outfile=dist/backend/src/vercel-entry.cjs src/vercel-entry.ts",
+    "start": "tsx src/index.ts",
+    "start:prod": "node dist/backend/src/index.js",
     "migrate": "tsx src/database/migrations/run.ts",
     "seed": "tsx scripts/seed.ts",
     "validate": "tsx scripts/validate-seed.ts",
@@ -29,6 +31,7 @@
     "@types/uuid": "^9.0.7",
     "tsx": "^4.7.0",
     "typescript": "^5.8.3",
-    "vitest": "^3.2.4"
+    "vitest": "^3.2.4",
+    "esbuild": "^0.20.0"
   }
 }

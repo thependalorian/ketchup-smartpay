@@ -65,6 +65,16 @@ export * from './components/input-otp';
 export * from './components/MetricCard';
 export * from './components/StatusBadge';
 
+// Brand Components (brand.md)
+export * from './components/BrandBadge';
+export * from './components/BrandFrame';
+export * from './components/BrandLogo';
+
+// Enhanced Entity Components
+export * from './components/EntityCard';
+export * from './components/UIEnhancements';
+export * from './components/IOSButton';
+
 // Utility Components
 export * from './components/aspect-ratio';
 export * from './components/toggle';

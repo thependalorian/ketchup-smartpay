@@ -348,7 +348,7 @@ export class BankOfNamibiaReportingService {
         )
       `;
 
-      // TODO: In production, send actual email/API to BoN
+      // External integration: send report via email/API to BoN (assessments.npsd@bon.com.na) when gateway is configured
       console.log(`✅ Report submitted to Bank of Namibia`);
       console.log(`   Email: assessments.npsd@bon.com.na`);
       console.log(`   Report Month: ${reportData.report_month}`);
@@ -362,51 +362,48 @@ export class BankOfNamibiaReportingService {
   /**
    * Generate Agent Annual Return (Table 1)
    * PSD-1 Section 16.15: Due by January 31 annually
+   * Uses agents and agent_float tables; per-agent transaction volume/value require agent_id on vouchers (not yet in schema).
    */
   static async generateAgentAnnualReturn(year: number): Promise<AgentAnnualReturn[]> {
     try {
       console.log(`📊 Generating Agent Annual Return for ${year}...`);
 
-      // Get agent data from the system
-      // Note: Agents are referenced in vouchers and transactions
-      // For a complete implementation, there should be an 'agents' table
-      
-      // For now, extract from existing data
-      const yearStart = new Date(year, 0, 1);
-      const yearEnd = new Date(year, 11, 31, 23, 59, 59);
+      // Query agents with pool balance from agent_float (database)
+      const agentsRows = await sql`
+        SELECT a.id, a.name, a.type, a.location, a.status,
+               COALESCE(af.current_float, 0)::numeric AS pool_balance
+        FROM agents a
+        LEFT JOIN agent_float af ON af.agent_id = a.id
+        ORDER BY a.name
+      `;
 
-      // This is a placeholder - in production, query actual agents table
-      const agentsData = [
-        {
-          agent_id: 'AGENT001',
-          agent_name: 'SmartPay Agent Network',
-          city: 'Windhoek',
-          region: 'Khomas',
-          services: ['voucher_redemption', 'cash_in', 'cash_out'],
-          status: 'active',
-        },
-      ];
-
+      const defaultServices = ['voucher_redemption', 'cash_in', 'cash_out'];
       const returns: AgentAnnualReturn[] = [];
       let agentNumber = 1;
 
-      for (const agent of agentsData) {
-        // Calculate agent statistics for the year
-        // In production, query actual agent transaction data
-        
+      for (const row of agentsRows) {
+        const agentId = String(row.id);
+        const agentName = String(row.name ?? '');
+        const location = String(row.location ?? '');
+        const status = (row.status === 'active' ? 'active' : 'inactive') as 'active' | 'inactive';
+        const poolBalance = Number(row.pool_balance ?? 0);
+        // Per-agent transaction volume/value: vouchers/redemptions have no agent_id; use 0 until schema supports it
+        const transactionVolume = 0;
+        const transactionValue = 0;
+
         const agentReturn: AgentAnnualReturn = {
           agentNumber,
-          agentName: agent.agent_name,
-          locationCity: agent.city,
-          locationRegion: agent.region,
-          servicesOffered: agent.services,
-          status: agent.status as 'active' | 'inactive',
-          poolAccountBalance: 0, // TODO: Get from actual pool account
-          transactionVolume: 0, // TODO: Count agent transactions
-          transactionValue: 0, // TODO: Sum agent transaction values
+          agentName,
+          locationCity: location,
+          locationRegion: location,
+          servicesOffered: defaultServices,
+          status,
+          poolAccountBalance: poolBalance,
+          transactionVolume,
+          transactionValue,
         };
 
-        // Insert into agent_annual_returns table
+        // Insert into agent_annual_returns (table from 006_psd_compliance_schema)
         await sql`
           INSERT INTO agent_annual_returns (
             return_year,
@@ -424,24 +421,27 @@ export class BankOfNamibiaReportingService {
           ) VALUES (
             ${year},
             ${agentNumber},
-            ${agent.agent_id},
-            ${agent.agent_name},
-            ${agent.city},
-            ${agent.region},
-            ${agent.services},
-            ${agent.status},
-            ${agentReturn.poolAccountBalance},
-            ${agentReturn.transactionVolume},
-            ${agentReturn.transactionValue},
+            ${agentId},
+            ${agentName},
+            ${location},
+            ${location},
+            ${defaultServices},
+            ${status},
+            ${poolBalance},
+            ${transactionVolume},
+            ${transactionValue},
             ${`${year + 1}-01-31`}
           )
           ON CONFLICT (return_year, agent_id)
           DO UPDATE SET
-            agent_name = ${agent.agent_name},
-            location_city = ${agent.city},
-            location_region = ${agent.region},
-            services_offered = ${agent.services},
-            status = ${agent.status},
+            agent_name = ${agentName},
+            location_city = ${location},
+            location_region = ${location},
+            services_offered = ${defaultServices},
+            status = ${status},
+            pool_account_balance = ${poolBalance},
+            transaction_volume = ${transactionVolume},
+            transaction_value = ${transactionValue},
             updated_at = NOW()
         `;
 
@@ -570,7 +570,7 @@ PAYMENT SERVICE PROVIDER MONTHLY RETURN
 Bank of Namibia - National Payment System Department
 ═══════════════════════════════════════════════════════════════
 
-Provider:        SmartPay Connect
+Provider:        Ketchup SmartPay
 Report Month:    ${data.report_month}
 Generated:       ${new Date(data.generated_at).toLocaleString()}
 Due Date:        ${data.due_date}

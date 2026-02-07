@@ -1,6 +1,6 @@
 # Partnerships Strategy
 
-## SmartPay Connect Namibia G2P Voucher Platform
+## Ketchup SmartPay Namibia G2P Voucher Platform
 
 **Version:** 1.0  
 **Date:** February 1, 2026  
@@ -53,7 +53,7 @@ Build a robust partnership ecosystem to maximize last-mile delivery, reduce cost
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                        SMARTPAY CONNECT ECOSYSTEM                           │
+│                        KETCHUP SMARTPAY ECOSYSTEM                           │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │                                                                             │
 │    ┌─────────────┐    ┌─────────────┐    ┌─────────────┐                  │
@@ -65,7 +65,7 @@ Build a robust partnership ecosystem to maximize last-mile delivery, reduce cost
 │                              │                                              │
 │                              ▼                                              │
 │              ┌───────────────────────────────┐                              │
-│              │    SMARTPAY CONNECT PLATFORM  │                              │
+│              │    KETCHUP SMARTPAY PLATFORM  │                              │
 │              │    (Ketchup + Buffr + G2P)    │                              │
 │              └───────────────┬───────────────┘                              │
 │                              │                                              │
@@ -375,7 +375,7 @@ Build a robust partnership ecosystem to maximize last-mile delivery, reduce cost
 │                  LAST-MILE DELIVERY MODEL                       │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│  SmartPay Connect                                               │
+│  Ketchup SmartPay                                               │
 │       │                                                         │
 │       ▼                                                         │
 │  Partner Network (NGOs, Community Leaders)                      │

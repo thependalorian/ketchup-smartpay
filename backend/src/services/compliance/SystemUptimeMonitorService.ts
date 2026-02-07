@@ -229,16 +229,25 @@ export class SystemUptimeMonitorService {
   }
 
   /**
-   * Internal service check (stub for internal components)
+   * Internal service check: uses database connectivity as proxy for internal component health.
    */
   private static async internalServiceCheck(serviceName: string): Promise<{
     status: 'up' | 'down' | 'degraded';
     responseTimeMs: number;
     errorMessage?: string;
   }> {
-    // For internal services, assume they're up if process is running
-    // In production, implement actual health checks
-    return { status: 'up', responseTimeMs: 0 };
+    const startTime = Date.now();
+    try {
+      await sql`SELECT 1 as health_check`;
+      const responseTimeMs = Date.now() - startTime;
+      if (responseTimeMs > 1000) {
+        return { status: 'degraded', responseTimeMs, errorMessage: 'Slow response' };
+      }
+      return { status: 'up', responseTimeMs };
+    } catch (error: any) {
+      const responseTimeMs = Date.now() - startTime;
+      return { status: 'down', responseTimeMs, errorMessage: error.message };
+    }
   }
 
   /**

@@ -6,120 +6,133 @@
 
 @layer base {
   :root {
-    /* Namibian-inspired warm palette */
-    --background: 30 20% 98%;
-    --foreground: 222 47% 11%;
+    /* Ketchup brand tokens (brand.md) */
+    --ketchup-midnight: #001818;
+    --ketchup-forest: #226644;
+    --ketchup-lime: #84cc16;
+    --ketchup-magenta: #c026d3;
+    --ketchup-royal: #2563eb;
+    --ketchup-yellow: #eab308;
+    --ketchup-accent: #10b981;
+    --ketchup-sand: #ebe9e1;
+    --ketchup-seafoam: #e0ffff;
+    --ketchup-k-black: #000000;
+
+    /* Namibian-inspired warm palette – updated to use Ketchup brand */
+    --background: 40 15% 98%;
+    --foreground: 180 100% 5%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 180 100% 5%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 180 100% 5%;
 
-    /* Deep slate - professional and authoritative */
-    --primary: 222 47% 18%;
-    --primary-foreground: 30 20% 98%;
+    /* Primary – Accent Green #10b981 (Ketchup brand) */
+    --primary: 160 84% 39%;
+    --primary-foreground: 0 0% 100%;
 
-    /* Warm amber - Namibian desert inspiration */
-    --secondary: 32 95% 44%;
+    /* Secondary – Forest #226644 (Ketchup brand) */
+    --secondary: 150 50% 27%;
     --secondary-foreground: 0 0% 100%;
 
-    --muted: 30 15% 94%;
-    --muted-foreground: 222 20% 45%;
+    --muted: 40 15% 94%;
+    --muted-foreground: 180 10% 45%;
 
-    /* Terracotta accent */
-    --accent: 16 85% 55%;
-    --accent-foreground: 0 0% 100%;
+    /* Accent – Lime #84cc16 (Ketchup brand) */
+    --accent: 84 71% 45%;
+    --accent-foreground: 180 100% 5%;
 
     --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 100%;
 
-    /* Success green */
-    --success: 152 69% 40%;
+    /* Success – Accent Green (Ketchup brand) */
+    --success: 160 84% 39%;
     --success-foreground: 0 0% 100%;
 
-    /* Warning amber */
-    --warning: 38 92% 50%;
-    --warning-foreground: 222 47% 11%;
+    /* Warning – Sunny Yellow (Ketchup brand) */
+    --warning: 48 96% 47%;
+    --warning-foreground: 180 100% 5%;
 
-    /* Info blue */
-    --info: 210 100% 50%;
+    /* Info – Royal Blue (Ketchup brand) */
+    --info: 221 83% 53%;
     --info-foreground: 0 0% 100%;
 
-    --border: 30 15% 90%;
-    --input: 30 15% 90%;
-    --ring: 32 95% 44%;
+    --border: 40 15% 90%;
+    --input: 40 15% 90%;
+    --ring: 160 84% 39%;
 
     --radius: 0.75rem;
 
-    /* Custom gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(222 47% 18%) 0%, hsl(222 47% 28%) 100%);
-    --gradient-accent: linear-gradient(135deg, hsl(32 95% 44%) 0%, hsl(16 85% 55%) 100%);
-    --gradient-warm: linear-gradient(135deg, hsl(32 95% 44% / 0.1) 0%, hsl(16 85% 55% / 0.1) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(222 47% 18%) 0%, hsl(222 47% 25%) 50%, hsl(32 60% 25%) 100%);
+    /* Ketchup brand gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(var(--primary)) 100%);
+    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(var(--primary)) 100%);
+    --gradient-warm: linear-gradient(135deg, hsl(var(--secondary) / 0.1) 0%, hsl(var(--primary) / 0.1) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(180 100% 5%) 0%, hsl(150 50% 27%) 50%, hsl(160 84% 39%) 100%);
     
     /* Shadows */
-    --shadow-sm: 0 1px 2px 0 hsl(222 47% 11% / 0.05);
-    --shadow-md: 0 4px 6px -1px hsl(222 47% 11% / 0.08), 0 2px 4px -2px hsl(222 47% 11% / 0.05);
-    --shadow-lg: 0 10px 15px -3px hsl(222 47% 11% / 0.1), 0 4px 6px -4px hsl(222 47% 11% / 0.05);
-    --shadow-glow: 0 0 40px hsl(32 95% 44% / 0.15);
+    --shadow-sm: 0 1px 2px 0 hsl(180 100% 5% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(180 100% 5% / 0.08), 0 2px 4px -2px hsl(180 100% 5% / 0.05);
+    --shadow-lg: 0 10px 15px -3px hsl(180 100% 5% / 0.1), 0 4px 6px -4px hsl(180 100% 5% / 0.05);
+    --shadow-ketchup: 0 4px 14px 0 rgb(16 185 129 / 0.2);
+    --shadow-ketchup-glow: 0 0 40px rgb(16 185 129 / 0.15);
 
-    --sidebar-background: 0 0% 98%;
-    --sidebar-foreground: 240 5.3% 26.1%;
-    --sidebar-primary: 240 5.9% 10%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 240 4.8% 95.9%;
-    --sidebar-accent-foreground: 240 5.9% 10%;
-    --sidebar-border: 220 13% 91%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 40 15% 98%;
+    --sidebar-foreground: 180 100% 5%;
+    --sidebar-primary: 160 84% 39%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 84 71% 45%;
+    --sidebar-accent-foreground: 180 100% 5%;
+    --sidebar-border: 40 15% 90%;
+    --sidebar-ring: 160 84% 39%;
   }
 
   .dark {
-    --background: 222 47% 8%;
-    --foreground: 30 20% 98%;
+    --background: 180 100% 5%;
+    --foreground: 40 15% 98%;
 
-    --card: 222 47% 11%;
-    --card-foreground: 30 20% 98%;
+    --card: 180 100% 7%;
+    --card-foreground: 40 15% 98%;
 
-    --popover: 222 47% 11%;
-    --popover-foreground: 30 20% 98%;
+    --popover: 180 100% 7%;
+    --popover-foreground: 40 15% 98%;
 
-    --primary: 32 95% 50%;
-    --primary-foreground: 222 47% 11%;
+    --primary: 160 84% 45%;
+    --primary-foreground: 180 100% 5%;
 
-    --secondary: 222 30% 20%;
-    --secondary-foreground: 30 20% 98%;
+    --secondary: 150 30% 22%;
+    --secondary-foreground: 40 15% 98%;
 
-    --muted: 222 30% 15%;
-    --muted-foreground: 30 15% 65%;
+    --muted: 180 20% 12%;
+    --muted-foreground: 40 10% 65%;
 
-    --accent: 16 85% 55%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 84 71% 50%;
+    --accent-foreground: 180 100% 5%;
 
     --destructive: 0 62% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --success: 152 69% 45%;
-    --success-foreground: 0 0% 100%;
+    --success: 160 84% 45%;
+    --success-foreground: 180 100% 5%;
 
-    --warning: 38 92% 55%;
-    --warning-foreground: 222 47% 11%;
+    --warning: 48 96% 50%;
+    --warning-foreground: 180 100% 5%;
 
-    --info: 210 100% 55%;
+    --info: 221 83% 55%;
     --info-foreground: 0 0% 100%;
 
-    --border: 222 30% 20%;
-    --input: 222 30% 20%;
-    --ring: 32 95% 50%;
+    --border: 180 20% 18%;
+    --input: 180 20% 18%;
+    --ring: 160 84% 45%;
 
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 180 100% 5%;
+    --sidebar-foreground: 40 15% 98%;
+    --sidebar-primary: 160 84% 45%;
+    --sidebar-primary-foreground: 180 100% 5%;
+    --sidebar-accent: 84 71% 55%;
+    --sidebar-accent-foreground: 180 100% 5%;
+    --sidebar-border: 180 20% 18%;
+    --sidebar-ring: 160 84% 45%;
   }
 }
 
@@ -134,13 +147,13 @@
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, 'Inter', system-ui, sans-serif;
   }
 }
 
 @layer utilities {
   .font-display {
-    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-family: 'Helvetica Neue', Helvetica, 'Inter', system-ui, sans-serif;
   }
 
   .gradient-primary {
@@ -159,8 +172,12 @@
     background: var(--gradient-hero);
   }
 
-  .shadow-glow {
-    box-shadow: var(--shadow-glow);
+  .shadow-ketchup {
+    box-shadow: var(--shadow-ketchup);
+  }
+
+  .shadow-ketchup-glow {
+    box-shadow: var(--shadow-ketchup-glow);
   }
 
   .text-gradient {
@@ -168,5 +185,26 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
+  }
+
+  /* Ketchup brand – subtle sphere gradient (brand.md) */
+  .gradient-sphere-subtle {
+    background: linear-gradient(135deg,
+      rgb(132 204 22 / 0.08) 0%,
+      rgb(192 38 211 / 0.04) 33%,
+      rgb(37 99 235 / 0.04) 66%,
+      rgb(234 179 8 / 0.08) 100%
+    );
+  }
+
+  /* Logo sphere – four quadrants (brand.md) */
+  .gradient-sphere {
+    background: linear-gradient(135deg,
+      var(--ketchup-lime) 0%,
+      var(--ketchup-magenta) 25%,
+      var(--ketchup-royal) 50%,
+      var(--ketchup-yellow) 75%,
+      var(--ketchup-lime) 100%
+    );
   }
 }

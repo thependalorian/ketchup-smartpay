@@ -9,16 +9,17 @@ import { Router, Request, Response } from 'express';
 import { APIResponse } from '../../../../../shared/types';
 import { logError } from '../../../utils/logger';
 import { authenticate } from '../../middleware/auth';
+import { asyncHandler } from '../../../utils/asyncHandler';
 import { DashboardService } from '../../../services/dashboard/DashboardService';
 
-const router = Router();
+const router: Router = Router();
 const dashboardService = new DashboardService();
 
 /**
  * GET /api/v1/dashboard/metrics
  * Get dashboard metrics
  */
-router.get('/metrics', authenticate, async (req: Request, res: Response<APIResponse<any>>) => {
+router.get('/metrics', authenticate, asyncHandler(async (req: Request, res: Response<APIResponse<any>>) => {
   try {
     const metrics = await dashboardService.getMetrics();
     res.json({
@@ -32,13 +33,13 @@ router.get('/metrics', authenticate, async (req: Request, res: Response<APIRespo
       error: error instanceof Error ? error.message : 'Failed to fetch metrics',
     });
   }
-});
+}));
 
 /**
  * GET /api/v1/dashboard/monthly-trend
  * Get monthly trend data
  */
-router.get('/monthly-trend', authenticate, async (req: Request, res: Response<APIResponse<any>>) => {
+router.get('/monthly-trend', authenticate, asyncHandler(async (req: Request, res: Response<APIResponse<any>>) => {
   try {
     const months = req.query.months ? parseInt(req.query.months as string, 10) : 12;
     const trend = await dashboardService.getMonthlyTrend(months);
@@ -53,13 +54,13 @@ router.get('/monthly-trend', authenticate, async (req: Request, res: Response<AP
       error: error instanceof Error ? error.message : 'Failed to fetch monthly trend',
     });
   }
-});
+}));
 
 /**
  * GET /api/v1/dashboard/redemption-channels
  * Get redemption channels data: only post_office, mobile_unit, pos, mobile, atm. Bank/unknown allocated into these.
  */
-router.get('/redemption-channels', authenticate, async (req: Request, res: Response<APIResponse<any>>) => {
+router.get('/redemption-channels', authenticate, asyncHandler(async (req: Request, res: Response<APIResponse<any>>) => {
   try {
     const channels = await dashboardService.getRedemptionChannels();
     res.json({
@@ -73,13 +74,13 @@ router.get('/redemption-channels', authenticate, async (req: Request, res: Respo
       error: error instanceof Error ? error.message : 'Failed to fetch redemption channels',
     });
   }
-});
+}));
 
 /**
  * GET /api/v1/dashboard/regional-stats
  * Get regional statistics
  */
-router.get('/regional-stats', authenticate, async (req: Request, res: Response<APIResponse<any>>) => {
+router.get('/regional-stats', authenticate, asyncHandler(async (req: Request, res: Response<APIResponse<any>>) => {
   try {
     const stats = await dashboardService.getRegionalStats();
     res.json({
@@ -93,13 +94,13 @@ router.get('/regional-stats', authenticate, async (req: Request, res: Response<A
       error: error instanceof Error ? error.message : 'Failed to fetch regional stats',
     });
   }
-});
+}));
 
 /**
  * GET /api/v1/dashboard/requires-attention
  * Alerts for Ketchup: failed, expired, expiring soon. Query: expiringWithinDays=7
  */
-router.get('/requires-attention', authenticate, async (req: Request, res: Response<APIResponse<any>>) => {
+router.get('/requires-attention', authenticate, asyncHandler(async (req: Request, res: Response<APIResponse<any>>) => {
   try {
     const days = req.query.expiringWithinDays ? parseInt(req.query.expiringWithinDays as string, 10) : 7;
     const data = await dashboardService.getRequiresAttention(days);
@@ -114,6 +115,6 @@ router.get('/requires-attention', authenticate, async (req: Request, res: Respon
       error: error instanceof Error ? error.message : 'Failed to fetch requires attention',
     });
   }
-});
+}));
 
 export default router;

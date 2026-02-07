@@ -1,15 +1,15 @@
-# Migration order (Buffr, G2P, SmartPay Connect — same backend, same DB)
+# Migration order (Buffr, G2P, Ketchup SmartPay — same backend, same DB)
 
-Buffr and G2P are the same app; they share one backend and one database with SmartPay Connect. Use this order so the shared DB is consistent and seed works.
+Buffr and G2P are the same app; they share one backend and one database with Ketchup SmartPay. Use this order so the shared DB is consistent and seed works.
 
 ---
 
 ## 1. Single migration entry point (recommended)
 
-From **smartpay-connect/backend** run:
+From **ketchup-smartpay/backend** run:
 
 ```bash
-cd smartpay-connect/backend
+cd ketchup-smartpay/backend
 pnpm run migrate
 pnpm run seed
 ```
@@ -38,10 +38,10 @@ Then `pnpm run seed` seeds beneficiaries, 300 cash-out agents (pos_agent/mobile_
 
 If you use **Buffr’s** SQL migrations (e.g. `buffr/sql/migration_agent_network.sql`, `migration_vouchers.sql`, etc.) on the same DB:
 
-- Run **SmartPay Connect migrations first** (above), then run Buffr migrations.
+- Run **Ketchup SmartPay migrations first** (above), then run Buffr migrations.
 - Buffr uses `CREATE TABLE IF NOT EXISTS`, so existing tables (e.g. `agents`, `beneficiaries`, `vouchers`) are left as-is; Buffr can add extra tables (e.g. `agent_liquidity_logs`, `wallets`) and later add an FK from `agents.wallet_id` to `wallets(id)` in a separate migration if needed.
 
-Do **not** run 001–007 SQL files in smartpay-connect by hand; `run.ts` already applies the needed 001 and 008 logic inline. The numbered `.sql` files (001–008) are for reference and other tooling.
+Do **not** run 001–007 SQL files in ketchup-smartpay by hand; `run.ts` already applies the needed 001 and 008 logic inline. The numbered `.sql` files (001–008) are for reference and other tooling.
 
 ---
 
@@ -55,8 +55,8 @@ G2P uses the same backend and DB as Buffr. No separate migration step; ensure th
 
 | Step | Where | Command / action |
 |------|--------|-------------------|
-| 1 | smartpay-connect/backend | `pnpm run migrate` (creates beneficiaries, beneficiary_dependants, vouchers, status_events, webhook_events, reconciliation_records, agents, locations, communication_log) |
-| 2 | smartpay-connect/backend | `pnpm run seed` (agents, beneficiaries, status_events) |
+| 1 | ketchup-smartpay/backend | `pnpm run migrate` (creates beneficiaries, beneficiary_dependants, vouchers, status_events, webhook_events, reconciliation_records, agents, locations, communication_log) |
+| 2 | ketchup-smartpay/backend | `pnpm run seed` (agents, beneficiaries, status_events) |
 | 3 (optional) | buffr | Run Buffr SQL migrations if you need Buffr-specific tables (wallets, agent_liquidity_logs, etc.) |
 
-Same backend, same DB: Buffr and G2P point at this DB and at the SmartPay Connect backend (`KETCHUP_SMARTPAY_API_URL`).
+Same backend, same DB: Buffr and G2P point at this DB and at the Ketchup SmartPay backend (`KETCHUP_SMARTPAY_API_URL`).

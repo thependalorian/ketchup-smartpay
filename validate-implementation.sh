@@ -1,7 +1,7 @@
 #!/bin/bash
 
 echo "╔═══════════════════════════════════════════════════════════╗"
-echo "║   SmartPay Connect Implementation Validation Script      ║"
+echo "║   Ketchup SmartPay Implementation Validation Script      ║"
 echo "║   Date: $(date '+%Y-%m-%d %H:%M:%S')                           ║"
 echo "╚═══════════════════════════════════════════════════════════╝"
 echo ""
@@ -328,6 +328,33 @@ if [ -f ".gitignore" ]; then
 else
     print_status "FAIL" ".gitignore file not found"
 fi
+
+echo ""
+
+# Phase 8: URL validation (gov.ketchup.cc, app.ketchup.cc, api.ketchup.cc, backend health)
+echo "═══════════════════════════════════════════════════════════"
+echo "Phase 8: URL Validation (visit gov/app/api.ketchup.cc)"
+echo "═══════════════════════════════════════════════════════════"
+echo ""
+
+check_url() {
+    local url=$1
+    local expected=${2:-200}
+    local desc=${3:-$url}
+    local code
+    code=$(curl -s -o /dev/null -w "%{http_code}" --connect-timeout 10 --max-time 15 "$url" 2>/dev/null || echo "000")
+    if [ "$code" = "$expected" ]; then
+        print_status "PASS" "$desc → HTTP $code"
+    else
+        print_status "FAIL" "$desc → HTTP $code (expected $expected)"
+    fi
+}
+
+check_url "https://gov.ketchup.cc" "200" "https://gov.ketchup.cc (Government Portal)"
+check_url "https://app.ketchup.cc" "200" "https://app.ketchup.cc (Ketchup Portal)"
+check_url "https://ketchup-backend-buffr.vercel.app/health" "200" "Backend health (Vercel URL)"
+# api.ketchup.cc: expect 200; if it returns HTML (portal), that's a config issue documented in VALIDATION_RESULTS.md
+check_url "https://api.ketchup.cc/health" "200" "https://api.ketchup.cc/health (should be API JSON, not portal)"
 
 echo ""
 

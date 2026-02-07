@@ -8,7 +8,7 @@ export const env = {
   API_KEY: import.meta.env.VITE_API_KEY || '',
   
   // Application
-  APP_NAME: import.meta.env.VITE_APP_NAME || 'SmartPay Connect',
+  APP_NAME: import.meta.env.VITE_APP_NAME || 'Ketchup SmartPay',
   APP_VERSION: import.meta.env.VITE_APP_VERSION || '2.0.0',
   ENVIRONMENT: import.meta.env.MODE || 'development',
   

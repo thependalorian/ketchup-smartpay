@@ -1,10 +1,12 @@
 # Go-To-Market Plan
 
-## SmartPay Connect Namibia G2P Voucher Platform
+## BUFFR G2P Voucher Platform (Ketchup SmartPay + BUFFR)
 
 **Version:** 1.0  
 **Date:** February 1, 2026  
-**Status:** Planning Phase
+**Status:** Planning Phase  
+
+**Architecture:** Ketchup SmartPay = G2P engine; BUFFR = beneficiary platform. See [buffr/docs/CONSOLIDATED_PRD.md](../buffr/docs/CONSOLIDATED_PRD.md) for production-grade architecture and flows.
 
 ---
 
@@ -26,7 +28,7 @@
 ## Executive Summary
 
 ### Vision
-Launch SmartPay Connect to achieve **60% digital adoption** among 100,000+ beneficiaries within 12 months, while maintaining 99.9% compliance and reducing cash handling costs by 50%.
+Launch Ketchup SmartPay to achieve **60% digital adoption** among 100,000+ beneficiaries within 12 months, while maintaining 99.9% compliance and reducing cash handling costs by 50%.
 
 ### Key Objectives
 

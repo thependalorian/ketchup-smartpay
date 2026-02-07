@@ -1,10 +1,10 @@
 /**
  * Compliance API Routes
- * 
- * Purpose: API endpoints for regulatory compliance monitoring and management
- * Regulations: PSD-1, PSD-3, PSD-12
- * Location: backend/src/api/routes/compliance.ts
- * 
+ *
+ * Purpose: API endpoints for regulatory compliance monitoring and management.
+ * Regulations: PSD-1, PSD-3, PSD-12; ETA 4 of 2019 (Electronic Transactions Act).
+ * Location: backend/src/api/routes/government/compliance.ts
+ *
  * Endpoints:
  * - Trust Account Reconciliation (PSD-3)
  * - System Uptime Monitoring (PSD-12)
@@ -13,9 +13,11 @@
  * - Capital Requirements (PSD-3)
  * - Bank of Namibia Reporting (PSD-3 & PSD-1)
  * - Two-Factor Authentication (PSD-12)
+ * - ETA: Take-down (s54), Input-error withdrawal (s33)
  */
 
 import { Router, Request, Response } from 'express';
+import { z } from 'zod';
 import { TrustAccountService } from '../../../services/compliance/TrustAccountService';
 import { TwoFactorAuthService } from '../../../services/compliance/TwoFactorAuthService';
 import { SystemUptimeMonitorService } from '../../../services/compliance/SystemUptimeMonitorService';
@@ -23,10 +25,18 @@ import { IncidentResponseService } from '../../../services/compliance/IncidentRe
 import { DormantWalletService } from '../../../services/compliance/DormantWalletService';
 import { CapitalRequirementsService } from '../../../services/compliance/CapitalRequirementsService';
 import { BankOfNamibiaReportingService } from '../../../services/compliance/BankOfNamibiaReportingService';
+import {
+  validateTakeDownNotice,
+  executeTakeDownFlow,
+  processInputErrorWithdrawal,
+  type TakeDownNotice,
+  type InputErrorWithdrawalRequest,
+} from '../../../services/eta/ETAService';
 import { authenticateAPIKey } from '../../middleware/auth';
+import { logError } from '../../../utils/logger';
 import { sql } from '../../../database/connection';
 
-const router = Router();
+const router: Router = Router();
 
 // ============================================================================
 // PSD-3: Trust Account Reconciliation
@@ -782,6 +792,74 @@ router.get('/audit-trail', authenticateAPIKey, async (req: Request, res: Respons
       error: 'Failed to get audit trail',
       details: error.message,
     });
+  }
+});
+
+// ============================================================================
+// ETA 4 of 2019 – Electronic Transactions Act (PRD Appendix H)
+// ============================================================================
+
+const etaTakeDownSchema = z.object({
+  complainantFullName: z.string().min(1),
+  complainantAddress: z.string().min(1),
+  signature: z.string().min(1),
+  rightInfringed: z.string().min(1),
+  materialOrActivityId: z.string().min(1),
+  remedialAction: z.string().min(1),
+  contactDetails: z.string().min(1),
+  goodFaithAndAccuracy: z.boolean(),
+});
+
+const etaInputErrorSchema = z.object({
+  userId: z.string().min(1),
+  transactionId: z.string().min(1),
+  notifiedAt: z.string().min(1),
+  wishToCancel: z.boolean(),
+  stepsToReturnOrCorrect: z.string(),
+});
+
+/** POST /api/v1/compliance/eta/take-down – ETA s54 take-down notice */
+router.post('/eta/take-down', authenticateAPIKey, async (req: Request, res: Response) => {
+  try {
+    const parsed = etaTakeDownSchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({ error: parsed.error.flatten() });
+    }
+    const notice = parsed.data as TakeDownNotice;
+    if (!validateTakeDownNotice(notice)) {
+      return res.status(400).json({ error: 'Invalid take down notice' });
+    }
+    const result = await executeTakeDownFlow(
+      notice,
+      async (materialId: string) => { void materialId; },
+      async (materialId: string) => `contact-${materialId}`,
+      async (_contactId: string, _materialId: string) => {},
+      async (_materialId: string, _reason: string) => {},
+      async (_materialId: string, _info: string) => {},
+      async () => false
+    );
+    return res.json(result);
+  } catch (error: unknown) {
+    logError('ETA take-down failed', error instanceof Error ? error : new Error(String(error)));
+    res.status(500).json({ error: 'Take-down flow failed' });
+  }
+});
+
+/** POST /api/v1/compliance/eta/input-error-withdrawal – ETA s33 input error withdrawal/refund */
+router.post('/eta/input-error-withdrawal', authenticateAPIKey, async (req: Request, res: Response) => {
+  try {
+    const parsed = etaInputErrorSchema.safeParse(req.body);
+    if (!parsed.success) {
+      return res.status(400).json({ error: parsed.error.flatten() });
+    }
+    const request = parsed.data as InputErrorWithdrawalRequest;
+    const refundPayment = async (txId: string) => { void txId; };
+    const cancelContract = async (txId: string) => { void txId; };
+    const result = await processInputErrorWithdrawal(request, refundPayment, cancelContract);
+    return res.json(result);
+  } catch (error: unknown) {
+    logError('ETA input-error withdrawal failed', error instanceof Error ? error : new Error(String(error)));
+    res.status(500).json({ error: 'Input-error withdrawal failed' });
   }
 });
 

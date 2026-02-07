@@ -2,20 +2,19 @@
 
 This file provides references to all business and product requirement documents.
 
-## Consolidated PRD ✅ (Enhanced with Global Best Practices)
+## Consolidated PRD ✅ (Production-Grade Architecture & Flows)
 
 | Document | Location | Description |
 |----------|----------|-------------|
-| **Consolidated PRD v3.1** | [`buffr/docs/CONSOLIDATED_PRD.md`](buffr/docs/CONSOLIDATED_PRD.md) | **SINGLE SOURCE OF TRUTH** - Enhanced with UPI, G2P 4.0, and SASSA best practices |
+| **Consolidated PRD v3.3** | [`buffr/docs/CONSOLIDATED_PRD.md`](buffr/docs/CONSOLIDATED_PRD.md) | **SINGLE SOURCE OF TRUTH** – BUFFR G2P Voucher Platform: production-grade, ecosystem-aware architecture. Ketchup SmartPay = G2P engine; BUFFR = beneficiary platform; Token Vault, universal SMS, separate DBs, NAMQR/IPS/Open Banking. |
 
-**PRD Enhancements (v3.1):**
-- ✅ User personas and journey mapping (rural elderly, urban beneficiary, agent)
-- ✅ User-centric KPIs (digital adoption, USSD success rate, NPS)
-- ✅ Resilience architecture (offline support, disaster recovery)
-- ✅ Security enhancements (HSM, PCI DSS, privacy-by-design)
-- ✅ Agent & merchant network strategy with density targets
-- ✅ Gap analysis with prioritized action items
-- ✅ Lessons from global G2P implementations (UPI, Indonesia, SASSA)
+**PRD alignment (v3.3):**
+- ✅ Ecosystem principles (separation of concerns, Token Vault, separate DBs, universal SMS)
+- ✅ Ketchup SmartPay as G2P engine (system of record, not wallet/user app)
+- ✅ BUFFR as beneficiary platform (wallet, app, USSD, agents)
+- ✅ Key data flows, database architecture, operational flows, summary tables
+- ✅ User personas, KPIs, resilience, security, agent network, gap analysis
+- ✅ Aligned with PSD-1, ETA, NAMQR, Open Banking and global G2P best practices
 
 ## Archived PRD Documents
 
@@ -23,9 +22,9 @@ Individual PRDs have been consolidated. Historical versions available in `buffr/
 
 | Archived Document | Status |
 |-------------------|--------|
-| PRD_BUFFR_G2P_VOUCHER_PLATFORM.md | ✅ Consolidated into v3.1 |
-| PRD_KETCHUP_SMARTPAY_VOUCHER_DISTRIBUTION.md | ✅ Consolidated into v3.1 |
-| PRD_COMPLIANCE_COMPLETE.md | ✅ Consolidated into v3.1 |
+| PRD_BUFFR_G2P_VOUCHER_PLATFORM.md | ✅ Consolidated into v3.3 |
+| PRD_KETCHUP_SMARTPAY_VOUCHER_DISTRIBUTION.md | ✅ Consolidated into v3.3 |
+| PRD_COMPLIANCE_COMPLETE.md | ✅ Consolidated into v3.3 |
 
 ## Business Plans & Executive Summaries
 

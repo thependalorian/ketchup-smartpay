@@ -1,5 +1,5 @@
 /**
- * Shared Types for SmartPay Connect
+ * Shared Types for Ketchup SmartPay
  *
  * Location: shared/types/index.ts
  * Purpose: Common TypeScript types shared between frontend and backend
@@ -61,7 +61,7 @@ export interface Voucher {
     buffrUserId?: string;
     amount: number;
     grantType: string;
-    status: 'issued' | 'delivered' | 'redeemed' | 'expired' | 'cancelled';
+    status: VoucherStatus;
     issuedAt: string;
     expiryDate: string;
     redeemedAt?: string;
@@ -84,13 +84,13 @@ export interface VoucherFilters {
     beneficiaryId?: string;
     region?: Region;
     grantType?: string;
-    status?: 'issued' | 'delivered' | 'redeemed' | 'expired' | 'cancelled';
+    status?: 'issued' | 'delivered' | 'redeemed' | 'expired' | 'cancelled' | 'failed';
     search?: string;
 }
 export interface Agent {
     id: string;
     name: string;
-    type: 'small' | 'medium' | 'large';
+    type: 'small' | 'medium' | 'large' | 'mobile_unit';
     region: Region;
     status: 'active' | 'inactive' | 'low_liquidity';
     liquidity: number;
@@ -118,7 +118,7 @@ export interface BatchResult {
     failed: number;
     results: DistributionResult[];
 }
-export type VoucherStatus = 'issued' | 'delivered' | 'redeemed' | 'expired' | 'cancelled';
+export type VoucherStatus = 'issued' | 'delivered' | 'redeemed' | 'expired' | 'cancelled' | 'failed';
 export interface StatusEvent {
     voucherId: string;
     status: VoucherStatus;

@@ -112,24 +112,27 @@ export class APIClient {
   }
 }
 
+const defaultApiBase = (): string =>
+  (import.meta.env?.VITE_API_URL as string)?.trim() || 'http://localhost:3001';
+
 // Export factory functions for different portals
 export const createKetchupClient = (config: Omit<ClientConfig, 'baseURL'>) => {
   return new APIClient({
     ...config,
-    baseURL: config.baseURL || `${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/v1/ketchup`,
+    baseURL: config.baseURL || `${defaultApiBase()}/api/v1/ketchup`,
   });
 };
 
 export const createGovernmentClient = (config: Omit<ClientConfig, 'baseURL'>) => {
   return new APIClient({
     ...config,
-    baseURL: config.baseURL || `${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/v1/government`,
+    baseURL: config.baseURL || `${defaultApiBase()}/api/v1/government`,
   });
 };
 
 export const createSharedClient = (config: Omit<ClientConfig, 'baseURL'>) => {
   return new APIClient({
     ...config,
-    baseURL: config.baseURL || `${import.meta.env.VITE_API_URL || 'http://localhost:3001'}/api/v1/shared`,
+    baseURL: config.baseURL || `${defaultApiBase()}/api/v1/shared`,
   });
 };

@@ -3,9 +3,11 @@
  * 
  * Location: backend/src/services/distribution/DistributionEngine.ts
  * Purpose: Core distribution logic for vouchers (PRD Component: Distribution Engine)
+ *          Integrates Token Vault: generates token for voucher before sending to Buffr.
  */
 
 import { BuffrAPIClient } from './BuffrAPIClient';
+import { tokenVaultService } from '../tokenVault/TokenVaultService';
 import { Voucher, DistributionResult, BatchResult } from '../../../../shared/types';
 import type { Beneficiary } from '../../../../shared/types';
 import { log, logError } from '../../utils/logger';
@@ -36,13 +38,30 @@ export class DistributionEngine {
       }
       log('Distributing voucher to Buffr', { voucherId: voucher.id, buffrUserId: voucher.buffrUserId });
 
+      // Token Vault: generate token for voucher so Buffr can validate redemption (G2P/NAMQR)
+      let tokenId: string | undefined;
+      let token: string | undefined;
+      try {
+        const tokenResult = await tokenVaultService.generateToken({
+          voucherId: voucher.id,
+          purpose: 'g2p',
+          expiresAt: new Date(voucher.expiryDate),
+        });
+        tokenId = tokenResult.tokenId;
+        token = tokenResult.token;
+      } catch (tokenErr) {
+        logError('Token Vault generate failed; distributing without token', tokenErr, { voucherId: voucher.id });
+      }
+
       const enrichment = beneficiary
         ? {
             beneficiaryIdNumber: beneficiary.idNumber,
             beneficiaryPhone: beneficiary.phone,
             buffrUserId: voucher.buffrUserId ?? undefined,
+            tokenId,
+            token,
           }
-        : { buffrUserId: voucher.buffrUserId ?? undefined };
+        : { buffrUserId: voucher.buffrUserId ?? undefined, tokenId, token };
       const result = await this.buffrClient.sendVoucher(voucher, enrichment);
 
       return {

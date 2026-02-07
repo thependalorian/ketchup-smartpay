@@ -12,7 +12,7 @@ import { authenticate } from '../../middleware/auth';
 import { AgentService } from '../../../services/agents/AgentService';
 import { MobileUnitService } from '../../../services/mobileUnits/MobileUnitService';
 
-const router = Router();
+const router: Router = Router();
 const agentService = new AgentService();
 const mobileUnitService = new MobileUnitService();
 
@@ -226,6 +226,78 @@ router.post('/:id/maintenance', authenticate, async (req: Request, res: Response
     res.status(500).json({
       success: false,
       error: error instanceof Error ? error.message : 'Failed to create maintenance event',
+    });
+  }
+});
+
+/**
+ * POST /api/v1/mobile-units/:id/drivers
+ * Body: { name, idNumber?, phone?, role? }
+ */
+router.post('/:id/drivers', authenticate, async (req: Request, res: Response<APIResponse<any>>) => {
+  try {
+    const { name, idNumber, phone, role } = req.body;
+    if (!name || typeof name !== 'string' || !name.trim()) {
+      return res.status(400).json({ success: false, error: 'name is required' });
+    }
+    const driver = await mobileUnitService.addDriver(req.params.id, {
+      name: name.trim(),
+      idNumber: idNumber?.trim() || undefined,
+      phone: phone?.trim() || undefined,
+      role: role?.trim() || undefined,
+    });
+    res.status(201).json({ success: true, data: driver });
+  } catch (error) {
+    logError('POST /mobile-units/:id/drivers', error);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to add driver',
+    });
+  }
+});
+
+/**
+ * PATCH /api/v1/mobile-units/:id/drivers/:driverId
+ * Body: { name?, idNumber?, phone?, role?, status? }
+ */
+router.patch('/:id/drivers/:driverId', authenticate, async (req: Request, res: Response<APIResponse<any>>) => {
+  try {
+    const { name, idNumber, phone, role, status } = req.body;
+    const driver = await mobileUnitService.updateDriver(req.params.id, req.params.driverId, {
+      name: name?.trim(),
+      idNumber: idNumber !== undefined ? (idNumber === null ? undefined : String(idNumber).trim()) : undefined,
+      phone: phone !== undefined ? (phone === null ? undefined : String(phone).trim()) : undefined,
+      role: role?.trim(),
+      status,
+    });
+    if (!driver) {
+      return res.status(404).json({ success: false, error: 'Driver not found' });
+    }
+    res.json({ success: true, data: driver });
+  } catch (error) {
+    logError('PATCH /mobile-units/:id/drivers/:driverId', error);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to update driver',
+    });
+  }
+});
+
+/**
+ * DELETE /api/v1/mobile-units/:id/drivers/:driverId
+ */
+router.delete('/:id/drivers/:driverId', authenticate, async (req: Request, res: Response<APIResponse<any>>) => {
+  try {
+    const removed = await mobileUnitService.removeDriver(req.params.id, req.params.driverId);
+    if (!removed) {
+      return res.status(404).json({ success: false, error: 'Driver not found' });
+    }
+    res.status(204).send();
+  } catch (error) {
+    logError('DELETE /mobile-units/:id/drivers/:driverId', error);
+    res.status(500).json({
+      success: false,
+      error: error instanceof Error ? error.message : 'Failed to remove driver',
     });
   }
 });

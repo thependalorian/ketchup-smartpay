@@ -11,7 +11,7 @@ interface MetricCardProps {
     type: 'increase' | 'decrease';
   };
   icon: LucideIcon;
-  variant?: 'default' | 'primary' | 'accent' | 'success' | 'warning';
+  variant?: 'default' | 'primary' | 'accent' | 'ketchup' | 'success' | 'warning';
   className?: string;
   delay?: number;
 }
@@ -42,6 +42,11 @@ export function MetricCard({
       iconBg: 'bg-accent-foreground/10',
       iconColor: 'text-accent-foreground',
     },
+    ketchup: {
+      bg: 'gradient-sphere-subtle border-primary/20 text-foreground',
+      iconBg: 'bg-primary/10',
+      iconColor: 'text-primary',
+    },
     success: {
       bg: 'bg-success/5 border-success/20',
       iconBg: 'bg-success/10',
@@ -71,7 +76,7 @@ export function MetricCard({
         <div className="space-y-2">
           <p className={cn(
             'text-sm font-medium',
-            variant === 'primary' || variant === 'accent' ? 'text-inherit opacity-80' : 'text-muted-foreground'
+            (variant === 'primary' || variant === 'accent' || variant === 'ketchup') ? 'text-inherit opacity-80' : 'text-muted-foreground'
           )}>
             {title}
           </p>
@@ -81,7 +86,7 @@ export function MetricCard({
           {subtitle && (
             <p className={cn(
               'text-sm',
-              variant === 'primary' || variant === 'accent' ? 'text-inherit opacity-70' : 'text-muted-foreground'
+              (variant === 'primary' || variant === 'accent' || variant === 'ketchup') ? 'text-inherit opacity-70' : 'text-muted-foreground'
             )}>
               {subtitle}
             </p>
@@ -103,7 +108,7 @@ export function MetricCard({
       </div>
       
       {/* Decorative element */}
-      {(variant === 'primary' || variant === 'accent') && (
+      {(variant === 'primary' || variant === 'accent' || variant === 'ketchup') && (
         <div className="absolute -right-8 -top-8 h-32 w-32 rounded-full bg-white/5" />
       )}
     </motion.div>

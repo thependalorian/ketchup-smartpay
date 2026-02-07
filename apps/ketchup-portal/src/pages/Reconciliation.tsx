@@ -80,7 +80,7 @@ export default function Reconciliation() {
         {isBackendUnavailable && (
           <Card className="p-4 border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-950/30">
             <p className="text-sm text-amber-800 dark:text-amber-200">
-              <strong>Backend unavailable.</strong> Start the API server: in <code className="rounded bg-amber-100 dark:bg-amber-900/50 px-1">smartpay-connect/backend</code> run <code className="rounded bg-amber-100 dark:bg-amber-900/50 px-1">pnpm run dev</code> (default port 3001).
+              <strong>Backend unavailable.</strong> Start the API server: in <code className="rounded bg-amber-100 dark:bg-amber-900/50 px-1">ketchup-smartpay/backend</code> run <code className="rounded bg-amber-100 dark:bg-amber-900/50 px-1">pnpm run dev</code> (default port 3001).
             </p>
           </Card>
         )}

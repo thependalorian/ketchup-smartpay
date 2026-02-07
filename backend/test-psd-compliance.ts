@@ -503,7 +503,7 @@ async function runAllTests() {
 
     if (failed === 0) {
       console.log('\n🎉 ALL COMPLIANCE TESTS PASSED!');
-      console.log('\n✅ SmartPay Connect is COMPLIANT with:');
+      console.log('\n✅ Ketchup SmartPay is COMPLIANT with:');
       console.log('   • PSD-1: Payment Service Provider Licensing');
       console.log('   • PSD-3: Electronic Money Issuance');
       console.log('   • PSD-12: Operational and Cybersecurity Standards');

@@ -1,6 +1,8 @@
-# 📚 SMARTPAY CONNECT - COMPLETE DOCUMENTATION
+# 📚 KETCHUP SMARTPAY – COMPLETE DOCUMENTATION
 
-**All-in-one documentation for SmartPay Connect**
+**All-in-one documentation for Ketchup SmartPay (G2P Engine)**
+
+Ketchup SmartPay is the **G2P engine** (voucher lifecycle, beneficiary registry, Token Vault, compliance, admin/government portals). BUFFR is the beneficiary platform (wallet, app, USSD, agents). For production-grade architecture, ecosystem principles, key data flows, and Ketchup G2P Engine details, see [buffr/docs/CONSOLIDATED_PRD.md](buffr/docs/CONSOLIDATED_PRD.md).
 
 ---
 
@@ -106,9 +108,11 @@ npm run dev
 
 ### Architecture
 
+Ketchup SmartPay = G2P engine (voucher lifecycle, Token Vault, compliance, SMS, admin/gov portals). BUFFR = beneficiary platform (wallets, app, USSD, agents). Separate DBs for Ketchup, Buffr, Fineract, Token Vault. SMS is the universal channel. See [CONSOLIDATED_PRD.md](buffr/docs/CONSOLIDATED_PRD.md) for mermaid diagram and flows.
+
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                    SMARTPAY CONNECT                     │
+│                    KETCHUP SMARTPAY (G2P Engine)        │
 ├─────────────────────────────────────────────────────────┤
 │                                                         │
 │  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐ │
@@ -227,7 +231,7 @@ WHERE summary_date = CURRENT_DATE;
 
 ### Overview
 
-SmartPay Connect is **100% compliant** with Namibian Payment System Determinations:
+Ketchup SmartPay is **100% compliant** with Namibian Payment System Determinations:
 
 - ✅ **PSD-1:** Payment Service Provider Licensing
 - ✅ **PSD-3:** Electronic Money Issuance
@@ -356,7 +360,7 @@ Access: `http://localhost:5173/compliance`
 
 ### Namibian Open Banking Standards v1.0
 
-SmartPay Connect implements the complete Namibian Open Banking Standards:
+Ketchup SmartPay implements the complete Namibian Open Banking Standards:
 
 **Implemented Services:**
 - ✅ Account Information Services (AIS)
@@ -541,7 +545,7 @@ GET  /api/v1/compliance/bon-reports/pending
 ### Project Structure
 
 ```
-smartpay-connect/
+ketchup-smartpay/
 ├── src/                          # Frontend source
 │   ├── components/              # React components
 │   │   ├── dashboard/          # Dashboard widgets
@@ -811,7 +815,7 @@ npm run dev
 
 ## 🎉 Summary
 
-**SmartPay Connect is a production-ready payment platform with:**
+**Ketchup SmartPay is a production-ready payment platform with:**
 
 ✅ **216 database tables** covering all business needs  
 ✅ **100% PSD compliance** (PSD-1, PSD-3, PSD-12)  

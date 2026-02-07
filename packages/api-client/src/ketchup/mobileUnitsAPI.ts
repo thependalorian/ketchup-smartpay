@@ -123,4 +123,23 @@ export const mobileUnitsAPI = {
   ): Promise<MaintenanceEvent> {
     return apiClient.post<MaintenanceEvent>(`${BASE}/${unitId}/maintenance`, body);
   },
+
+  async addDriver(
+    unitId: string,
+    body: { name: string; idNumber?: string; phone?: string; role?: string }
+  ): Promise<MobileUnitDriver> {
+    return apiClient.post<MobileUnitDriver>(`${BASE}/${unitId}/drivers`, body);
+  },
+
+  async updateDriver(
+    unitId: string,
+    driverId: string,
+    body: { name?: string; idNumber?: string; phone?: string; role?: string; status?: string }
+  ): Promise<MobileUnitDriver> {
+    return apiClient.patch<MobileUnitDriver>(`${BASE}/${unitId}/drivers/${driverId}`, body);
+  },
+
+  async removeDriver(unitId: string, driverId: string): Promise<void> {
+    await apiClient.delete(`${BASE}/${unitId}/drivers/${driverId}`);
+  },
 };

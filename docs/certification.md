@@ -1,6 +1,6 @@
 # Certification Program
 
-## SmartPay Connect Namibia G2P Voucher Platform
+## Ketchup SmartPay Namibia G2P Voucher Platform
 
 **Version:** 1.0  
 **Date:** February 1, 2026  
@@ -24,7 +24,7 @@
 
 ### Purpose
 
-Establish a comprehensive certification program to ensure quality, compliance, and trust across the SmartPay Connect ecosystem.
+Establish a comprehensive certification program to ensure quality, compliance, and trust across the Ketchup SmartPay ecosystem.
 
 ### Certification Categories
 

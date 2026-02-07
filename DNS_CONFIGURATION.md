@@ -1,6 +1,6 @@
 # DNS Configuration for ketchup.cc
 
-## SmartPay Connect Namibia G2P Voucher Platform
+## Ketchup SmartPay Namibia G2P Voucher Platform
 
 **Version:** 1.0  
 **Date:** February 1, 2026  

@@ -1,7 +1,7 @@
-# SmartPay Connect – Validation Report
+# Ketchup SmartPay – Validation Report
 
 **Generated:** Validation of migrations, APIs, webhooks, and imports/exports.  
-**Location:** `smartpay-connect/docs/VALIDATION_REPORT.md`  
+**Location:** `ketchup-smartpay/docs/VALIDATION_REPORT.md`  
 **File structure:** See `docs/FILE_STRUCTURE.md` for repo tree.
 
 ---
@@ -11,7 +11,7 @@
 ### 1.1 Entry point
 
 - **Single entry point:** `backend/src/database/migrations/run.ts`
-- **Command:** From `smartpay-connect/backend`: `pnpm run migrate`
+- **Command:** From `ketchup-smartpay/backend`: `pnpm run migrate`
 - **Order:** See `backend/MIGRATION_ORDER.md`
 
 ### 1.2 Tables created by `run.ts`
@@ -50,7 +50,7 @@
 
 ### 1.5 Migrate then seed (30 mobile units)
 
-From `smartpay-connect/backend`:
+From `ketchup-smartpay/backend`:
 
 ```bash
 pnpm run migrate   # Creates all tables (run again if communication_log step timed out)
@@ -226,7 +226,7 @@ curl -s "http://localhost:3001/api/v1/mobile-units/UNIT_ID/drivers" | jq .
 curl -s "http://localhost:3001/api/v1/mobile-units/UNIT_ID/activity" | jq .
 ```
 
-**Why “No mobile units found” / Total 0?** The page reads from the **agents** table where `type = 'mobile_unit'`. You must run **migrate** then **seed** from `backend` so that 30 mobile units are inserted. From `smartpay-connect/backend`: `pnpm run migrate` then `pnpm run seed`. After that, list and stats will return data.
+**Why “No mobile units found” / Total 0?** The page reads from the **agents** table where `type = 'mobile_unit'`. You must run **migrate** then **seed** from `backend` so that 30 mobile units are inserted. From `ketchup-smartpay/backend`: `pnpm run migrate` then `pnpm run seed`. After that, list and stats will return data.
 
 **Where are Equipment, Drivers, Activity?** They are inside the **unit detail modal**. Click **View** on a row in the SmartPay Mobile table to open the modal; the **Info**, **Equipment**, **Drivers**, and **Activity** tabs are there. With 0 units there are no rows, so you cannot open the modal until the database has mobile units (run seed).
 

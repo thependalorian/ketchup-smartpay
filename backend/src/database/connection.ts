@@ -2,26 +2,39 @@
  * Database Connection
  *
  * Location: backend/src/database/connection.ts
- * Purpose: Neon PostgreSQL database connection for SmartPay Connect
+ * Purpose: Neon PostgreSQL database connection for Ketchup SmartPay
+ * Serverless: Lazy init so we don't throw at import time (Vercel env may not be ready).
  */
 
-import { neon } from '@neondatabase/serverless';
+import { neon, type NeonQueryFunction } from '@neondatabase/serverless';
 import dotenv from 'dotenv';
 import { resolve } from 'path';
 import { log } from '../utils/logger';
 
-// Load environment variables early (supports .env.local for development)
-dotenv.config();
-dotenv.config({ path: resolve(process.cwd(), '.env.local') });
-
-const DATABASE_URL = process.env.DATABASE_URL;
-
-if (!DATABASE_URL) {
-  throw new Error('DATABASE_URL environment variable is required');
+// Load dotenv only when DATABASE_URL is missing (local dev). On Vercel env is injected.
+if (!process.env.DATABASE_URL) {
+  dotenv.config();
+  dotenv.config({ path: resolve(process.cwd(), '.env.local') });
 }
 
-// Create Neon serverless connection
-export const sql = neon(DATABASE_URL);
+let _sql: NeonQueryFunction<false, false> | null = null;
+
+function getSql(): NeonQueryFunction<false, false> {
+  if (_sql) return _sql;
+  const url = process.env.DATABASE_URL;
+  if (!url) {
+    throw new Error('DATABASE_URL environment variable is required. Set it in Vercel project env or .env.local.');
+  }
+  _sql = neon(url);
+  return _sql;
+}
+
+/** Lazy Neon client: first use initializes; avoids throw-at-import in serverless. */
+export const sql = new Proxy({} as NeonQueryFunction<false, false>, {
+  get(_, prop) {
+    return (getSql() as unknown as Record<string, unknown>)[prop as string];
+  },
+});
 
 /**
  * Test database connection

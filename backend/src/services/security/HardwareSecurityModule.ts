@@ -13,11 +13,12 @@ const HSM_URL = process.env.HSM_URL || '';
 export class HardwareSecurityModule {
   /**
    * Sign payload with HSM key (e.g. for transaction authorization).
+   * Throws when HSM is not configured; no mock signatures in production.
    */
   async sign(keyId: string, payload: string): Promise<string> {
     if (!HSM_ENABLED || !HSM_URL) {
-      log('HSM not configured – returning mock signature');
-      return `mock-signature-${keyId}-${Buffer.from(payload).toString('base64url').slice(0, 16)}`;
+      logError('HSM sign called but HSM is not configured', new Error('HSM_NOT_CONFIGURED'), { keyId });
+      throw new Error('HSM is not configured; set HSM_ENABLED=true and HSM_URL for production signing.');
     }
     try {
       const res = await fetch(`${HSM_URL}/sign`, {
@@ -35,9 +36,13 @@ export class HardwareSecurityModule {
 
   /**
    * Encrypt sensitive field (e.g. PIN block) for POS.
+   * Throws when HSM is not configured; no mock ciphertext.
    */
   async encryptPinBlock(pinBlock: string, keyId: string): Promise<string> {
-    if (!HSM_ENABLED) return `encrypted-${pinBlock.slice(0, 4)}***`;
+    if (!HSM_ENABLED || !HSM_URL) {
+      logError('HSM encrypt called but HSM is not configured', new Error('HSM_NOT_CONFIGURED'), { keyId });
+      throw new Error('HSM is not configured; set HSM_ENABLED=true and HSM_URL for PIN encryption.');
+    }
     try {
       const res = await fetch(`${HSM_URL}/encrypt`, {
         method: 'POST',

@@ -9,6 +9,7 @@ import { sql } from '../../database/connection';
 import { log, logError } from '../../utils/logger';
 import { DashboardService } from '../dashboard/DashboardService';
 import { StatusMonitor } from '../status/StatusMonitor';
+import type { StatusEvent } from '../../../../shared/types';
 
 export interface NotificationRow {
   id: string;
@@ -135,18 +136,21 @@ export class NotificationsService {
         `;
         created++;
       }
-      for (const e of events ?? []) {
-        const vid = e.voucherId ?? e.voucher_id ?? e.id;
-        const sourceId = `status_event-${e.id ?? vid}-${(e as any).timestamp ?? ''}`;
+      type StatusEventRow = StatusEvent & { id?: string; voucher_id?: string; to_status?: string; from_status?: string; triggered_by?: string; timestamp?: string };
+      for (const e of (events ?? []) as StatusEventRow[]) {
+        const vid = e.voucherId ?? e.voucher_id ?? (e as StatusEventRow).id;
+        const sourceId = `status_event-${(e as StatusEventRow).id ?? vid}-${(e as StatusEventRow).timestamp ?? e.timestamp ?? ''}`;
         const existing = await sql`
           SELECT id FROM notifications WHERE source_type = 'status_event' AND source_id = ${sourceId} AND deleted_at IS NULL LIMIT 1
         `;
         if ((existing as any[]).length > 0) continue;
-        const toStatus = e.toStatus ?? e.status ?? 'updated';
+        const toStatus = (e as StatusEventRow).to_status ?? e.status ?? 'updated';
         const title = `Voucher ${typeof vid === 'string' ? vid.slice(0, 8) : '—'} → ${toStatus}`;
+        const fromStatus = (e as StatusEventRow).from_status;
+        const triggeredBy = (e as StatusEventRow).triggered_by;
         await sql`
           INSERT INTO notifications (type, title, body, source_type, source_id, link, metadata, created_at)
-          VALUES ('activity', ${title}, ${`Status change to ${toStatus}`}, 'status_event', ${sourceId}, ${`/vouchers?view=${vid}`}, ${JSON.stringify({ voucherId: vid, fromStatus: e.fromStatus, toStatus, triggeredBy: e.triggeredBy })}, ${now})
+          VALUES ('activity', ${title}, ${`Status change to ${toStatus}`}, 'status_event', ${sourceId}, ${`/vouchers?view=${vid}`}, ${JSON.stringify({ voucherId: vid, fromStatus, toStatus, triggeredBy })}, ${now})
         `;
         created++;
       }

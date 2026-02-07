@@ -1,6 +1,6 @@
 # 🚀 IMPLEMENTATION STATUS
 
-**SmartPay Connect - Modular Architecture Implementation**
+**Ketchup SmartPay - Modular Architecture Implementation**
 
 **Date:** January 29, 2026  
 **Status:** Phase 3 Complete - 50% Implementation Done
@@ -371,7 +371,7 @@ pnpm dev:ketchup
 ## 📁 DIRECTORY STRUCTURE (CURRENT)
 
 ```
-smartpay-connect/
+ketchup-smartpay/
 ├── apps/
 │   ├── ketchup-portal/          ✅ COMPLETE
 │   │   ├── src/

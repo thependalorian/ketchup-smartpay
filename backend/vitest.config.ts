@@ -1,7 +1,7 @@
 /**
  * Vitest Configuration for Backend
  * 
- * Purpose: Test configuration for SmartPay Connect backend
+ * Purpose: Test configuration for Ketchup SmartPay backend
  * Location: backend/vitest.config.ts
  */
 

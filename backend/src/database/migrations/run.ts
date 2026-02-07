@@ -2,10 +2,10 @@
  * Database Migration Runner
  *
  * Location: backend/src/database/migrations/run.ts
- * Purpose: Run database migrations in a single order for shared DB (Buffr / G2P / SmartPay Connect same backend).
+ * Purpose: Run database migrations in a single order for shared DB (Buffr / G2P / Ketchup SmartPay same backend).
  *
  * Order: 1) beneficiaries, vouchers (001) → 2) status_events → 3) webhook_events → 4) reconciliation_records → 5) agents (008).
- * Buffr/G2P use the same DB; run this once (e.g. from smartpay-connect backend) then run seed.
+ * Buffr/G2P use the same DB; run this once (e.g. from ketchup-smartpay backend) then run seed.
  */
 
 import { sql } from '../connection';
@@ -339,6 +339,7 @@ async function runMigrations() {
         ('dispenser', 'Cash dispenser', 'dispenser'),
         ('cash_cassette', 'Cash cassette', 'cash_cassette'),
         ('vehicle_part', 'Vehicle part', 'vehicle_part'),
+        ('vehicle', 'Vehicle', 'other'),
         ('tablet', 'Tablet / POS device', 'other'),
         ('other', 'Other', 'other')
       ON CONFLICT (code) DO NOTHING
@@ -399,7 +400,50 @@ async function runMigrations() {
     `;
     await sql`CREATE INDEX IF NOT EXISTS idx_maintenance_events_unit ON maintenance_events(mobile_unit_id)`;
     await sql`CREATE INDEX IF NOT EXISTS idx_maintenance_events_created_at ON maintenance_events(created_at DESC)`;
+    await sql`ALTER TABLE maintenance_events DROP CONSTRAINT IF EXISTS maintenance_events_type_check`.catch(() => {});
+    await sql`ALTER TABLE maintenance_events ADD CONSTRAINT maintenance_events_type_check CHECK (type IN ('inspection', 'repair', 'replacement', 'service', 'other'))`.catch(() => {});
     log('✅ maintenance_events table created');
+
+    // 9b) ATMs (Ketchup: ATM management – location, status, cash level, replenishment)
+    log('Creating atms table...');
+    await sql`
+      CREATE TABLE IF NOT EXISTS atms (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        terminal_id VARCHAR(100) NOT NULL UNIQUE,
+        location VARCHAR(255) NOT NULL,
+        region VARCHAR(50),
+        status VARCHAR(50) NOT NULL DEFAULT 'operational' CHECK (status IN ('operational', 'offline', 'maintenance', 'low_cash')),
+        cash_level_percent INTEGER CHECK (cash_level_percent >= 0 AND cash_level_percent <= 100),
+        mobile_unit_id UUID REFERENCES agents(id) ON DELETE SET NULL,
+        last_serviced_at TIMESTAMP WITH TIME ZONE,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+      )
+    `;
+    await sql`CREATE INDEX IF NOT EXISTS idx_atms_status ON atms(status)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_atms_region ON atms(region)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_atms_mobile_unit ON atms(mobile_unit_id)`;
+    log('✅ atms table created');
+
+    // 9c) POS Terminals (Ketchup: POS terminal management – agent/merchant assignment)
+    log('Creating pos_terminals table...');
+    await sql`
+      CREATE TABLE IF NOT EXISTS pos_terminals (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        terminal_id VARCHAR(100) NOT NULL UNIQUE,
+        agent_id UUID REFERENCES agents(id) ON DELETE SET NULL,
+        merchant_id VARCHAR(100),
+        status VARCHAR(50) NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'inactive', 'maintenance')),
+        device_id VARCHAR(255),
+        provisioned_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+      )
+    `;
+    await sql`CREATE INDEX IF NOT EXISTS idx_pos_terminals_agent_id ON pos_terminals(agent_id)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_pos_terminals_merchant_id ON pos_terminals(merchant_id)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_pos_terminals_status ON pos_terminals(status)`;
+    log('✅ pos_terminals table created');
 
     // 10) Notifications (Ketchup: user-actionable alerts – read, flag, archive, pin, delete)
     log('Creating notifications table...');
@@ -421,13 +465,22 @@ async function runMigrations() {
         created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
       )
     `;
-    await sql`CREATE INDEX IF NOT EXISTS idx_notifications_read_at ON notifications(read_at)`;
-    await sql`CREATE INDEX IF NOT EXISTS idx_notifications_is_flagged ON notifications(is_flagged)`;
-    await sql`CREATE INDEX IF NOT EXISTS idx_notifications_is_archived ON notifications(is_archived)`;
-    await sql`CREATE INDEX IF NOT EXISTS idx_notifications_is_pinned ON notifications(is_pinned)`;
-    await sql`CREATE INDEX IF NOT EXISTS idx_notifications_deleted_at ON notifications(deleted_at)`;
-    await sql`CREATE INDEX IF NOT EXISTS idx_notifications_created_at ON notifications(created_at DESC)`;
-    await sql`CREATE INDEX IF NOT EXISTS idx_notifications_source ON notifications(source_type, source_id)`;
+    await sql`ALTER TABLE notifications ADD COLUMN IF NOT EXISTS source_type VARCHAR(50)`.catch(() => {});
+    await sql`ALTER TABLE notifications ADD COLUMN IF NOT EXISTS source_id VARCHAR(255)`.catch(() => {});
+    await sql`ALTER TABLE notifications ADD COLUMN IF NOT EXISTS link VARCHAR(500)`.catch(() => {});
+    await sql`ALTER TABLE notifications ADD COLUMN IF NOT EXISTS read_at TIMESTAMP WITH TIME ZONE`.catch(() => {});
+    await sql`ALTER TABLE notifications ADD COLUMN IF NOT EXISTS is_flagged BOOLEAN NOT NULL DEFAULT false`.catch(() => {});
+    await sql`ALTER TABLE notifications ADD COLUMN IF NOT EXISTS is_archived BOOLEAN NOT NULL DEFAULT false`.catch(() => {});
+    await sql`ALTER TABLE notifications ADD COLUMN IF NOT EXISTS is_pinned BOOLEAN NOT NULL DEFAULT false`.catch(() => {});
+    await sql`ALTER TABLE notifications ADD COLUMN IF NOT EXISTS deleted_at TIMESTAMP WITH TIME ZONE`.catch(() => {});
+    await sql`ALTER TABLE notifications ADD COLUMN IF NOT EXISTS metadata JSONB DEFAULT '{}'`.catch(() => {});
+    await sql`CREATE INDEX IF NOT EXISTS idx_notifications_read_at ON notifications(read_at)`.catch(() => {});
+    await sql`CREATE INDEX IF NOT EXISTS idx_notifications_is_flagged ON notifications(is_flagged)`.catch(() => {});
+    await sql`CREATE INDEX IF NOT EXISTS idx_notifications_is_archived ON notifications(is_archived)`.catch(() => {});
+    await sql`CREATE INDEX IF NOT EXISTS idx_notifications_is_pinned ON notifications(is_pinned)`.catch(() => {});
+    await sql`CREATE INDEX IF NOT EXISTS idx_notifications_deleted_at ON notifications(deleted_at)`.catch(() => {});
+    await sql`CREATE INDEX IF NOT EXISTS idx_notifications_created_at ON notifications(created_at DESC)`.catch(() => {});
+    await sql`CREATE INDEX IF NOT EXISTS idx_notifications_source ON notifications(source_type, source_id)`.catch(() => {});
     log('✅ notifications table created');
 
     // 11) Interoperability, Privacy, Agent Expansion (012: PRD Sections 6–7)
@@ -467,9 +520,19 @@ async function runMigrations() {
         created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
       )
     `;
-    await sql`CREATE INDEX IF NOT EXISTS idx_namqr_codes_qr_id ON namqr_codes(qr_id)`;
-    await sql`CREATE INDEX IF NOT EXISTS idx_namqr_codes_merchant_id ON namqr_codes(merchant_id)`;
-    await sql`CREATE INDEX IF NOT EXISTS idx_namqr_codes_expires_at ON namqr_codes(expires_at)`;
+    await sql`ALTER TABLE namqr_codes ADD COLUMN IF NOT EXISTS qr_id UUID`.catch(() => {});
+    await sql`ALTER TABLE namqr_codes ADD COLUMN IF NOT EXISTS merchant_id VARCHAR(100)`.catch(() => {});
+    await sql`ALTER TABLE namqr_codes ADD COLUMN IF NOT EXISTS amount VARCHAR(20)`.catch(() => {});
+    await sql`ALTER TABLE namqr_codes ADD COLUMN IF NOT EXISTS currency VARCHAR(3)`.catch(() => {});
+    await sql`ALTER TABLE namqr_codes ADD COLUMN IF NOT EXISTS reference VARCHAR(255)`.catch(() => {});
+    await sql`ALTER TABLE namqr_codes ADD COLUMN IF NOT EXISTS expires_at TIMESTAMP WITH TIME ZONE`.catch(() => {});
+    await sql`ALTER TABLE namqr_codes ADD COLUMN IF NOT EXISTS payload_hash VARCHAR(64)`.catch(() => {});
+    await sql`ALTER TABLE namqr_codes ADD COLUMN IF NOT EXISTS redeemed_at TIMESTAMP WITH TIME ZONE`.catch(() => {});
+    await sql`ALTER TABLE namqr_codes ADD COLUMN IF NOT EXISTS redeemed_by_beneficiary_id VARCHAR(50)`.catch(() => {});
+    await sql`ALTER TABLE namqr_codes ADD COLUMN IF NOT EXISTS transaction_id UUID`.catch(() => {});
+    await sql`CREATE INDEX IF NOT EXISTS idx_namqr_codes_qr_id ON namqr_codes(qr_id)`.catch(() => {});
+    await sql`CREATE INDEX IF NOT EXISTS idx_namqr_codes_merchant_id ON namqr_codes(merchant_id)`.catch(() => {});
+    await sql`CREATE INDEX IF NOT EXISTS idx_namqr_codes_expires_at ON namqr_codes(expires_at)`.catch(() => {});
     log('✅ namqr_codes table created');
 
     log('Creating ips_transactions table...');
@@ -492,9 +555,9 @@ async function runMigrations() {
         status_reason TEXT
       )
     `;
-    await sql`CREATE INDEX IF NOT EXISTS idx_ips_transactions_payment_id ON ips_transactions(payment_id)`;
-    await sql`CREATE INDEX IF NOT EXISTS idx_ips_transactions_request_id ON ips_transactions(request_id)`;
-    await sql`CREATE INDEX IF NOT EXISTS idx_ips_transactions_created_at ON ips_transactions(created_at)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_ips_transactions_payment_id ON ips_transactions(payment_id)`.catch(() => {});
+    await sql`CREATE INDEX IF NOT EXISTS idx_ips_transactions_request_id ON ips_transactions(request_id)`.catch(() => {});
+    await sql`CREATE INDEX IF NOT EXISTS idx_ips_transactions_created_at ON ips_transactions(created_at)`.catch(() => {});
     log('✅ ips_transactions table created');
 
     log('Creating agent_float table...');
@@ -509,8 +572,8 @@ async function runMigrations() {
         UNIQUE(agent_id)
       )
     `;
-    await sql`CREATE INDEX IF NOT EXISTS idx_agent_float_agent_id ON agent_float(agent_id)`;
-    await sql`CREATE INDEX IF NOT EXISTS idx_agent_float_current_float ON agent_float(current_float) WHERE current_float >= 0`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_agent_float_agent_id ON agent_float(agent_id)`.catch(() => {});
+    await sql`CREATE INDEX IF NOT EXISTS idx_agent_float_current_float ON agent_float(current_float) WHERE current_float >= 0`.catch(() => {});
     log('✅ agent_float table created');
 
     log('Creating agent_coverage_by_region table...');
@@ -524,8 +587,8 @@ async function runMigrations() {
         UNIQUE(region, agent_id)
       )
     `;
-    await sql`CREATE INDEX IF NOT EXISTS idx_agent_coverage_by_region_region ON agent_coverage_by_region(region)`;
-    await sql`CREATE INDEX IF NOT EXISTS idx_agent_coverage_by_region_agent_id ON agent_coverage_by_region(agent_id)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_agent_coverage_by_region_region ON agent_coverage_by_region(region)`.catch(() => {});
+    await sql`CREATE INDEX IF NOT EXISTS idx_agent_coverage_by_region_agent_id ON agent_coverage_by_region(agent_id)`.catch(() => {});
     log('✅ agent_coverage_by_region table created');
 
     // 12) IPS participants and NAMQR offline (013)
@@ -542,14 +605,394 @@ async function runMigrations() {
         updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
       )
     `;
-    await sql`CREATE INDEX IF NOT EXISTS idx_ips_participants_bic ON ips_participants(bic) WHERE bic IS NOT NULL`;
-    await sql`CREATE INDEX IF NOT EXISTS idx_ips_participants_status ON ips_participants(status)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_ips_participants_bic ON ips_participants(bic) WHERE bic IS NOT NULL`.catch(() => {});
+    await sql`CREATE INDEX IF NOT EXISTS idx_ips_participants_status ON ips_participants(status)`.catch(() => {});
     log('✅ ips_participants table created');
 
     log('Adding namqr_codes.offline column...');
     await sql`ALTER TABLE namqr_codes ADD COLUMN IF NOT EXISTS offline BOOLEAN NOT NULL DEFAULT false`;
     await sql`CREATE INDEX IF NOT EXISTS idx_namqr_codes_offline ON namqr_codes(offline) WHERE offline = true`.catch(() => {});
     log('✅ namqr_codes.offline column added');
+
+    // 13) Token Vault (token ↔ voucher mapping for G2P, NAMQR; PRD Token Vault). DDL only here – no separate SQL file.
+    log('Creating token_vault table...');
+    await sql`
+      CREATE TABLE IF NOT EXISTS token_vault (
+        id VARCHAR(50) PRIMARY KEY,
+        token_hash VARCHAR(128) NOT NULL UNIQUE,
+        voucher_id VARCHAR(100) NOT NULL,
+        purpose VARCHAR(50) NOT NULL DEFAULT 'g2p',
+        expires_at TIMESTAMP WITH TIME ZONE NOT NULL,
+        used_at TIMESTAMP WITH TIME ZONE,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+      )
+    `;
+    await sql`ALTER TABLE token_vault ADD COLUMN IF NOT EXISTS token_hash VARCHAR(128)`.catch(() => {});
+    await sql`ALTER TABLE token_vault ADD COLUMN IF NOT EXISTS voucher_id VARCHAR(100)`.catch(() => {});
+    await sql`ALTER TABLE token_vault ADD COLUMN IF NOT EXISTS purpose VARCHAR(50)`.catch(() => {});
+    await sql`ALTER TABLE token_vault ADD COLUMN IF NOT EXISTS expires_at TIMESTAMP WITH TIME ZONE`.catch(() => {});
+    await sql`ALTER TABLE token_vault ADD COLUMN IF NOT EXISTS used_at TIMESTAMP WITH TIME ZONE`.catch(() => {});
+    await sql`CREATE INDEX IF NOT EXISTS idx_token_vault_token_hash ON token_vault(token_hash)`.catch(() => {});
+    await sql`CREATE INDEX IF NOT EXISTS idx_token_vault_voucher_id ON token_vault(voucher_id)`.catch(() => {});
+    await sql`CREATE INDEX IF NOT EXISTS idx_token_vault_expires_at ON token_vault(expires_at)`.catch(() => {});
+    await sql`CREATE INDEX IF NOT EXISTS idx_token_vault_purpose ON token_vault(purpose)`.catch(() => {});
+    log('✅ token_vault table created');
+
+    // 14) Idempotency records for duplicate prevention (PRD: avoid duplicates)
+    // Aligned with buffr/sql/migration_idempotency_keys.sql and buffr/utils/idempotency.ts
+    log('Creating idempotency_keys table...');
+    await sql`
+      CREATE TABLE IF NOT EXISTS idempotency_keys (
+        idempotency_key VARCHAR(128) NOT NULL,
+        endpoint_prefix VARCHAR(50) NOT NULL DEFAULT 'distribution',
+        response_status INTEGER NOT NULL DEFAULT 200,
+        response_body JSONB NOT NULL DEFAULT '{}',
+        created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
+        expires_at TIMESTAMP WITH TIME ZONE NOT NULL,
+        PRIMARY KEY (idempotency_key, endpoint_prefix)
+      )
+    `;
+    await sql`CREATE INDEX IF NOT EXISTS idx_idempotency_keys_expires ON idempotency_keys(expires_at)`.catch(() => {});
+    await sql`CREATE INDEX IF NOT EXISTS idx_idempotency_keys_key_prefix ON idempotency_keys(idempotency_key, endpoint_prefix)`.catch(() => {});
+    log('✅ idempotency_keys table created');
+
+    // 15) Add idempotency_key to webhook_events for duplicate detection
+    log('Adding idempotency_key column to webhook_events...');
+    await sql`ALTER TABLE webhook_events ADD COLUMN IF NOT EXISTS idempotency_key VARCHAR(128)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_webhook_events_idempotency_key ON webhook_events(idempotency_key)`.catch(() => {});
+    log('✅ webhook_events idempotency_key column added');
+
+    // 16) Add national_id_hash to beneficiaries for duplicate detection
+    log('Adding national_id_hash column to beneficiaries...');
+    await sql`ALTER TABLE beneficiaries ADD COLUMN IF NOT EXISTS national_id_hash VARCHAR(128)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_beneficiaries_national_id_hash ON beneficiaries(national_id_hash)`.catch(() => {});
+    log('✅ beneficiaries national_id_hash column added');
+
+    // 17) Audit retention config (admin audit-logs retention policy)
+    log('Creating audit_retention_config table...');
+    await sql`
+      CREATE TABLE IF NOT EXISTS audit_retention_config (
+        key VARCHAR(64) PRIMARY KEY,
+        value TEXT NOT NULL,
+        updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
+      )
+    `.catch(() => {});
+    await sql`
+      INSERT INTO audit_retention_config (key, value, updated_at)
+      VALUES ('audit_retention_days', '90', NOW())
+      ON CONFLICT (key) DO NOTHING
+    `.catch(() => {});
+    log('✅ audit_retention_config table ready');
+
+    // 18) Agent Network Tracking (new: agent_transactions, agent_float_transactions)
+    log('Creating agent_transactions table...');
+    await sql`
+      CREATE TABLE IF NOT EXISTS agent_transactions (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        agent_id UUID NOT NULL REFERENCES agents(id) ON DELETE CASCADE,
+        transaction_date DATE NOT NULL DEFAULT CURRENT_DATE,
+        transaction_count INTEGER NOT NULL DEFAULT 0,
+        successful_count INTEGER NOT NULL DEFAULT 0,
+        failed_count INTEGER NOT NULL DEFAULT 0,
+        total_cashout_amount DECIMAL(15, 2) NOT NULL DEFAULT 0,
+        total_deposit_amount DECIMAL(15, 2) NOT NULL DEFAULT 0,
+        total_commission_earned DECIMAL(15, 2) NOT NULL DEFAULT 0,
+        total_fees_collected DECIMAL(15, 2) NOT NULL DEFAULT 0,
+        avg_transaction_value DECIMAL(15, 2),
+        success_rate DECIMAL(5, 2),
+        vouchers_redeemed INTEGER NOT NULL DEFAULT 0,
+        vouchers_issued INTEGER NOT NULL DEFAULT 0,
+        unique_beneficiaries_served INTEGER NOT NULL DEFAULT 0,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        UNIQUE(agent_id, transaction_date)
+      )
+    `;
+    await sql`CREATE INDEX IF NOT EXISTS idx_agent_transactions_agent ON agent_transactions(agent_id)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_agent_transactions_date ON agent_transactions(transaction_date)`;
+    log('✅ agent_transactions table created');
+
+    log('Creating agent_float_transactions table...');
+    await sql`
+      CREATE TABLE IF NOT EXISTS agent_float_transactions (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        agent_id UUID NOT NULL REFERENCES agents(id) ON DELETE CASCADE,
+        transaction_type VARCHAR(20) NOT NULL CHECK (transaction_type IN ('topup', 'withdrawal', 'adjustment', 'transfer_in', 'transfer_out')),
+        amount DECIMAL(15, 2) NOT NULL,
+        balance_before DECIMAL(15, 2) NOT NULL,
+        balance_after DECIMAL(15, 2) NOT NULL,
+        reference_type VARCHAR(50),
+        reference_id VARCHAR(100),
+        notes TEXT,
+        processed_by VARCHAR(255),
+        approved_by VARCHAR(255),
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+      )
+    `;
+    await sql`CREATE INDEX IF NOT EXISTS idx_agent_float_transactions_agent ON agent_float_transactions(agent_id)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_agent_float_transactions_date ON agent_float_transactions(created_at)`;
+    log('✅ agent_float_transactions table created');
+
+    // 19) POS Terminal Transactions
+    log('Creating pos_transactions table...');
+    await sql`
+      CREATE TABLE IF NOT EXISTS pos_transactions (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        transaction_id VARCHAR(100) NOT NULL UNIQUE,
+        terminal_id UUID NOT NULL REFERENCES pos_terminals(id) ON DELETE CASCADE,
+        agent_id UUID REFERENCES agents(id) ON DELETE SET NULL,
+        transaction_type VARCHAR(50) NOT NULL CHECK (transaction_type IN ('cashout', 'balance_inquiry', 'mini_statement', 'transfer', 'refund')),
+        amount DECIMAL(15, 2) NOT NULL,
+        fee_amount DECIMAL(10, 2) NOT NULL DEFAULT 0,
+        commission_amount DECIMAL(15, 2) NOT NULL DEFAULT 0,
+        voucher_id VARCHAR(100),
+        beneficiary_id VARCHAR(50),
+        status VARCHAR(20) NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'completed', 'failed', 'reversed', 'timeout')),
+        response_code VARCHAR(10),
+        response_message TEXT,
+        initiated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+        completed_at TIMESTAMP WITH TIME ZONE,
+        processing_time_ms INTEGER,
+        is_offline_transaction BOOLEAN NOT NULL DEFAULT false,
+        offline_batch_id VARCHAR(100),
+        synced_at TIMESTAMP WITH TIME ZONE,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+      )
+    `;
+    await sql`CREATE INDEX IF NOT EXISTS idx_pos_transactions_terminal ON pos_transactions(terminal_id)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_pos_transactions_agent ON pos_transactions(agent_id)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_pos_transactions_date ON pos_transactions(initiated_at)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_pos_transactions_voucher ON pos_transactions(voucher_id)`;
+    log('✅ pos_transactions table created');
+
+    log('Creating pos_daily_summaries table...');
+    await sql`
+      CREATE TABLE IF NOT EXISTS pos_daily_summaries (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        terminal_id UUID NOT NULL REFERENCES pos_terminals(id) ON DELETE CASCADE,
+        summary_date DATE NOT NULL DEFAULT CURRENT_DATE,
+        total_transactions INTEGER NOT NULL DEFAULT 0,
+        successful_transactions INTEGER NOT NULL DEFAULT 0,
+        failed_transactions INTEGER NOT NULL DEFAULT 0,
+        total_volume DECIMAL(15, 2) NOT NULL DEFAULT 0,
+        total_fees DECIMAL(15, 2) NOT NULL DEFAULT 0,
+        total_commission DECIMAL(15, 2) NOT NULL DEFAULT 0,
+        avg_response_time_ms DECIMAL(10, 2),
+        uptime_percentage DECIMAL(5, 2),
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        UNIQUE(terminal_id, summary_date)
+      )
+    `;
+    await sql`CREATE INDEX IF NOT EXISTS idx_pos_daily_summaries_terminal ON pos_daily_summaries(terminal_id)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_pos_daily_summaries_date ON pos_daily_summaries(summary_date)`;
+    log('✅ pos_daily_summaries table created');
+
+    // 20) ATM Transactions & Cash Levels
+    log('Creating atm_transactions table...');
+    await sql`
+      CREATE TABLE IF NOT EXISTS atm_transactions (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        transaction_id VARCHAR(100) NOT NULL UNIQUE,
+        atm_id UUID NOT NULL REFERENCES atms(id) ON DELETE CASCADE,
+        card_hash VARCHAR(128),
+        account_type VARCHAR(20),
+        transaction_type VARCHAR(50) NOT NULL CHECK (transaction_type IN ('cash_withdrawal', 'balance_inquiry', 'mini_statement', 'cash_deposit')),
+        amount DECIMAL(15, 2) NOT NULL,
+        fee_amount DECIMAL(10, 2) NOT NULL DEFAULT 0,
+        dispensed_denominations JSONB,
+        status VARCHAR(20) NOT NULL DEFAULT 'pending' CHECK (status IN ('pending', 'completed', 'failed', 'cancelled', 'partially_dispensed')),
+        response_code VARCHAR(10),
+        response_message TEXT,
+        error_code VARCHAR(20),
+        error_message TEXT,
+        initiated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+        completed_at TIMESTAMP WITH TIME ZONE,
+        processing_time_seconds INTEGER,
+        receipt_printed BOOLEAN NOT NULL DEFAULT false,
+        receipt_data TEXT,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+      )
+    `;
+    await sql`CREATE INDEX IF NOT EXISTS idx_atm_transactions_atm ON atm_transactions(atm_id)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_atm_transactions_date ON atm_transactions(initiated_at)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_atm_transactions_status ON atm_transactions(status)`;
+    log('✅ atm_transactions table created');
+
+    log('Creating atm_cash_levels table...');
+    await sql`
+      CREATE TABLE IF NOT EXISTS atm_cash_levels (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        atm_id UUID NOT NULL REFERENCES atms(id) ON DELETE CASCADE,
+        total_cash DECIMAL(15, 2) NOT NULL DEFAULT 0,
+        denomination_200 INTEGER DEFAULT 0,
+        denomination_100 INTEGER DEFAULT 0,
+        denomination_50 INTEGER DEFAULT 0,
+        denomination_20 INTEGER DEFAULT 0,
+        cash_level_percent INTEGER CHECK (cash_level_percent >= 0 AND cash_level_percent <= 100),
+        measured_by VARCHAR(50) DEFAULT 'cassette_sensor',
+        transactions_since_count INTEGER DEFAULT 0,
+        last_dispensed_at TIMESTAMP WITH TIME ZONE,
+        recorded_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+      )
+    `;
+    await sql`CREATE INDEX IF NOT EXISTS idx_atm_cash_levels_atm ON atm_cash_levels(atm_id)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_atm_cash_levels_date ON atm_cash_levels(recorded_at)`;
+    log('✅ atm_cash_levels table created');
+
+    log('Creating atm_daily_stats table...');
+    await sql`
+      CREATE TABLE IF NOT EXISTS atm_daily_stats (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        atm_id UUID NOT NULL REFERENCES atms(id) ON DELETE CASCADE,
+        stats_date DATE NOT NULL DEFAULT CURRENT_DATE,
+        total_transactions INTEGER NOT NULL DEFAULT 0,
+        successful_transactions INTEGER NOT NULL DEFAULT 0,
+        failed_transactions INTEGER NOT NULL DEFAULT 0,
+        partially_dispensed INTEGER NOT NULL DEFAULT 0,
+        total_dispensed DECIMAL(15, 2) NOT NULL DEFAULT 0,
+        total_deposited DECIMAL(15, 2) NOT NULL DEFAULT 0,
+        total_fees_collected DECIMAL(15, 2) NOT NULL DEFAULT 0,
+        cassettes_used INTEGER DEFAULT 0,
+        uptime_percentage DECIMAL(5, 2),
+        avg_transaction_time_seconds DECIMAL(5, 2),
+        peak_hour INTEGER,
+        peak_transactions INTEGER,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        UNIQUE(atm_id, stats_date)
+      )
+    `;
+    await sql`CREATE INDEX IF NOT EXISTS idx_atm_daily_stats_atm ON atm_daily_stats(atm_id)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_atm_daily_stats_date ON atm_daily_stats(stats_date)`;
+    log('✅ atm_daily_stats table created');
+
+    // 21) Mobile Unit Tracking
+    log('Creating mobile_unit_details table...');
+    await sql`
+      CREATE TABLE IF NOT EXISTS mobile_unit_details (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        agent_id UUID NOT NULL REFERENCES agents(id) ON DELETE CASCADE UNIQUE,
+        vehicle_registration VARCHAR(20) UNIQUE,
+        vehicle_make VARCHAR(50),
+        vehicle_model VARCHAR(50),
+        vehicle_year INTEGER,
+        vehicle_type VARCHAR(50) DEFAULT 'van',
+        team_lead_name VARCHAR(255),
+        team_lead_phone VARCHAR(20),
+        team_size INTEGER DEFAULT 2,
+        assigned_regions TEXT[],
+        primary_region VARCHAR(50),
+        operating_hours_start TIME,
+        operating_hours_end TIME,
+        operating_days INTEGER[],
+        max_cash_capacity DECIMAL(15, 2) NOT NULL DEFAULT 500000,
+        current_cash_onboard DECIMAL(15, 2) NOT NULL DEFAULT 0,
+        route_status VARCHAR(20) NOT NULL DEFAULT 'depot',
+        current_latitude DECIMAL(10, 8),
+        current_longitude DECIMAL(11, 8),
+        last_location_update TIMESTAMP WITH TIME ZONE,
+        total_routes_completed INTEGER DEFAULT 0,
+        total_beneficiaries_served INTEGER DEFAULT 0,
+        avg_daily_transactions DECIMAL(10, 2),
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+      )
+    `;
+    await sql`CREATE INDEX IF NOT EXISTS idx_mobile_unit_details_region ON mobile_unit_details((ANY(assigned_regions)))`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_mobile_unit_details_status ON mobile_unit_details(route_status)`;
+    log('✅ mobile_unit_details table created');
+
+    log('Creating mobile_unit_routes table...');
+    await sql`
+      CREATE TABLE IF NOT EXISTS mobile_unit_routes (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        mobile_unit_id UUID NOT NULL REFERENCES agents(id) ON DELETE CASCADE,
+        route_name VARCHAR(255),
+        route_date DATE NOT NULL DEFAULT CURRENT_DATE,
+        planned_stops INTEGER,
+        planned_route JSONB,
+        estimated_duration_minutes INTEGER,
+        actual_stops INTEGER DEFAULT 0,
+        completed_stops INTEGER DEFAULT 0,
+        skipped_stops INTEGER DEFAULT 0,
+        departed_depot_at TIMESTAMP WITH TIME ZONE,
+        arrived_first_stop_at TIMESTAMP WITH TIME ZONE,
+        completed_route_at TIMESTAMP WITH TIME ZONE,
+        total_distance_km DECIMAL(10, 2),
+        total_transactions INTEGER DEFAULT 0,
+        total_volume DECIMAL(15, 2) DEFAULT 0,
+        route_status VARCHAR(20) NOT NULL DEFAULT 'planned',
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        UNIQUE(mobile_unit_id, route_date)
+      )
+    `;
+    await sql`CREATE INDEX IF NOT EXISTS idx_mobile_unit_routes_unit ON mobile_unit_routes(mobile_unit_id)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_mobile_unit_routes_date ON mobile_unit_routes(route_date)`;
+    log('✅ mobile_unit_routes table created');
+
+    log('Creating mobile_unit_stops table...');
+    await sql`
+      CREATE TABLE IF NOT EXISTS mobile_unit_stops (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        route_id UUID NOT NULL REFERENCES mobile_unit_routes(id) ON DELETE CASCADE,
+        stop_number INTEGER NOT NULL,
+        location_name VARCHAR(255),
+        latitude DECIMAL(10, 8) NOT NULL,
+        longitude DECIMAL(11, 8) NOT NULL,
+        planned_arrival TIME,
+        planned_departure TIME,
+        actual_arrival TIMESTAMP WITH TIME ZONE,
+        actual_departure TIMESTAMP WITH TIME ZONE,
+        beneficiaries_served INTEGER DEFAULT 0,
+        transactions_completed INTEGER DEFAULT 0,
+        total_amount DECIMAL(15, 2) DEFAULT 0,
+        stop_status VARCHAR(20) NOT NULL DEFAULT 'pending',
+        skip_reason TEXT,
+        notes TEXT,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL
+      )
+    `;
+    await sql`CREATE INDEX IF NOT EXISTS idx_mobile_unit_stops_route ON mobile_unit_stops(route_id)`;
+    log('✅ mobile_unit_stops table created');
+
+    log('Creating mobile_unit_liquidity table...');
+    await sql`
+      CREATE TABLE IF NOT EXISTS mobile_unit_liquidity (
+        id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+        mobile_unit_id UUID NOT NULL REFERENCES agents(id) ON DELETE CASCADE,
+        opening_balance DECIMAL(15, 2) NOT NULL,
+        closing_balance DECIMAL(15, 2),
+        topups_received DECIMAL(15, 2) NOT NULL DEFAULT 0,
+        cash_collected DECIMAL(15, 2) NOT NULL DEFAULT 0,
+        cash_dispensed DECIMAL(15, 2) NOT NULL DEFAULT 0,
+        variance_amount DECIMAL(15, 2),
+        variance_reason TEXT,
+        liquidity_date DATE NOT NULL DEFAULT CURRENT_DATE,
+        recorded_at TIMESTAMP WITH TIME ZONE DEFAULT NOW() NOT NULL,
+        UNIQUE(mobile_unit_id, liquidity_date)
+      )
+    `;
+    await sql`CREATE INDEX IF NOT EXISTS idx_mobile_unit_liquidity_unit ON mobile_unit_liquidity(mobile_unit_id)`;
+    await sql`CREATE INDEX IF NOT EXISTS idx_mobile_unit_liquidity_date ON mobile_unit_liquidity(liquidity_date)`;
+    log('✅ mobile_unit_liquidity table created');
+
+    // 22) Equipment Types (enhanced)
+    log('Adding equipment types for mobile units...');
+    await sql`
+      INSERT INTO equipment_types (code, label, category, requires_calibration, calibration_interval_days, useful_life_days)
+      VALUES
+        ('cash_dispenser', 'Cash Dispenser Module', 'dispenser', true, 30, NULL),
+        ('gps_tracker', 'GPS Tracking Device', 'communication', false, NULL, 365),
+        ('satellite_phone', 'Satellite Phone', 'communication', false, NULL, 730),
+        ('card_reader', 'Card Reader/PIN Pad', 'dispenser', true, 90, 365),
+        ('receipt_printer', 'Receipt Printer', 'other', false, NULL, 365),
+        ('secure_safe', 'Secure Cash Safe', 'security', false, NULL, NULL)
+      ON CONFLICT (code) DO NOTHING
+    `.catch(() => {});
+    log('✅ equipment types added');
 
     log('✅ Database migrations completed successfully');
   } catch (error) {

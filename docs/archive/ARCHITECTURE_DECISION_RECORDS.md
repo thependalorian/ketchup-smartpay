@@ -1,6 +1,6 @@
 # 📋 ARCHITECTURE DECISION RECORDS (ADRs)
 
-**SmartPay Connect - Modular Architecture**
+**Ketchup SmartPay - Modular Architecture**
 
 ---
 
@@ -11,7 +11,7 @@
 **Deciders:** Tech Lead, Frontend Lead, Backend Lead
 
 ### Context
-SmartPay Connect currently has a monolithic frontend with mixed Ketchup and Government pages. This creates maintenance challenges, deployment coupling, and larger bundle sizes.
+Ketchup SmartPay currently has a monolithic frontend with mixed Ketchup and Government pages. This creates maintenance challenges, deployment coupling, and larger bundle sizes.
 
 ### Decision
 Adopt a monorepo architecture using PNPM workspaces and Turborepo to manage multiple applications (Ketchup Portal, Government Portal) and shared packages.
@@ -229,9 +229,9 @@ Need to deploy Ketchup and Government portals independently. Options: single dep
 
 ### Decision
 Create separate Vercel projects for each portal:
-- `smartpay-ketchup-portal` → ketchup.smartpay-connect.com
-- `smartpay-government-portal` → gov.smartpay-connect.com
-- `smartpay-backend-api` → api.smartpay-connect.com
+- `smartpay-ketchup-portal` → ketchup.ketchup-smartpay.com
+- `smartpay-government-portal` → gov.ketchup-smartpay.com
+- `smartpay-backend-api` → api.ketchup-smartpay.com
 
 ### Consequences
 

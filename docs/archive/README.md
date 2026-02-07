@@ -1,6 +1,6 @@
 # 📁 ARCHIVE - HISTORICAL DOCUMENTATION
 
-**Consolidated historical documentation for SmartPay Connect**
+**Consolidated historical documentation for Ketchup SmartPay**
 
 **Also archived here (Jan 2026):** One-off implementation/refactoring reports: `IMPLEMENTATION_COMPLETE.md`, `IMPLEMENTATION_STATUS.md`, `IMPLEMENTATION_SUMMARY.md`, `REFACTORING_SUMMARY.md`, `REFACTORING_PLAN.md`, `ARCHITECTURE_COMPARISON.md`, `ARCHIVE_CONSOLIDATION_SUMMARY.md`. Use for historical reference only; current docs are in repo root and `/DOCUMENTATION.md`.
 

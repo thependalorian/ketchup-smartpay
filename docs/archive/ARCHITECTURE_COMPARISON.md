@@ -1,6 +1,6 @@
 # 🔄 ARCHITECTURE COMPARISON
 
-**SmartPay Connect - Before & After**
+**Ketchup SmartPay - Before & After**
 
 ---
 
@@ -29,7 +29,7 @@
 ```
 ┌───────────────────────────────────────────────────────────────┐
 │                    SINGLE APPLICATION                         │
-│                smartpay-connect.com                           │
+│                ketchup-smartpay.com                           │
 └───────────────────────────────────────────────────────────────┘
                             │
                             ▼
@@ -95,8 +95,8 @@
      ┌─────────────────────┐              ┌─────────────────────┐
      │  KETCHUP PORTAL     │              │  GOVERNMENT PORTAL  │
      │                     │              │                     │
-     │ ketchup.smartpay-   │              │ gov.smartpay-       │
-     │ connect.com         │              │ connect.com         │
+     │ ketchup.ketchup-    │              │ gov.ketchup-        │
+     │ smartpay.com        │              │ smartpay.com        │
      ├─────────────────────┤              ├─────────────────────┤
      │ React App           │              │ React App           │
      │ Bundle: 1.2 MB      │              │ Bundle: 800 KB      │
@@ -126,7 +126,7 @@
                              │
                 ┌────────────▼───────────────────────────────┐
                 │         Backend API (Unified)              │
-                │     api.smartpay-connect.com               │
+                │     api.ketchup-smartpay.com               │
                 ├────────────────────────────────────────────┤
                 │  Route Segregation:                        │
                 │  • /api/v1/ketchup/*    (Full CRUD)       │
@@ -160,7 +160,7 @@
 ### BEFORE: Monolithic
 
 ```
-smartpay-connect/
+ketchup-smartpay/
 ├── src/                          # Everything mixed together
 │   ├── components/
 │   │   ├── dashboard/           # Whose dashboard?
@@ -197,7 +197,7 @@ smartpay-connect/
 ### AFTER: Modular
 
 ```
-smartpay-connect/                    # Monorepo root
+ketchup-smartpay/                    # Monorepo root
 ├── apps/                            # Applications
 │   ├── ketchup-portal/             # ✅ Separate app
 │   │   ├── src/
@@ -255,10 +255,10 @@ smartpay-connect/                    # Monorepo root
 ```
 ┌─────────────────────────────────────────────────────┐
 │          SINGLE VERCEL PROJECT                      │
-│        smartpay-connect.vercel.app                  │
+│        ketchup-smartpay.vercel.app                  │
 ├─────────────────────────────────────────────────────┤
 │                                                     │
-│  Domain: smartpay-connect.com                       │
+│  Domain: ketchup-smartpay.com                       │
 │                                                     │
 │  Contains:                                          │
 │  • Ketchup pages                                    │
@@ -296,12 +296,12 @@ smartpay-connect/                    # Monorepo root
 │ portal.vercel.app    │  │ portal.vercel.app    │  │ backend-   │
 │                      │  │                      │  │ api.vercel │
 │ Domain:              │  │ Domain:              │  │ .app       │
-│ ketchup.smartpay-    │  │ gov.smartpay-        │  │            │
-│ connect.com          │  │ connect.com          │  │ Domain:    │
-│                      │  │                      │  │ api.smart- │
-│ Bundle: 1.2 MB       │  │ Bundle: 800 KB       │  │ pay-       │
-│ Build: 15s           │  │ Build: 12s           │  │ connect.   │
-│ Deploy: 45s          │  │ Deploy: 40s          │  │ com        │
+│ ketchup.ketchup-     │  │ gov.ketchup-         │  │ Domain:     │
+│ smartpay.com         │  │ smartpay.com         │  │ api.ketchup- │
+│                      │  │                      │  │ smartpay.com │
+│ Bundle: 1.2 MB       │  │ Bundle: 800 KB       │  │              │
+│ Build: 15s           │  │ Build: 12s           │  │            │
+│ Deploy: 45s          │  │ Deploy: 40s          │  │            │
 │                      │  │                      │  │            │
 │ Independent!         │  │ Independent!         │  │ Shared!    │
 └──────────────────────┘  └──────────────────────┘  └────────────┘
@@ -354,7 +354,7 @@ KETCHUP USER                     GOVERNMENT USER
     │                                │
     ▼                                ▼
 Login at ketchup.                Login at gov.
-smartpay-connect.com             smartpay-connect.com
+ketchup-smartpay.com             ketchup-smartpay.com
     │                                │
     ▼                                ▼
 Authenticate                     Authenticate

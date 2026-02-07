@@ -1,6 +1,6 @@
 # 🎯 START HERE!
 
-**SmartPay Connect v2.0 - Modular Architecture**
+**Ketchup SmartPay v2.0 - Modular Architecture**
 
 **Welcome!** Your complete refactoring has been implemented. Here's everything you need to know.
 
@@ -127,7 +127,7 @@ pnpm dev
 ## 🔍 PROJECT STRUCTURE
 
 ```
-smartpay-connect/
+ketchup-smartpay/
 │
 ├── apps/
 │   ├── ketchup-portal/       🏪 Operations (17 pages)
@@ -206,7 +206,7 @@ rm -rf node_modules && pnpm install  # Fresh install
 - **Pages:** 17
 - **Access:** Full CRUD
 - **Branding:** Ketchup blue/purple
-- **URL:** ketchup.smartpay-connect.com
+- **URL:** ketchup.ketchup-smartpay.com
 
 ### Government Portal
 - **Purpose:** Oversight & Compliance
@@ -214,7 +214,7 @@ rm -rf node_modules && pnpm install  # Fresh install
 - **Pages:** 12
 - **Access:** Read-Only
 - **Branding:** Government navy blue
-- **URL:** gov.smartpay-connect.com
+- **URL:** gov.ketchup-smartpay.com
 
 ---
 
@@ -296,7 +296,7 @@ lsof -ti :3001 | xargs kill -9  # Backend
 
 ```bash
 # Open terminal in project root
-cd /Users/georgenekwaya/Downloads/ai-agent-mastery-main/smartpay-connect
+cd /Users/georgenekwaya/Downloads/ai-agent-mastery-main/ketchup-smartpay
 
 # Install dependencies
 pnpm install

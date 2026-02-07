@@ -1,8 +1,8 @@
-# SmartPay Connect – Pages and API Reference
+# Ketchup SmartPay – Pages and API Reference
 
 **Order:** 1. Ketchup Portal → 2. Government Portal → 3. Backend API  
 **Purpose:** Single reference for all pages and correct backend routes.  
-**Location:** `smartpay-connect/docs/PAGES_AND_API_REFERENCE.md`
+**Location:** `ketchup-smartpay/docs/PAGES_AND_API_REFERENCE.md`
 
 ---
 
@@ -267,10 +267,10 @@ Key paths for voucher operations, alerts, and beneficiary communications:
 
 ## Appendix: Integration with Buffr
 
-For how Buffr integrates with SmartPay Connect and G2P (shared backend, DB, migration order), see:
+For how Buffr integrates with Ketchup SmartPay and G2P (shared backend, DB, migration order), see:
 
-- [smartpay-connect/backend/INTEGRATION.md](../../smartpay-connect/backend/INTEGRATION.md)
+- [ketchup-smartpay/backend/INTEGRATION.md](../../ketchup-smartpay/backend/INTEGRATION.md)
 - [AUDIT_RESULTS_3_PROJECTS.md](../../AUDIT_RESULTS_3_PROJECTS.md) (repo root)
 
 **Last Updated:** January 29, 2026  
-**Status:** Complete reference for all SmartPay Connect pages and APIs
+**Status:** Complete reference for all Ketchup SmartPay pages and APIs

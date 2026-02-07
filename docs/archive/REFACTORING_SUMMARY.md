@@ -1,14 +1,14 @@
 # 📋 REFACTORING DOCUMENTATION SUMMARY
 
-**SmartPay Connect - Complete Modular Architecture Refactoring**
+**Ketchup SmartPay - Complete Modular Architecture Refactoring**
 
 ---
 
 ## 🎯 OVERVIEW
 
-This folder contains complete documentation for refactoring SmartPay Connect from a monolithic architecture to a modular, multi-portal system.
+This folder contains complete documentation for refactoring Ketchup SmartPay from a monolithic architecture to a modular, multi-portal system.
 
-**Project:** SmartPay Connect  
+**Project:** Ketchup SmartPay  
 **Current State:** Monolithic (1 app with profile switching)  
 **Target State:** Modular (2 independent portals + shared packages)  
 **Timeline:** 9 weeks  
@@ -453,7 +453,7 @@ If all items above are checked, you're ready to begin Phase 1!
 
 **From Monolith to Modular**
 
-We're transforming SmartPay Connect from a single monolithic application into a modern, modular system with:
+We're transforming Ketchup SmartPay from a single monolithic application into a modern, modular system with:
 - 2 independent portals
 - 5 shared packages
 - Independent deployments
@@ -467,7 +467,7 @@ We're transforming SmartPay Connect from a single monolithic application into a 
 
 ---
 
-**🚀 Let's Build a Better SmartPay Connect!**
+**🚀 Let's Build a Better Ketchup SmartPay!**
 
 ---
 

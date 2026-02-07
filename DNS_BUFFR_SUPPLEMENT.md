@@ -1,6 +1,6 @@
 # Buffr App Integration - DNS Supplement
 
-## SmartPay Connect Namibia G2P Voucher Platform
+## Ketchup SmartPay Namibia G2P Voucher Platform
 
 **Version:** 1.0  
 **Date:** February 1, 2026
@@ -9,7 +9,7 @@
 
 ## Buffr App Integration
 
-The **Buffr** mobile app (React Native/Expo) integrates with the SmartPay Connect backend API.
+The **Buffr** mobile app (React Native/Expo) integrates with the Ketchup SmartPay backend API.
 
 ### Integration Points
 

@@ -25,7 +25,7 @@
 
 ### Overview
 
-SmartPay Connect achieved **100% compliance** with Namibian Payment System Determinations:
+Ketchup SmartPay achieved **100% compliance** with Namibian Payment System Determinations:
 
 **Regulations Implemented:**
 - ✅ **PSD-1:** Payment Service Provider Licensing
@@ -68,7 +68,7 @@ Documentation:         ~150 pages
 
 ## 2. Regulatory Analysis
 
-### SmartPay Connect Classification
+### Ketchup SmartPay Classification
 
 **Primary Classification:**
 - Payment Service Provider (PSP)
@@ -813,7 +813,7 @@ PSD-1 Compliance:     100% ✅
 
 ## 🎯 Summary
 
-SmartPay Connect has achieved **100% compliance** with all applicable Namibian Payment System Determinations:
+Ketchup SmartPay has achieved **100% compliance** with all applicable Namibian Payment System Determinations:
 
 ✅ **PSD-1:** Agent reporting automated  
 ✅ **PSD-3:** Trust account, capital, dormancy, monthly reporting  

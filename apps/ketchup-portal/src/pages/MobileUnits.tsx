@@ -25,7 +25,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from '@smartpay/ui';
-import { Search, Package, Users, Activity } from 'lucide-react';
+import { Search, Package, Users, Activity, Truck, Plus, Pencil, Trash2 } from 'lucide-react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { mobileUnitsAPI } from '@smartpay/api-client/ketchup';
 import type {
@@ -33,6 +33,7 @@ import type {
   MobileUnitEquipment,
   MobileUnitDriver,
   EquipmentType,
+  ActivityItem,
 } from '@smartpay/api-client/ketchup';
 
 const PAGE_SIZE = 10;
@@ -41,7 +42,7 @@ const NAMIBIAN_REGIONS = [
   'Kavango East', 'Kavango West', 'Zambezi', 'Kunene', 'Otjozondjupa', 'Omaheke', 'Hardap', 'Karas',
 ];
 
-type DetailTab = 'info' | 'equipment' | 'drivers' | 'activity';
+type DetailTab = 'info' | 'equipment' | 'vehicles' | 'drivers' | 'activity';
 
 export default function MobileUnits() {
   const [search, setSearch] = useState('');
@@ -52,6 +53,13 @@ export default function MobileUnits() {
   const [detailTab, setDetailTab] = useState<DetailTab>('info');
   const [issueForm, setIssueForm] = useState({ equipmentTypeCode: '', assetId: '', notes: '' });
   const [showIssueForm, setShowIssueForm] = useState(false);
+  const [showMaintenanceForm, setShowMaintenanceForm] = useState(false);
+  const [maintenanceForm, setMaintenanceForm] = useState({ type: 'inspection', description: '', partsUsed: '', cost: '', meterReading: '' });
+  const [showDriverForm, setShowDriverForm] = useState(false);
+  const [driverForm, setDriverForm] = useState({ name: '', idNumber: '', phone: '', role: 'driver' });
+  const [editingDriver, setEditingDriver] = useState<MobileUnitDriver | null>(null);
+  const [confirmRemoveDriverId, setConfirmRemoveDriverId] = useState<string | null>(null);
+  const [showVehicleIssueForm, setShowVehicleIssueForm] = useState(false);
   const queryClient = useQueryClient();
 
   const { data: unitsResponse, isLoading } = useQuery({
@@ -111,6 +119,30 @@ export default function MobileUnits() {
       queryClient.invalidateQueries({ queryKey: ['mobile-units-activity', unitId] });
       setShowMaintenanceForm(false);
       setMaintenanceForm({ type: 'inspection', description: '', partsUsed: '', cost: '', meterReading: '' });
+    },
+  });
+  const addDriverMutation = useMutation({
+    mutationFn: (body: { name: string; idNumber?: string; phone?: string; role?: string }) =>
+      mobileUnitsAPI.addDriver(unitId, body),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['mobile-units-drivers', unitId] });
+      setShowDriverForm(false);
+      setDriverForm({ name: '', idNumber: '', phone: '', role: 'driver' });
+    },
+  });
+  const updateDriverMutation = useMutation({
+    mutationFn: ({ driverId, body }: { driverId: string; body: { name?: string; idNumber?: string; phone?: string; role?: string; status?: string } }) =>
+      mobileUnitsAPI.updateDriver(unitId, driverId, body),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['mobile-units-drivers', unitId] });
+      setEditingDriver(null);
+    },
+  });
+  const removeDriverMutation = useMutation({
+    mutationFn: (driverId: string) => mobileUnitsAPI.removeDriver(unitId, driverId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['mobile-units-drivers', unitId] });
+      setConfirmRemoveDriverId(null);
     },
   });
 
@@ -202,6 +234,10 @@ export default function MobileUnits() {
               setDetailTab('info');
               setShowIssueForm(false);
               setShowMaintenanceForm(false);
+              setShowDriverForm(false);
+              setEditingDriver(null);
+              setConfirmRemoveDriverId(null);
+              setShowVehicleIssueForm(false);
             }
           }}
         >
@@ -228,6 +264,13 @@ export default function MobileUnits() {
                     onClick={() => setDetailTab('equipment')}
                   >
                     <Package className="h-4 w-4 mr-1" /> Equipment
+                  </Button>
+                  <Button
+                    variant={detailTab === 'vehicles' ? 'default' : 'outline'}
+                    size="sm"
+                    onClick={() => setDetailTab('vehicles')}
+                  >
+                    <Truck className="h-4 w-4 mr-1" /> Vehicles
                   </Button>
                   <Button
                     variant={detailTab === 'drivers' ? 'default' : 'outline'}
@@ -346,19 +389,116 @@ export default function MobileUnits() {
                   </div>
                 )}
 
+                {detailTab === 'vehicles' && (
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <p className="font-medium">Vehicles</p>
+                      <Button size="sm" onClick={() => { setIssueForm((f) => ({ ...f, equipmentTypeCode: 'vehicle', assetId: '', notes: '' })); setShowVehicleIssueForm(!showVehicleIssueForm); }}>
+                        {showVehicleIssueForm ? 'Cancel' : 'Register vehicle'}
+                      </Button>
+                    </div>
+                    {showVehicleIssueForm && (
+                      <Card className="p-4 space-y-3">
+                        <p className="text-xs text-muted-foreground">Type: Vehicle</p>
+                        <label className="block text-xs font-medium">Asset ID / Plate</label>
+                        <Input
+                          placeholder="Plate or asset number"
+                          value={issueForm.assetId}
+                          onChange={(e) => setIssueForm((f) => ({ ...f, assetId: e.target.value }))}
+                          className="text-sm"
+                        />
+                        <label className="block text-xs font-medium">Notes (optional)</label>
+                        <Input
+                          placeholder="Condition notes"
+                          value={issueForm.notes}
+                          onChange={(e) => setIssueForm((f) => ({ ...f, notes: e.target.value }))}
+                          className="text-sm"
+                        />
+                        <Button
+                          size="sm"
+                          disabled={!issueForm.assetId || issueMutation.isPending}
+                          onClick={() => {
+                            issueMutation.mutate({ equipmentTypeCode: 'vehicle', assetId: issueForm.assetId, notes: issueForm.notes || undefined });
+                            setShowVehicleIssueForm(false);
+                            setIssueForm((f) => ({ ...f, assetId: '', notes: '' }));
+                          }}
+                        >
+                          {issueMutation.isPending ? 'Registering…' : 'Register vehicle'}
+                        </Button>
+                      </Card>
+                    )}
+                    {(equipmentList as MobileUnitEquipment[]).filter((eq) => eq.equipmentTypeCode === 'vehicle').length === 0 ? (
+                      <p className="text-muted-foreground text-xs">No vehicles registered. Use “Register vehicle” to add.</p>
+                    ) : (
+                      <Table>
+                        <TableHeader>
+                          <TableRow>
+                            <TableHead>Asset ID / Plate</TableHead>
+                            <TableHead>Status</TableHead>
+                            <TableHead>Issued</TableHead>
+                            <TableHead className="w-[80px]">Actions</TableHead>
+                          </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                          {(equipmentList as MobileUnitEquipment[]).filter((eq) => eq.equipmentTypeCode === 'vehicle').map((eq) => (
+                            <TableRow key={eq.id}>
+                              <TableCell className="font-medium">{eq.assetId}</TableCell>
+                              <TableCell>{eq.status}</TableCell>
+                              <TableCell>{eq.issuedAt ? new Date(eq.issuedAt).toLocaleDateString() : '—'}</TableCell>
+                              <TableCell>
+                                {eq.status !== 'returned' && (
+                                  <Button variant="outline" size="sm" disabled={returnMutation.isPending} onClick={() => returnMutation.mutate(eq.id)}>
+                                    Return
+                                  </Button>
+                                )}
+                              </TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    )}
+                  </div>
+                )}
+
                 {detailTab === 'drivers' && (
                   <div className="space-y-4">
-                    <p className="font-medium">Drivers</p>
-                    {driversList.length === 0 ? (
-                      <p className="text-muted-foreground text-xs">No drivers assigned.</p>
+                    <div className="flex justify-between items-center">
+                      <p className="font-medium">Drivers</p>
+                      <Button size="sm" onClick={() => { setEditingDriver(null); setDriverForm({ name: '', idNumber: '', phone: '', role: 'driver' }); setShowDriverForm(!showDriverForm); }}>
+                        {showDriverForm ? 'Cancel' : <><Plus className="h-4 w-4 mr-1" /> Add driver</>}
+                      </Button>
+                    </div>
+                    {showDriverForm && (
+                      <Card className="p-4 space-y-3">
+                        <label className="block text-xs font-medium">Name *</label>
+                        <Input placeholder="Full name" value={driverForm.name} onChange={(e) => setDriverForm((f) => ({ ...f, name: e.target.value }))} className="text-sm" />
+                        <label className="block text-xs font-medium">ID number</label>
+                        <Input placeholder="ID number" value={driverForm.idNumber} onChange={(e) => setDriverForm((f) => ({ ...f, idNumber: e.target.value }))} className="text-sm" />
+                        <label className="block text-xs font-medium">Phone</label>
+                        <Input placeholder="Phone" value={driverForm.phone} onChange={(e) => setDriverForm((f) => ({ ...f, phone: e.target.value }))} className="text-sm" />
+                        <label className="block text-xs font-medium">Role</label>
+                        <Input placeholder="e.g. driver" value={driverForm.role} onChange={(e) => setDriverForm((f) => ({ ...f, role: e.target.value }))} className="text-sm" />
+                        <Button
+                          size="sm"
+                          disabled={!driverForm.name.trim() || addDriverMutation.isPending}
+                          onClick={() => addDriverMutation.mutate({ name: driverForm.name.trim(), idNumber: driverForm.idNumber || undefined, phone: driverForm.phone || undefined, role: driverForm.role || undefined })}
+                        >
+                          {addDriverMutation.isPending ? 'Adding…' : 'Add driver'}
+                        </Button>
+                      </Card>
+                    )}
+                    {driversList.length === 0 && !showDriverForm ? (
+                      <p className="text-muted-foreground text-xs">No drivers assigned. Use “Add driver” to add.</p>
                     ) : (
                       <Table>
                         <TableHeader>
                           <TableRow>
                             <TableHead>Name</TableHead>
                             <TableHead>ID number</TableHead>
+                            <TableHead>Phone</TableHead>
                             <TableHead>Role</TableHead>
                             <TableHead>Status</TableHead>
+                            <TableHead className="w-[100px]">Actions</TableHead>
                           </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -366,12 +506,106 @@ export default function MobileUnits() {
                             <TableRow key={d.id}>
                               <TableCell className="font-medium">{d.name}</TableCell>
                               <TableCell>{d.idNumber ?? '—'}</TableCell>
+                              <TableCell>{d.phone ?? '—'}</TableCell>
                               <TableCell>{d.role}</TableCell>
                               <TableCell>{d.status}</TableCell>
+                              <TableCell>
+                                <div className="flex gap-1">
+                                  <Button variant="ghost" size="sm" onClick={() => { setEditingDriver(d); setDriverForm({ name: d.name, idNumber: d.idNumber ?? '', phone: d.phone ?? '', role: d.role }); setShowDriverForm(false); }}>
+                                    <Pencil className="h-4 w-4" />
+                                  </Button>
+                                  <Button variant="ghost" size="sm" onClick={() => setConfirmRemoveDriverId(d.id)}>
+                                    <Trash2 className="h-4 w-4 text-destructive" />
+                                  </Button>
+                                </div>
+                              </TableCell>
                             </TableRow>
                           ))}
                         </TableBody>
                       </Table>
+                    )}
+                    {editingDriver && (
+                      <Card className="p-4 space-y-3">
+                        <p className="font-medium text-sm">Edit driver: {editingDriver.name}</p>
+                        <label className="block text-xs font-medium">Name *</label>
+                        <Input placeholder="Full name" value={driverForm.name} onChange={(e) => setDriverForm((f) => ({ ...f, name: e.target.value }))} className="text-sm" />
+                        <label className="block text-xs font-medium">ID number</label>
+                        <Input placeholder="ID number" value={driverForm.idNumber} onChange={(e) => setDriverForm((f) => ({ ...f, idNumber: e.target.value }))} className="text-sm" />
+                        <label className="block text-xs font-medium">Phone</label>
+                        <Input placeholder="Phone" value={driverForm.phone} onChange={(e) => setDriverForm((f) => ({ ...f, phone: e.target.value }))} className="text-sm" />
+                        <label className="block text-xs font-medium">Role</label>
+                        <Input placeholder="Role" value={driverForm.role} onChange={(e) => setDriverForm((f) => ({ ...f, role: e.target.value }))} className="text-sm" />
+                        <div className="flex gap-2">
+                          <Button size="sm" variant="outline" onClick={() => setEditingDriver(null)}>Cancel</Button>
+                          <Button
+                            size="sm"
+                            disabled={!driverForm.name.trim() || updateDriverMutation.isPending}
+                            onClick={() => updateDriverMutation.mutate({ driverId: editingDriver.id, body: { name: driverForm.name.trim(), idNumber: driverForm.idNumber || undefined, phone: driverForm.phone || undefined, role: driverForm.role || undefined } })}
+                          >
+                            {updateDriverMutation.isPending ? 'Saving…' : 'Save'}
+                          </Button>
+                        </div>
+                      </Card>
+                    )}
+                    {confirmRemoveDriverId && (
+                      <Card className="p-4">
+                        <p className="text-sm mb-2">Remove this driver from the unit?</p>
+                        <div className="flex gap-2">
+                          <Button size="sm" variant="outline" onClick={() => setConfirmRemoveDriverId(null)}>Cancel</Button>
+                          <Button size="sm" variant="destructive" disabled={removeDriverMutation.isPending} onClick={() => removeDriverMutation.mutate(confirmRemoveDriverId)}>
+                            {removeDriverMutation.isPending ? 'Removing…' : 'Remove'}
+                          </Button>
+                        </div>
+                      </Card>
+                    )}
+                  </div>
+                )}
+
+                {detailTab === 'activity' && (
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <p className="font-medium">Activity</p>
+                      <Button size="sm" onClick={() => setShowMaintenanceForm(!showMaintenanceForm)}>
+                        {showMaintenanceForm ? 'Cancel' : 'Log maintenance'}
+                      </Button>
+                    </div>
+                    {showMaintenanceForm && (
+                      <Card className="p-4 space-y-3">
+                        <label className="block text-xs font-medium">Type</label>
+                        <select value={maintenanceForm.type} onChange={(e) => setMaintenanceForm((f) => ({ ...f, type: e.target.value }))} className="w-full h-9 rounded-md border border-input bg-background px-3 text-sm">
+                          <option value="inspection">Inspection</option>
+                          <option value="repair">Repair</option>
+                          <option value="service">Service</option>
+                          <option value="other">Other</option>
+                        </select>
+                        <label className="block text-xs font-medium">Description *</label>
+                        <Input placeholder="Description" value={maintenanceForm.description} onChange={(e) => setMaintenanceForm((f) => ({ ...f, description: e.target.value }))} className="text-sm" />
+                        <label className="block text-xs font-medium">Parts used</label>
+                        <Input placeholder="Parts used" value={maintenanceForm.partsUsed} onChange={(e) => setMaintenanceForm((f) => ({ ...f, partsUsed: e.target.value }))} className="text-sm" />
+                        <label className="block text-xs font-medium">Cost (NAD)</label>
+                        <Input type="number" placeholder="Cost" value={maintenanceForm.cost} onChange={(e) => setMaintenanceForm((f) => ({ ...f, cost: e.target.value }))} className="text-sm" />
+                        <label className="block text-xs font-medium">Meter reading</label>
+                        <Input placeholder="Meter reading" value={maintenanceForm.meterReading} onChange={(e) => setMaintenanceForm((f) => ({ ...f, meterReading: e.target.value }))} className="text-sm" />
+                        <Button
+                          size="sm"
+                          disabled={!maintenanceForm.description.trim() || maintenanceMutation.isPending}
+                          onClick={() => maintenanceMutation.mutate({ type: maintenanceForm.type, description: maintenanceForm.description.trim(), partsUsed: maintenanceForm.partsUsed || undefined, cost: maintenanceForm.cost ? Number(maintenanceForm.cost) : undefined, meterReading: maintenanceForm.meterReading || undefined })}
+                        >
+                          {maintenanceMutation.isPending ? 'Logging…' : 'Log maintenance'}
+                        </Button>
+                      </Card>
+                    )}
+                    {activityList.length === 0 ? (
+                      <p className="text-muted-foreground text-xs">No activity yet.</p>
+                    ) : (
+                      <ul className="space-y-2 text-sm">
+                        {(activityList as ActivityItem[]).map((a) => (
+                          <li key={a.id} className="flex justify-between border-b pb-2">
+                            <span><strong>{a.type}</strong> {a.description ?? a.maintenanceType ?? a.assetId ?? ''} {a.cost != null ? ` · ${formatCurrency(a.cost)}` : ''}</span>
+                            <span className="text-muted-foreground">{a.at ? new Date(a.at).toLocaleString() : ''}</span>
+                          </li>
+                        ))}
+                      </ul>
                     )}
                   </div>
                 )}

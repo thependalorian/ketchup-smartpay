@@ -1,9 +1,9 @@
-# 🎨 VISUAL GUIDE - SmartPay Connect v2.0
+# 🎨 VISUAL GUIDE - Ketchup SmartPay v2.0
 
 ## 📊 COMPLETE STRUCTURE
 
 ```
-smartpay-connect/ (Monorepo Root)
+ketchup-smartpay/ (Monorepo Root)
 │
 ├── 📱 apps/                                 # Applications
 │   │
@@ -436,19 +436,19 @@ Database (Read-Only)
 └────────────────────────────────────────────────────┘
 
 Project 1: smartpay-ketchup-portal
-├── Domain: ketchup.smartpay-connect.com
+├── Domain: ketchup.ketchup-smartpay.com
 ├── Build: apps/ketchup-portal
 ├── CI/CD: .github/workflows/ketchup-portal.yml
 └── Triggers: Changes to ketchup-portal/ or packages/
 
 Project 2: smartpay-government-portal
-├── Domain: gov.smartpay-connect.com
+├── Domain: gov.ketchup-smartpay.com
 ├── Build: apps/government-portal
 ├── CI/CD: .github/workflows/government-portal.yml
 └── Triggers: Changes to government-portal/ or packages/
 
 Project 3: smartpay-backend-api
-├── Domain: api.smartpay-connect.com
+├── Domain: api.ketchup-smartpay.com
 ├── Build: backend/
 ├── CI/CD: .github/workflows/backend.yml
 └── Triggers: Changes to backend/

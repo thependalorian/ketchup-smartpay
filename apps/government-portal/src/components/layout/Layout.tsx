@@ -2,6 +2,7 @@
  * Layout Component - Government Portal
  * 
  * Purpose: Main layout wrapper with sidebar and header
+ * Mobile responsive with collapsible sidebar and hamburger menu
  * Location: apps/government-portal/src/components/layout/Layout.tsx
  */
 
@@ -17,14 +18,16 @@ interface LayoutProps {
 
 export function Layout({ children, title, subtitle }: LayoutProps) {
   return (
-    <div className="flex h-screen">
+    <div className="flex min-h-screen bg-background">
       <Sidebar />
-      <div className="flex-1 overflow-auto" style={{ marginLeft: '260px' }}>
+      
+      {/* Main content area - responsive margins */}
+      <div className="flex flex-1 flex-col lg:ml-[260px] min-h-screen transition-all duration-300">
         <Header title={title} subtitle={subtitle} />
-        <main className="p-6">
-          {/* Read-only indicator */}
+        <main className="flex-1 p-4 md:p-6 lg:p-6">
+          {/* Read-only indicator - Ketchup brand styling */}
           <div className="mb-4 flex items-center gap-2 text-xs text-muted-foreground">
-            <div className="h-2 w-2 rounded-full bg-blue-500"></div>
+            <div className="h-2 w-2 rounded-full bg-primary"></div>
             <span>Government Oversight Portal - Read-Only Access</span>
           </div>
           {children}

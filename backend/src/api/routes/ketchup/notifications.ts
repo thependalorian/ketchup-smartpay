@@ -11,7 +11,7 @@ import { logError } from '../../../utils/logger';
 import { authenticate } from '../../middleware/auth';
 import { NotificationsService } from '../../../services/notifications/NotificationsService';
 
-const router = Router();
+const router: Router = Router();
 const notificationsService = new NotificationsService();
 
 /**

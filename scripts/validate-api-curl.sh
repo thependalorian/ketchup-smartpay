@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# SmartPay Connect – API validation with curl
-# Run from repo root or smartpay-connect. Backend must be running on PORT (default 3001).
+# Ketchup SmartPay – API validation with curl
+# Run from repo root or ketchup-smartpay. Backend must be running on PORT (default 3001).
 # Usage: ./scripts/validate-api-curl.sh [BASE_URL]
 # Optional: set API_KEY (or KETCHUP_SMARTPAY_API_KEY) so Ketchup/mobile-units routes pass auth.
 
@@ -36,7 +36,7 @@ check() {
   fi
 }
 
-echo "Validating SmartPay Connect API at $BASE"
+echo "Validating Ketchup SmartPay API at $BASE"
 echo "----------------------------------------"
 
 # Health

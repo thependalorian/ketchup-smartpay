@@ -11,7 +11,7 @@ import { APIResponse, PaginatedResponse } from '../../../../../shared/types';
 import { log, logError } from '../../../utils/logger';
 import { authenticate } from '../../middleware/auth';
 
-const router = Router();
+const router: Router = Router();
 const reconciliationService = new ReconciliationService();
 
 /**
