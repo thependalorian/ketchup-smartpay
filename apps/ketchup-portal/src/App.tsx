@@ -3,6 +3,7 @@
  * 
  * Purpose: Main application component with routing (NO ProfileContext)
  * Location: apps/ketchup-portal/src/App.tsx
+ * Updated: Deployment trigger - Feb 7, 2026
  */
 
 import { Toaster } from '@smartpay/ui';
