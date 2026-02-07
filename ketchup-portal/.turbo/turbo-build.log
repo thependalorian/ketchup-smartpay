@@ -1,0 +1,25 @@
+
+> ketchup-portal@2.0.0 build /Users/georgenekwaya/Downloads/ai-agent-mastery-main/ketchup-smartpay/apps/ketchup-portal
+> vite build
+
+▲ [WARNING] Duplicate key "build:backend" in object literal [duplicate-object-key]
+
+    ../../package.json:20:4:
+      20 │     "build:backend": "turbo run build --filter=backend",
+         ╵     ~~~~~~~~~~~~~~~
+
+  The original key "build:backend" is here:
+
+    ../../package.json:17:4:
+      17 │     "build:backend": "cd backend && pnpm run build:vercel",
+         ╵     ~~~~~~~~~~~~~~~
+
+vite v5.4.21 building for production...
+transforming...
+✓ 4290 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                     0.54 kB │ gzip:   0.32 kB
+dist/assets/index-WBXDohMX.css     97.37 kB │ gzip:  20.31 kB
+dist/assets/index-Bei4b1aC.js   1,624.84 kB │ gzip: 461.16 kB │ map: 7,264.46 kB
+✓ built in 17.53s

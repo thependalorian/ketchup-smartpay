@@ -1,0 +1,13 @@
+
+> government-portal@2.0.0 build /Users/georgenekwaya/Downloads/ai-agent-mastery-main/ketchup-smartpay/apps/government-portal
+> vite build
+
+vite v5.4.21 building for production...
+transforming...
+✓ 4197 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                   0.50 kB │ gzip:   0.32 kB
+dist/assets/index-CH3ERVM7.css   62.28 kB │ gzip:  11.14 kB
+dist/assets/index-Dw3Scs16.js   907.75 kB │ gzip: 275.53 kB │ map: 4,344.03 kB
+✓ built in 10.97s

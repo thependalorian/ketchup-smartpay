@@ -1,0 +1,59 @@
+/**
+ * Hardware Security Module (HSM) – HSM integration for POS/ATM
+ *
+ * Location: backend/src/services/security/HardwareSecurityModule.ts
+ * Purpose: Key management and crypto operations for POS/ATM (PRD FR3.7).
+ */
+import { logError } from '../../utils/logger';
+const HSM_ENABLED = process.env.HSM_ENABLED === 'true';
+const HSM_URL = process.env.HSM_URL || '';
+export class HardwareSecurityModule {
+    /**
+     * Sign payload with HSM key (e.g. for transaction authorization).
+     * Throws when HSM is not configured; no mock signatures in production.
+     */
+    async sign(keyId, payload) {
+        if (!HSM_ENABLED || !HSM_URL) {
+            logError('HSM sign called but HSM is not configured', new Error('HSM_NOT_CONFIGURED'), { keyId });
+            throw new Error('HSM is not configured; set HSM_ENABLED=true and HSM_URL for production signing.');
+        }
+        try {
+            const res = await fetch(`${HSM_URL}/sign`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ keyId, payload }),
+            });
+            const data = (await res.json());
+            return data.signature;
+        }
+        catch (e) {
+            logError('HSM sign failed', e, { keyId });
+            throw e;
+        }
+    }
+    /**
+     * Encrypt sensitive field (e.g. PIN block) for POS.
+     * Throws when HSM is not configured; no mock ciphertext.
+     */
+    async encryptPinBlock(pinBlock, keyId) {
+        if (!HSM_ENABLED || !HSM_URL) {
+            logError('HSM encrypt called but HSM is not configured', new Error('HSM_NOT_CONFIGURED'), { keyId });
+            throw new Error('HSM is not configured; set HSM_ENABLED=true and HSM_URL for PIN encryption.');
+        }
+        try {
+            const res = await fetch(`${HSM_URL}/encrypt`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ keyId, plaintext: pinBlock }),
+            });
+            const data = (await res.json());
+            return data.ciphertext;
+        }
+        catch (e) {
+            logError('HSM encrypt failed', e, { keyId });
+            throw e;
+        }
+    }
+}
+export const hardwareSecurityModule = new HardwareSecurityModule();
+//# sourceMappingURL=HardwareSecurityModule.js.map

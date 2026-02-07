@@ -1,0 +1,299 @@
+/**
+ * Dashboard Service
+ *
+ * Purpose: Generate dashboard metrics from database
+ * Location: backend/src/services/dashboard/DashboardService.ts
+ *
+ * Analytics endpoints (PRD Section 9): Impact KPIs exposed via government API:
+ * - GET /api/government/impact – ImpactAnalyticsService.getImpactKPIs (financial inclusion, social impact, adoption, NPS)
+ * - GET /api/government/analytics – existing analytics; can add adoption and training metrics
+ */
+import { sql } from '../../database/connection';
+import { logError } from '../../utils/logger';
+export class DashboardService {
+    /**
+     * Get dashboard metrics
+     */
+    async getMetrics() {
+        const emptyBeneficiary = { total: 0, active: 0, deceased: 0 };
+        const emptyVoucher = {
+            total_issued: 0,
+            redeemed: 0,
+            expired: 0,
+            total_disbursement: 0,
+            monthly_disbursement: 0,
+        };
+        const emptyAgent = { total: 0, active: 0 };
+        let beneficiaryStats = emptyBeneficiary;
+        let voucherStats = emptyVoucher;
+        let agentStats = emptyAgent;
+        try {
+            const [b] = await sql `
+        SELECT 
+          COUNT(*) as total,
+          COUNT(*) FILTER (WHERE status = 'active') as active,
+          COUNT(*) FILTER (WHERE status = 'deceased') as deceased
+        FROM beneficiaries
+      `;
+            if (b)
+                beneficiaryStats = { total: Number(b.total), active: Number(b.active), deceased: Number(b.deceased) };
+        }
+        catch (e) {
+            logError('Dashboard getMetrics: beneficiaries query failed (table may not exist)', e);
+        }
+        try {
+            const [v] = await sql `
+        SELECT 
+          COUNT(*) as total_issued,
+          COUNT(*) FILTER (WHERE status = 'redeemed') as redeemed,
+          COUNT(*) FILTER (WHERE status = 'expired') as expired,
+          COALESCE(SUM(amount), 0) as total_disbursement,
+          COALESCE(SUM(amount) FILTER (
+            WHERE issued_at >= DATE_TRUNC('month', CURRENT_DATE)
+          ), 0) as monthly_disbursement
+        FROM vouchers
+      `;
+            if (v)
+                voucherStats = {
+                    total_issued: Number(v.total_issued),
+                    redeemed: Number(v.redeemed),
+                    expired: Number(v.expired),
+                    total_disbursement: Number(v.total_disbursement),
+                    monthly_disbursement: Number(v.monthly_disbursement),
+                };
+        }
+        catch (e) {
+            logError('Dashboard getMetrics: vouchers query failed (table may not exist)', e);
+        }
+        try {
+            const [a] = await sql `
+        SELECT 
+          COUNT(*) as total,
+          COUNT(*) FILTER (WHERE status = 'active') as active
+        FROM agents
+      `;
+            if (a)
+                agentStats = { total: Number(a.total), active: Number(a.active) };
+        }
+        catch (e) {
+            logError('Dashboard getMetrics: agents query failed (table may not exist)', e);
+        }
+        const networkHealthScore = agentStats.active > 0 && agentStats.total > 0
+            ? Math.min(100, (agentStats.active / agentStats.total) * 100)
+            : 100;
+        return {
+            totalBeneficiaries: beneficiaryStats.total,
+            activeBeneficiaries: beneficiaryStats.active,
+            deceasedBeneficiaries: beneficiaryStats.deceased,
+            totalVouchersIssued: voucherStats.total_issued,
+            vouchersRedeemed: voucherStats.redeemed,
+            vouchersExpired: voucherStats.expired,
+            totalDisbursement: voucherStats.total_disbursement,
+            monthlyDisbursement: voucherStats.monthly_disbursement,
+            activeAgents: agentStats.active,
+            totalAgents: agentStats.total,
+            networkHealthScore: Number(networkHealthScore.toFixed(1)),
+        };
+    }
+    /**
+     * Get monthly trend data
+     */
+    async getMonthlyTrend(months = 12) {
+        try {
+            const result = await sql `
+        SELECT 
+          TO_CHAR(DATE_TRUNC('month', issued_at), 'YYYY-MM') as month,
+          COUNT(*) as issued,
+          COUNT(*) FILTER (WHERE status = 'redeemed') as redeemed,
+          COUNT(*) FILTER (WHERE status = 'expired') as expired
+        FROM vouchers
+        WHERE issued_at >= CURRENT_DATE - (${months} || ' months')::INTERVAL
+        GROUP BY DATE_TRUNC('month', issued_at)
+        ORDER BY month DESC
+        LIMIT ${months}
+      `;
+            return result.map((row) => ({
+                month: row.month,
+                issued: Number(row.issued || 0),
+                redeemed: Number(row.redeemed || 0),
+                expired: Number(row.expired || 0),
+            }));
+        }
+        catch (error) {
+            logError('Failed to get monthly trend', error);
+            throw error;
+        }
+    }
+    /** Valid redemption channels only (no bank, no unknown). */
+    static REDEMPTION_CHANNELS = [
+        'post_office',
+        'mobile_unit',
+        'pos',
+        'mobile',
+        'atm',
+    ];
+    /**
+     * Get redemption channels data.
+     * Only returns valid channels: post_office, mobile_unit, pos, mobile, atm.
+     * Legacy "bank" and null/unknown counts are allocated proportionally into these channels.
+     */
+    async getRedemptionChannels() {
+        try {
+            const result = await sql `
+        SELECT 
+          COALESCE(redemption_method, 'unknown') as channel,
+          COUNT(*) as count
+        FROM vouchers
+        WHERE status = 'redeemed'
+        GROUP BY redemption_method
+        ORDER BY count DESC
+      `;
+            const validSet = new Set(DashboardService.REDEMPTION_CHANNELS);
+            const byChannel = new Map();
+            for (const ch of DashboardService.REDEMPTION_CHANNELS) {
+                byChannel.set(ch, 0);
+            }
+            let reallocateSum = 0;
+            for (const row of result) {
+                const ch = (row.channel || '').trim().toLowerCase();
+                const count = Number(row.count || 0);
+                if (validSet.has(ch)) {
+                    byChannel.set(ch, (byChannel.get(ch) ?? 0) + count);
+                }
+                else {
+                    reallocateSum += count;
+                }
+            }
+            // Allocate bank/unknown/other counts proportionally into valid channels
+            if (reallocateSum > 0) {
+                const validTotal = Array.from(byChannel.values()).reduce((s, n) => s + n, 0);
+                if (validTotal > 0) {
+                    for (const ch of DashboardService.REDEMPTION_CHANNELS) {
+                        const current = byChannel.get(ch) ?? 0;
+                        const share = current / validTotal;
+                        byChannel.set(ch, current + Math.round(reallocateSum * share));
+                    }
+                }
+                else {
+                    byChannel.set('post_office', (byChannel.get('post_office') ?? 0) + reallocateSum);
+                }
+            }
+            const total = Array.from(byChannel.values()).reduce((s, n) => s + n, 0);
+            return DashboardService.REDEMPTION_CHANNELS.map((channel) => {
+                const count = byChannel.get(channel) ?? 0;
+                return {
+                    channel,
+                    count,
+                    percentage: total > 0 ? Number(((count / total) * 100).toFixed(1)) : 0,
+                };
+            }).filter((row) => row.count > 0);
+        }
+        catch (error) {
+            logError('Failed to get redemption channels', error);
+            throw error;
+        }
+    }
+    /**
+     * Get regional statistics
+     */
+    async getRegionalStats() {
+        try {
+            const result = await sql `
+        SELECT 
+          b.region,
+          COUNT(DISTINCT b.id) as beneficiaries,
+          COUNT(v.id) as vouchers,
+          COUNT(v.id) FILTER (WHERE v.status = 'redeemed') as redeemed
+        FROM beneficiaries b
+        LEFT JOIN vouchers v ON v.beneficiary_id = b.id
+        GROUP BY b.region
+        ORDER BY beneficiaries DESC
+      `;
+            return result.map((row) => ({
+                region: row.region,
+                beneficiaries: Number(row.beneficiaries || 0),
+                vouchers: Number(row.vouchers || 0),
+                redeemed: Number(row.redeemed || 0),
+            }));
+        }
+        catch (error) {
+            logError('Failed to get regional stats', error);
+            throw error;
+        }
+    }
+    /**
+     * Requires attention: failed, expired, and expiring soon (default 7 days).
+     * Ketchup is notified via status_events and webhooks; this endpoint surfaces counts for dashboard/alerts.
+     */
+    async getRequiresAttention(expiringWithinDays = 7) {
+        try {
+            const summaryResult = await sql `
+        SELECT
+          COUNT(*) FILTER (WHERE status = 'failed')::int as failed,
+          COUNT(*) FILTER (WHERE status = 'expired')::int as expired,
+          COUNT(*) FILTER (WHERE status IN ('issued', 'delivered') AND expiry_date <= NOW() + (${expiringWithinDays} || ' days')::interval)::int as expiring_soon
+        FROM vouchers
+      `;
+            const s = summaryResult[0];
+            const summary = {
+                failed: Number(s?.failed ?? 0),
+                expired: Number(s?.expired ?? 0),
+                expiring_soon: Number(s?.expiring_soon ?? 0),
+            };
+            const byRegionResult = await sql `
+        SELECT
+          region,
+          COUNT(*) FILTER (WHERE status = 'failed')::int as failed,
+          COUNT(*) FILTER (WHERE status = 'expired')::int as expired,
+          COUNT(*) FILTER (WHERE status IN ('issued', 'delivered') AND expiry_date <= NOW() + (${expiringWithinDays} || ' days')::interval)::int as expiring_soon
+        FROM vouchers
+        GROUP BY region
+        HAVING COUNT(*) FILTER (WHERE status = 'failed') > 0
+           OR COUNT(*) FILTER (WHERE status = 'expired') > 0
+           OR COUNT(*) FILTER (WHERE status IN ('issued', 'delivered') AND expiry_date <= NOW() + (${expiringWithinDays} || ' days')::interval) > 0
+        ORDER BY region
+      `;
+            const by_region = byRegionResult.map((row) => ({
+                region: row.region,
+                failed: Number(row.failed ?? 0),
+                expired: Number(row.expired ?? 0),
+                expiring_soon: Number(row.expiring_soon ?? 0),
+            }));
+            const sampleFailed = await sql `
+        SELECT id, voucher_code, region, status
+        FROM vouchers
+        WHERE status = 'failed'
+        ORDER BY updated_at DESC NULLS LAST
+        LIMIT 20
+      `;
+            const sampleExpiring = await sql `
+        SELECT id, voucher_code, region, expiry_date::text
+        FROM vouchers
+        WHERE status IN ('issued', 'delivered') AND expiry_date <= NOW() + (${expiringWithinDays} || ' days')::interval
+        ORDER BY expiry_date ASC
+        LIMIT 20
+      `;
+            return {
+                summary,
+                by_region,
+                sample_failed: sampleFailed.map((r) => ({
+                    id: r.id,
+                    voucher_code: r.voucher_code ?? null,
+                    region: r.region,
+                    status: r.status,
+                })),
+                sample_expiring_soon: sampleExpiring.map((r) => ({
+                    id: r.id,
+                    voucher_code: r.voucher_code ?? null,
+                    region: r.region,
+                    expiry_date: r.expiry_date ?? null,
+                })),
+            };
+        }
+        catch (error) {
+            logError('Failed to get requires attention', error);
+            throw error;
+        }
+    }
+}
+//# sourceMappingURL=DashboardService.js.map

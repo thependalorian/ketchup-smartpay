@@ -1,0 +1,502 @@
+2026-01-30T16:38:06.402114Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/vite.config.ts.timestamp-1769791086370-a6c386027cdf98.mjs")}
+2026-01-30T16:38:06.402149Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T16:38:06.501546Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/vite.config.ts.timestamp-1769791086370-a6c386027cdf98.mjs")}
+2026-01-30T16:38:06.501575Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T16:42:22.326813Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("shared/types/entities.ts")}
+2026-01-30T16:42:22.327172Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T16:42:38.724900Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("shared/types/index.ts")}
+2026-01-30T16:42:38.725059Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T16:42:59.424253Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/reconciliation/ReconciliationService.ts")}
+2026-01-30T16:42:59.424284Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T16:43:02.525280Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/api-client/src/ketchup/voucherAPI.ts"), AnchoredSystemPathBuf("packages/api-client/src/ketchup/beneficiaryAPI.ts")}
+2026-01-30T16:43:02.525517Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@smartpay/api-client"), path: AnchoredSystemPathBuf("packages/api-client") }}))
+2026-01-30T16:43:09.324885Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/webhook/WebhookRepository.ts")}
+2026-01-30T16:43:09.324953Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T16:43:22.526652Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/agents/AgentService.ts")}
+2026-01-30T16:43:22.526708Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T16:43:32.127217Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/dashboard/DashboardService.ts")}
+2026-01-30T16:43:32.127248Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T16:44:04.425696Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/api-client/src/ketchup/beneficiaryAPI.ts")}
+2026-01-30T16:44:04.425731Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@smartpay/api-client"), path: AnchoredSystemPathBuf("packages/api-client") }}))
+2026-01-30T16:44:10.313576Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/api-client/src/ketchup/voucherAPI.ts")}
+2026-01-30T16:44:10.321881Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@smartpay/api-client"), path: AnchoredSystemPathBuf("packages/api-client") }}))
+2026-01-30T16:44:14.329637Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/api-client/src/types.ts")}
+2026-01-30T16:44:14.330386Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@smartpay/api-client"), path: AnchoredSystemPathBuf("packages/api-client") }}))
+2026-01-30T16:44:26.936408Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/api-client/src/types.ts")}
+2026-01-30T16:44:26.936511Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@smartpay/api-client"), path: AnchoredSystemPathBuf("packages/api-client") }}))
+2026-01-30T16:45:29.126143Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/KETCHUP_MISSING_AND_COMING_SOON.md")}
+2026-01-30T16:45:29.126181Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T16:45:38.726965Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/api-client/src/types.ts")}
+2026-01-30T16:45:38.727016Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@smartpay/api-client"), path: AnchoredSystemPathBuf("packages/api-client") }}))
+2026-01-30T16:46:03.831420Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/KETCHUP_MISSING_AND_COMING_SOON.md"), AnchoredSystemPathBuf("packages/api-client/src/types.ts")}
+2026-01-30T16:46:03.831533Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@smartpay/api-client"), path: AnchoredSystemPathBuf("packages/api-client") }, WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T16:46:03.942665Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/api-client/src/ketchup/voucherAPI.ts")}
+2026-01-30T16:46:03.942713Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@smartpay/api-client"), path: AnchoredSystemPathBuf("packages/api-client") }}))
+2026-01-30T16:46:04.072650Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/api-client/src/ketchup/beneficiaryAPI.ts")}
+2026-01-30T16:46:04.072724Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@smartpay/api-client"), path: AnchoredSystemPathBuf("packages/api-client") }}))
+2026-01-30T16:48:25.335633Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Vouchers.tsx")}
+2026-01-30T16:48:25.337110Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T16:48:25.430328Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Vouchers.tsx")}
+2026-01-30T16:48:25.430340Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T16:49:23.530748Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Beneficiaries.tsx")}
+2026-01-30T16:49:23.530896Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T16:49:31.133012Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Vouchers.tsx")}
+2026-01-30T16:49:31.133529Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T16:49:36.432794Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Vouchers.tsx")}
+2026-01-30T16:49:36.433723Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T16:50:34.230878Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/api-client/src/ketchup/agentAPI.ts")}
+2026-01-30T16:50:34.230908Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@smartpay/api-client"), path: AnchoredSystemPathBuf("packages/api-client") }}))
+2026-01-30T16:52:42.534828Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Agents.tsx"), AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/StatusMonitor.tsx")}
+2026-01-30T16:52:42.535057Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T16:52:44.141865Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Reconciliation.tsx")}
+2026-01-30T16:52:44.142398Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T16:52:44.244159Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Reconciliation.tsx")}
+2026-01-30T16:52:44.244171Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T16:54:09.033544Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/WebhookMonitoring.tsx"), AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/BatchDistribution.tsx")}
+2026-01-30T16:54:09.033595Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T16:56:15.243848Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Regions.tsx")}
+2026-01-30T16:56:15.243892Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T16:56:40.047361Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Analytics.tsx")}
+2026-01-30T16:56:40.047476Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T16:56:41.547405Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/OpenBankingAccounts.tsx")}
+2026-01-30T16:56:41.547479Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T16:56:42.246407Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/OpenBankingConsents.tsx"), AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/OpenBankingPayments.tsx")}
+2026-01-30T16:56:42.246421Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T16:57:19.345838Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/OpenBankingAccounts.tsx")}
+2026-01-30T16:57:19.346410Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T16:57:21.351246Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/OpenBankingConsents.tsx")}
+2026-01-30T16:57:21.351361Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T16:57:49.646098Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/OpenBankingAccounts.tsx")}
+2026-01-30T16:57:49.646144Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T16:58:04.056161Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/OpenBankingConsents.tsx")}
+2026-01-30T16:58:04.056725Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:01:56.054773Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Reports.tsx"), AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/OpenBankingDashboard.tsx")}
+2026-01-30T17:01:56.054844Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:03:05.050497Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Settings.tsx")}
+2026-01-30T17:03:05.050585Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:03:55.856749Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Help.tsx")}
+2026-01-30T17:03:55.857431Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:04:26.651220Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/KETCHUP_MISSING_AND_COMING_SOON.md")}
+2026-01-30T17:04:26.651252Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:04:43.450649Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/KETCHUP_MISSING_AND_COMING_SOON.md")}
+2026-01-30T17:04:43.450681Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:04:51.351613Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/KETCHUP_MISSING_AND_COMING_SOON.md")}
+2026-01-30T17:04:51.351650Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:07:14.753693Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/reconciliation/ReconciliationService.ts")}
+2026-01-30T17:07:14.753740Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T17:09:04.155848Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Beneficiaries.tsx")}
+2026-01-30T17:09:04.155892Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:09:28.055914Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Beneficiaries.tsx")}
+2026-01-30T17:09:28.058009Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:09:31.357390Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Beneficiaries.tsx")}
+2026-01-30T17:09:31.357511Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:10:21.036133Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Beneficiaries.tsx")}
+2026-01-30T17:10:21.038649Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:10:53.611002Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Beneficiaries.tsx")}
+2026-01-30T17:10:53.611040Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:10:53.711496Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/api-client/src/index.ts")}
+2026-01-30T17:10:53.711510Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@smartpay/api-client"), path: AnchoredSystemPathBuf("packages/api-client") }}))
+2026-01-30T17:10:59.010637Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Beneficiaries.tsx")}
+2026-01-30T17:10:59.010711Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:11:12.509219Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Beneficiaries.tsx")}
+2026-01-30T17:11:12.509258Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:11:15.509192Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Beneficiaries.tsx")}
+2026-01-30T17:11:15.509283Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:11:53.109221Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Vouchers.tsx")}
+2026-01-30T17:11:53.109266Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:12:16.210438Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Vouchers.tsx")}
+2026-01-30T17:12:16.210485Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:12:19.909439Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Vouchers.tsx")}
+2026-01-30T17:12:19.909482Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:12:44.308975Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Vouchers.tsx")}
+2026-01-30T17:12:44.309007Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:12:59.410682Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Agents.tsx")}
+2026-01-30T17:12:59.410864Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:13:12.009352Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Agents.tsx")}
+2026-01-30T17:13:12.009381Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:13:16.211812Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Agents.tsx")}
+2026-01-30T17:13:16.211837Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:14:05.779779Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Settings.tsx"), AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Reconciliation.tsx")}
+2026-01-30T17:14:05.779816Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:14:14.009798Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Reconciliation.tsx")}
+2026-01-30T17:14:14.009826Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:14:23.909843Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Reconciliation.tsx")}
+2026-01-30T17:14:23.909878Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:14:53.010768Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Analytics.tsx")}
+2026-01-30T17:14:53.010798Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:14:57.818097Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Analytics.tsx")}
+2026-01-30T17:14:57.818276Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:15:20.513154Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Reconciliation.tsx")}
+2026-01-30T17:15:20.513202Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:15:23.509301Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Reconciliation.tsx")}
+2026-01-30T17:15:23.509336Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:15:55.610417Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/KETCHUP_MISSING_AND_COMING_SOON.md")}
+2026-01-30T17:15:55.610460Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:16:25.111706Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Vouchers.tsx"), AnchoredSystemPathBuf("packages/api-client/src/index.ts"), AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Analytics.tsx"), AnchoredSystemPathBuf("apps/ketchup-portal/KETCHUP_MISSING_AND_COMING_SOON.md"), AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Reconciliation.tsx"), AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Beneficiaries.tsx"), AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Settings.tsx"), AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Agents.tsx")}
+2026-01-30T17:16:25.111739Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }, WorkspacePackage { name: Other("@smartpay/api-client"), path: AnchoredSystemPathBuf("packages/api-client") }}))
+2026-01-30T17:16:25.210556Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Beneficiaries.tsx"), AnchoredSystemPathBuf("packages/api-client/src/index.ts"), AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Vouchers.tsx"), AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Settings.tsx"), AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Agents.tsx")}
+2026-01-30T17:16:25.210567Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }, WorkspacePackage { name: Other("@smartpay/api-client"), path: AnchoredSystemPathBuf("packages/api-client") }}))
+2026-01-30T17:21:11.113480Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/api-client/src/government/index.ts")}
+2026-01-30T17:21:11.115147Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@smartpay/api-client"), path: AnchoredSystemPathBuf("packages/api-client") }}))
+2026-01-30T17:23:42.615245Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/government-portal/src/pages/BeneficiaryRegistry.tsx")}
+2026-01-30T17:23:42.615303Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("government-portal"), path: AnchoredSystemPathBuf("apps/government-portal") }}))
+2026-01-30T17:23:44.315608Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/government-portal/src/pages/AgentNetwork.tsx")}
+2026-01-30T17:23:44.315643Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("government-portal"), path: AnchoredSystemPathBuf("apps/government-portal") }}))
+2026-01-30T17:24:21.515874Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/government-portal/src/pages/VoucherMonitoring.tsx")}
+2026-01-30T17:24:21.516063Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("government-portal"), path: AnchoredSystemPathBuf("apps/government-portal") }}))
+2026-01-30T17:28:01.631571Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/government-portal/src/pages/Reports.tsx")}
+2026-01-30T17:28:01.631608Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("government-portal"), path: AnchoredSystemPathBuf("apps/government-portal") }}))
+2026-01-30T17:30:53.718916Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/government-portal/src/pages/Compliance.tsx")}
+2026-01-30T17:30:53.718947Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("government-portal"), path: AnchoredSystemPathBuf("apps/government-portal") }}))
+2026-01-30T17:33:43.621231Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/government-portal/src/pages/AuditReports.tsx"), AnchoredSystemPathBuf("apps/government-portal/src/pages/RegionalPerformance.tsx")}
+2026-01-30T17:33:43.621295Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("government-portal"), path: AnchoredSystemPathBuf("apps/government-portal") }}))
+2026-01-30T17:34:48.819070Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/government-portal/src/pages/Analytics.tsx")}
+2026-01-30T17:34:48.819175Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("government-portal"), path: AnchoredSystemPathBuf("apps/government-portal") }}))
+2026-01-30T17:36:19.421921Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/government-portal/src/pages/Reports.tsx")}
+2026-01-30T17:36:19.422018Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("government-portal"), path: AnchoredSystemPathBuf("apps/government-portal") }}))
+2026-01-30T17:36:20.019103Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/government-portal/src/pages/Settings.tsx"), AnchoredSystemPathBuf("apps/government-portal/src/pages/Dashboard.tsx")}
+2026-01-30T17:36:20.019114Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("government-portal"), path: AnchoredSystemPathBuf("apps/government-portal") }}))
+2026-01-30T17:36:28.819650Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/government-portal/src/pages/Reports.tsx")}
+2026-01-30T17:36:28.819679Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("government-portal"), path: AnchoredSystemPathBuf("apps/government-portal") }}))
+2026-01-30T17:36:56.919533Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/government-portal/vite.config.ts.timestamp-1769794616813-60d6e3876b471.mjs")}
+2026-01-30T17:36:56.919593Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("government-portal"), path: AnchoredSystemPathBuf("apps/government-portal") }}))
+2026-01-30T17:37:44.623276Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/government-portal/src/pages/RegionalPerformance.tsx")}
+2026-01-30T17:37:44.624275Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("government-portal"), path: AnchoredSystemPathBuf("apps/government-portal") }}))
+2026-01-30T17:37:48.121210Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/government-portal/src/pages/RegionalPerformance.tsx")}
+2026-01-30T17:37:48.121244Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("government-portal"), path: AnchoredSystemPathBuf("apps/government-portal") }}))
+2026-01-30T17:38:42.121255Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/government-portal/src/pages/RegionalPerformance.tsx")}
+2026-01-30T17:38:42.121307Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("government-portal"), path: AnchoredSystemPathBuf("apps/government-portal") }}))
+2026-01-30T17:39:11.419566Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/government-portal/vite.config.ts.timestamp-1769794751370-d6fa3316370978.mjs")}
+2026-01-30T17:39:11.420107Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("government-portal"), path: AnchoredSystemPathBuf("apps/government-portal") }}))
+2026-01-30T17:39:45.621990Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/government-portal/vite.config.ts")}
+2026-01-30T17:39:45.622028Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("government-portal"), path: AnchoredSystemPathBuf("apps/government-portal") }}))
+2026-01-30T17:39:56.821699Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("package.json")}
+2026-01-30T17:39:56.821737Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(All)
+2026-01-30T17:40:22.121454Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/government-portal/vite.config.ts.timestamp-1769794822066-b88e2b6bd06038.mjs")}
+2026-01-30T17:40:22.121505Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("government-portal"), path: AnchoredSystemPathBuf("apps/government-portal") }}))
+2026-01-30T17:40:52.590283Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/government-portal/src/pages/Dashboard.tsx"), AnchoredSystemPathBuf("apps/government-portal/src/pages/Settings.tsx"), AnchoredSystemPathBuf("apps/government-portal/src/pages/Reports.tsx"), AnchoredSystemPathBuf("apps/government-portal/src/pages/RegionalPerformance.tsx"), AnchoredSystemPathBuf("apps/government-portal/vite.config.ts"), AnchoredSystemPathBuf("package.json"), AnchoredSystemPathBuf("apps/government-portal/src/pages/Analytics.tsx")}
+2026-01-30T17:40:52.590313Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(All)
+2026-01-30T17:40:53.386751Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/government-portal/src/pages/BeneficiaryRegistry.tsx"), AnchoredSystemPathBuf("apps/government-portal/src/pages/AgentNetwork.tsx"), AnchoredSystemPathBuf("apps/government-portal/src/pages/Compliance.tsx"), AnchoredSystemPathBuf("apps/government-portal/src/pages/VoucherMonitoring.tsx"), AnchoredSystemPathBuf("packages/api-client/src/government/index.ts"), AnchoredSystemPathBuf("apps/government-portal/src/pages/AuditReports.tsx")}
+2026-01-30T17:40:53.386767Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("government-portal"), path: AnchoredSystemPathBuf("apps/government-portal") }, WorkspacePackage { name: Other("@smartpay/api-client"), path: AnchoredSystemPathBuf("packages/api-client") }}))
+2026-01-30T17:48:55.679301Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/vite.config.ts.timestamp-1769795335610-3a64df68610338.mjs")}
+2026-01-30T17:48:55.679347Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:49:37.281164Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/App.tsx"), AnchoredSystemPathBuf("apps/ketchup-portal/vite.config.ts")}
+2026-01-30T17:49:37.281428Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:49:38.291158Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/vite.config.ts.timestamp-1769795378175-407c86c586c08.mjs")}
+2026-01-30T17:49:38.291195Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:50:12.177906Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/vite.config.ts.timestamp-1769795412134-847d177a1e6088.mjs")}
+2026-01-30T17:50:12.177936Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:50:42.384665Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/vite.config.ts"), AnchoredSystemPathBuf("apps/ketchup-portal/src/App.tsx")}
+2026-01-30T17:50:42.384727Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:50:42.938503Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/vite.config.ts.timestamp-1769795442808-f00ac184dfc9c8.mjs")}
+2026-01-30T17:50:42.938531Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:50:43.077297Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/vite.config.ts.timestamp-1769795442808-f00ac184dfc9c8.mjs")}
+2026-01-30T17:50:43.077314Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:53:15.820579Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/components/dashboard/RecentVouchers.tsx")}
+2026-01-30T17:53:15.820618Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:53:46.374222Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/components/dashboard/RecentVouchers.tsx")}
+2026-01-30T17:53:46.374343Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:54:37.676636Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/components/dashboard/RecentVouchers.tsx")}
+2026-01-30T17:54:37.677012Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:56:03.295533Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/vite.config.ts.timestamp-1769795763254-e8744d91d6ff1.mjs")}
+2026-01-30T17:56:03.295562Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T17:56:51.318336Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/vite.config.ts.timestamp-1769795811240-998a9b55d0aef8.mjs")}
+2026-01-30T17:56:51.318388Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T18:01:46.617721Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/App.tsx")}
+2026-01-30T18:01:46.617774Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T18:02:12.617248Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Agents.tsx")}
+2026-01-30T18:02:12.617320Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T18:02:13.016083Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Vouchers.tsx")}
+2026-01-30T18:02:13.016103Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T18:02:14.623664Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Beneficiaries.tsx")}
+2026-01-30T18:02:14.623867Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T18:02:19.817459Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Agents.tsx")}
+2026-01-30T18:02:19.817556Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T18:02:25.123175Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Vouchers.tsx")}
+2026-01-30T18:02:25.123211Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T18:02:36.219123Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Beneficiaries.tsx"), AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Vouchers.tsx")}
+2026-01-30T18:02:36.219370Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T18:02:42.416728Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Beneficiaries.tsx")}
+2026-01-30T18:02:42.416812Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T18:02:48.018505Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Beneficiaries.tsx")}
+2026-01-30T18:02:48.019031Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T18:06:35.618496Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/beneficiary/BeneficiaryRepository.ts")}
+2026-01-30T18:06:35.618740Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:07:06.270437Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/beneficiary/BeneficiaryRepository.ts")}
+2026-01-30T18:07:06.271383Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:07:27.516033Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Beneficiaries.tsx")}
+2026-01-30T18:07:27.516077Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T18:07:34.215986Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Beneficiaries.tsx")}
+2026-01-30T18:07:34.216023Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T18:07:43.015411Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Beneficiaries.tsx")}
+2026-01-30T18:07:43.015493Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T18:07:58.217835Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/pages/Beneficiaries.tsx")}
+2026-01-30T18:07:58.218005Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T18:11:26.215276Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/reconciliation/ReconciliationService.ts")}
+2026-01-30T18:11:26.215318Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:11:49.515226Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/api/routes/ketchup/reconciliation.ts")}
+2026-01-30T18:11:49.515288Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:12:38.614748Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/reconciliation/ReconciliationService.ts"), AnchoredSystemPathBuf("backend/src/api/routes/ketchup/reconciliation.ts")}
+2026-01-30T18:12:38.614833Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:29:51.903749Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/api-client/src/ketchup/reconciliationAPI.ts")}
+2026-01-30T18:29:51.905131Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@smartpay/api-client"), path: AnchoredSystemPathBuf("packages/api-client") }}))
+2026-01-30T18:30:18.878714Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/reconciliation/ReconciliationService.ts")}
+2026-01-30T18:30:18.878766Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:34:12.307412Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("shared/types/index.ts")}
+2026-01-30T18:34:12.307479Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:34:23.805258Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/voucher/VoucherRepository.ts")}
+2026-01-30T18:34:23.805287Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:34:24.504738Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/reconciliation/ReconciliationService.ts")}
+2026-01-30T18:34:24.504751Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:34:44.205138Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/voucher/VoucherRepository.ts")}
+2026-01-30T18:34:44.205260Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:34:56.404641Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/api/routes/ketchup/reconciliation.ts")}
+2026-01-30T18:34:56.404669Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:34:59.805206Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/api/routes/ketchup/beneficiaries.ts")}
+2026-01-30T18:34:59.805236Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:35:14.108366Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/api/routes/ketchup/beneficiaries.ts")}
+2026-01-30T18:35:14.108455Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:35:15.808136Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/api/routes/ketchup/beneficiaries.ts")}
+2026-01-30T18:35:15.808161Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:35:22.609347Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/api/routes/ketchup/webhooks.ts")}
+2026-01-30T18:35:22.609555Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:35:54.105597Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/government-portal/src/pages/Help.tsx")}
+2026-01-30T18:35:54.105972Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("government-portal"), path: AnchoredSystemPathBuf("apps/government-portal") }}))
+2026-01-30T18:36:00.004979Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/dashboard/DashboardService.ts")}
+2026-01-30T18:36:00.005005Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:36:08.805378Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/status/StatusMonitor.ts")}
+2026-01-30T18:36:08.805431Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:36:24.305949Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/api/routes/ketchup/beneficiaries.ts")}
+2026-01-30T18:36:24.305988Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:36:34.310645Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/api/routes/ketchup/beneficiaries.ts")}
+2026-01-30T18:36:34.310874Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:36:36.808453Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/api/routes/ketchup/beneficiaries.ts")}
+2026-01-30T18:36:36.808507Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:36:56.605633Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/voucher/VoucherRepository.ts")}
+2026-01-30T18:36:56.605676Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:37:24.906658Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/voucher/VoucherRepository.ts")}
+2026-01-30T18:37:24.906841Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:38:02.519779Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/voucher/VoucherRepository.ts")}
+2026-01-30T18:38:02.519995Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:38:36.707693Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/api/routes/ketchup/reconciliation.ts"), AnchoredSystemPathBuf("backend/src/api/routes/ketchup/webhooks.ts"), AnchoredSystemPathBuf("shared/types/index.ts"), AnchoredSystemPathBuf("backend/src/api/routes/ketchup/beneficiaries.ts"), AnchoredSystemPathBuf("backend/src/services/status/StatusMonitor.ts"), AnchoredSystemPathBuf("apps/government-portal/src/pages/Help.tsx"), AnchoredSystemPathBuf("backend/src/services/voucher/VoucherRepository.ts"), AnchoredSystemPathBuf("backend/src/services/dashboard/DashboardService.ts"), AnchoredSystemPathBuf("backend/src/services/reconciliation/ReconciliationService.ts")}
+2026-01-30T18:38:36.707833Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("government-portal"), path: AnchoredSystemPathBuf("apps/government-portal") }, WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:43:03.514504Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/voucher/VoucherRepository.ts")}
+2026-01-30T18:43:03.514609Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:43:07.013984Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/voucher/VoucherRepository.ts")}
+2026-01-30T18:43:07.014027Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:43:14.416879Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/voucher/VoucherRepository.ts")}
+2026-01-30T18:43:14.416918Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:43:18.213783Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/voucher/VoucherRepository.ts")}
+2026-01-30T18:43:18.214069Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:43:36.625596Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/reports/ReportService.ts")}
+2026-01-30T18:43:36.625911Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:43:36.710460Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/reports/ReportService.ts")}
+2026-01-30T18:43:36.710473Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:43:48.008457Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/reports/ReportService.ts")}
+2026-01-30T18:43:48.008507Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:44:05.108972Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/distribution/DistributionEngine.ts")}
+2026-01-30T18:44:05.109202Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:44:56.509132Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("src/README_LEGACY_APP.md")}
+2026-01-30T18:44:56.509204Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:45:36.510162Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/voucher/VoucherRepository.ts"), AnchoredSystemPathBuf("backend/src/services/distribution/DistributionEngine.ts"), AnchoredSystemPathBuf("backend/src/services/reports/ReportService.ts"), AnchoredSystemPathBuf("src/README_LEGACY_APP.md")}
+2026-01-30T18:45:36.511566Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:46:22.131053Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("src/components/ui/MetricCard.tsx"), AnchoredSystemPathBuf("src/components/ui/toast.tsx"), AnchoredSystemPathBuf("src/App.tsx"), AnchoredSystemPathBuf("src/components/ui/drawer.tsx"), AnchoredSystemPathBuf("src/components/layout/Sidebar.tsx"), AnchoredSystemPathBuf("src/components/ui/sidebar.tsx"), AnchoredSystemPathBuf("src/components/NavLink.tsx"), AnchoredSystemPathBuf("src/components/ui/input.tsx"), AnchoredSystemPathBuf("src/components/ui/aspect-ratio.tsx"), AnchoredSystemPathBuf("src/components/ui/textarea.tsx"), AnchoredSystemPathBuf("src/components/ui/input-otp.tsx"), AnchoredSystemPathBuf("src/components/layout/Header.tsx"), AnchoredSystemPathBuf("src/components/layout"), AnchoredSystemPathBuf("src/components/ui/calendar.tsx"), AnchoredSystemPathBuf("src/components/ui/command.tsx"), AnchoredSystemPathBuf("src/components/ui/separator.tsx"), AnchoredSystemPathBuf("src/components/ui/dialog.tsx"), AnchoredSystemPathBuf("src/components/ui/carousel.tsx"), AnchoredSystemPathBuf("src/components/ui/label.tsx"), AnchoredSystemPathBuf("src/components/ui/skeleton.tsx"), AnchoredSystemPathBuf("src/main.tsx"), AnchoredSystemPathBuf("src/components/ui/avatar.tsx"), AnchoredSystemPathBuf("src/components/ui/card.tsx"), AnchoredSystemPathBuf("src/components/ui/pagination.tsx"), AnchoredSystemPathBuf("src/components/ui/slider.tsx"), AnchoredSystemPathBuf("src/components/ui/switch.tsx"), AnchoredSystemPathBuf("src/test/setup.ts"), AnchoredSystemPathBuf("src/components/ui/badge.tsx"), AnchoredSystemPathBuf("src/components/ui/table.tsx"), AnchoredSystemPathBuf("src/types/index.ts"), AnchoredSystemPathBuf("src/components/ui/breadcrumb.tsx"), AnchoredSystemPathBuf("src/components/ui/select.tsx"), AnchoredSystemPathBuf("src/components/ui/scroll-area.tsx"), AnchoredSystemPathBuf("src/components/ui/form.tsx"), AnchoredSystemPathBuf("src/components/ui/use-toast.ts"), AnchoredSystemPathBuf("src/types"), AnchoredSystemPathBuf("src/App.css"), AnchoredSystemPathBuf("src/components/ui/sonner.tsx"), AnchoredSystemPathBuf("src/contexts"), AnchoredSystemPathBuf("src/components/ui/sheet.tsx"), AnchoredSystemPathBuf("src/components/ui/context-menu.tsx"), AnchoredSystemPathBuf("src/components/ui/tabs.tsx"), AnchoredSystemPathBuf("src/components/ui/resizable.tsx"), AnchoredSystemPathBuf("src/components/ui/checkbox.tsx"), AnchoredSystemPathBuf("src/contexts/OpenBankingContext.tsx"), AnchoredSystemPathBuf("src/components/ui/toggle-group.tsx"), AnchoredSystemPathBuf("src/components/ui/button.tsx"), AnchoredSystemPathBuf("src/components/ui/toaster.tsx"), AnchoredSystemPathBuf("src/components/ui/toggle.tsx"), AnchoredSystemPathBuf("src/components/ui/navigation-menu.tsx"), AnchoredSystemPathBuf("src/contexts/ProfileContext.tsx"), AnchoredSystemPathBuf("src/components/ui/radio-group.tsx"), AnchoredSystemPathBuf("src/components/ui/chart.tsx"), AnchoredSystemPathBuf("src/components/ui/progress.tsx"), AnchoredSystemPathBuf("src/components/ui/StatusBadge.tsx"), AnchoredSystemPathBuf("src/components/ui/accordion.tsx"), AnchoredSystemPathBuf("src/components/ui/popover.tsx"), AnchoredSystemPathBuf("src/test/example.test.ts"), AnchoredSystemPathBuf("src/components/ui/hover-card.tsx"), AnchoredSystemPathBuf("src/components/ui/alert-dialog.tsx"), AnchoredSystemPathBuf("src/components/ui/tooltip.tsx"), AnchoredSystemPathBuf("src/components/ui"), AnchoredSystemPathBuf("src/components/ui/alert.tsx"), AnchoredSystemPathBuf("src/components/ui/menubar.tsx"), AnchoredSystemPathBuf("src/test"), AnchoredSystemPathBuf("src/components/ui/dropdown-menu.tsx"), AnchoredSystemPathBuf("src/components/ui/collapsible.tsx"), AnchoredSystemPathBuf("src/index.css")}
+2026-01-30T18:46:22.152330Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:46:22.229530Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("src/components/openbanking/AccountCard.tsx"), AnchoredSystemPathBuf("src/hooks/use-mobile.tsx"), AnchoredSystemPathBuf("src/hooks/use-toast.ts"), AnchoredSystemPathBuf("src/components/openbanking/PaymentStatusTracker.tsx"), AnchoredSystemPathBuf("src/components/dashboard/VoucherStatusChart.tsx"), AnchoredSystemPathBuf("src/components/routing/ProfileRoute.tsx"), AnchoredSystemPathBuf("src/components/dashboard"), AnchoredSystemPathBuf("src/components/dashboard/RecentVouchers.tsx"), AnchoredSystemPathBuf("src/pages/Settings.tsx"), AnchoredSystemPathBuf("src/components/openbanking/QuickStats.tsx"), AnchoredSystemPathBuf("src/lib/utils.ts"), AnchoredSystemPathBuf("src/lib"), AnchoredSystemPathBuf("src/components"), AnchoredSystemPathBuf("src/components/dashboard/RegionalMap.tsx"), AnchoredSystemPathBuf("src/components/dashboard/AgentNetworkHealth.tsx"), AnchoredSystemPathBuf("src/components/dashboard/MonthlyTrendChart.tsx"), AnchoredSystemPathBuf("src/components/openbanking/TransactionList.tsx"), AnchoredSystemPathBuf("src/components/dashboard/LiveActivityFeed.tsx"), AnchoredSystemPathBuf("src/components/routing"), AnchoredSystemPathBuf("src/pages/Index.tsx"), AnchoredSystemPathBuf("src/vite-env.d.ts"), AnchoredSystemPathBuf("src/components/profile"), AnchoredSystemPathBuf("src/components/openbanking"), AnchoredSystemPathBuf("src/components/openbanking/ConsentFlowWizard.tsx"), AnchoredSystemPathBuf("src/components/openbanking/ConsentCard.tsx"), AnchoredSystemPathBuf("src/hooks"), AnchoredSystemPathBuf("src/hooks/useOpenBankingAPI.ts"), AnchoredSystemPathBuf("src/components/openbanking/index.ts"), AnchoredSystemPathBuf("src/lib/mockData.ts"), AnchoredSystemPathBuf("src/README_LEGACY_APP.md"), AnchoredSystemPathBuf("src/components/profile/ProfileSwitcher.tsx")}
+2026-01-30T18:46:22.229545Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:46:22.357917Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("src/pages/BatchDistribution.tsx"), AnchoredSystemPathBuf("src/pages/government/GovernmentReports.tsx"), AnchoredSystemPathBuf("src/pages/Vouchers.tsx"), AnchoredSystemPathBuf("src/pages/government/GovernmentAnalytics.tsx"), AnchoredSystemPathBuf("src/pages/government/GovernmentDashboard.tsx"), AnchoredSystemPathBuf("src/pages/Agents.tsx"), AnchoredSystemPathBuf("src/pages/government/GovernmentBeneficiaries.tsx"), AnchoredSystemPathBuf("src/pages/government/GovernmentAudit.tsx"), AnchoredSystemPathBuf("src/pages/government/GovernmentCompliance.tsx"), AnchoredSystemPathBuf("src/pages/government/GovernmentRegions.tsx"), AnchoredSystemPathBuf("src/pages/Reconciliation.tsx"), AnchoredSystemPathBuf("src/pages/government/GovernmentVouchers.tsx"), AnchoredSystemPathBuf("src/pages/government"), AnchoredSystemPathBuf("src/pages/government/GovernmentAgents.tsx")}
+2026-01-30T18:46:22.357932Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:46:22.408621Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("src/pages/RegulatoryCompliance.tsx"), AnchoredSystemPathBuf("src/pages/GovernmentReports.tsx"), AnchoredSystemPathBuf("src/pages/OpenBankingDashboard.tsx"), AnchoredSystemPathBuf("src/pages/OpenBankingConsent.tsx"), AnchoredSystemPathBuf("src/pages/StatusMonitor.tsx")}
+2026-01-30T18:46:22.408649Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:46:22.508447Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("src/pages/Analytics.tsx"), AnchoredSystemPathBuf("src/pages/Help.tsx"), AnchoredSystemPathBuf("src/pages/OpenBankingPayments.tsx"), AnchoredSystemPathBuf("src/pages/Regions.tsx"), AnchoredSystemPathBuf("src/pages/Beneficiaries.tsx"), AnchoredSystemPathBuf("src/pages/WebhookMonitoring.tsx")}
+2026-01-30T18:46:22.508491Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:46:22.610223Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("src/pages"), AnchoredSystemPathBuf("src/pages/OpenBankingAccounts.tsx"), AnchoredSystemPathBuf("src/pages/OpenBankingConsents.tsx"), AnchoredSystemPathBuf("src/pages/NotFound.tsx")}
+2026-01-30T18:46:22.610236Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:46:22.708866Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("src/services/reconciliationAPI.ts"), AnchoredSystemPathBuf("src/services/api.ts"), AnchoredSystemPathBuf("src/services/api.test.ts"), AnchoredSystemPathBuf("src/services/dashboardAPI.ts"), AnchoredSystemPathBuf("src/services"), AnchoredSystemPathBuf("src/services/agentAPI.ts"), AnchoredSystemPathBuf("src/services/voucherAPI.ts"), AnchoredSystemPathBuf("src/services/openBankingAPI.ts"), AnchoredSystemPathBuf("src"), AnchoredSystemPathBuf("src/services/beneficiaryAPI.ts"), AnchoredSystemPathBuf("src/services/distributionAPI.ts"), AnchoredSystemPathBuf("src/services/webhookAPI.ts")}
+2026-01-30T18:46:22.708887Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:46:33.109098Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("vite.config.ts"), AnchoredSystemPathBuf("index.html")}
+2026-01-30T18:46:33.109131Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:46:33.508049Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("vitest.config.ts"), AnchoredSystemPathBuf("tsconfig.app.json")}
+2026-01-30T18:46:33.508068Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:46:33.608551Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("tailwind.config.ts"), AnchoredSystemPathBuf("postcss.config.js")}
+2026-01-30T18:46:33.608565Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:46:42.009956Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("tsconfig.json")}
+2026-01-30T18:46:42.010074Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:46:46.109665Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("public/robots.txt"), AnchoredSystemPathBuf("public/favicon.ico"), AnchoredSystemPathBuf("public/placeholder.svg")}
+2026-01-30T18:46:46.109815Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:46:51.308943Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("public")}
+2026-01-30T18:46:51.308987Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:49:36.590004Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/components/map/NamibiaMap.tsx")}
+2026-01-30T18:49:36.600315Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T18:49:40.635033Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/components/map/NamibiaMap.tsx")}
+2026-01-30T18:49:40.635062Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T18:50:32.533132Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/src/components/map/NamibiaMap.tsx")}
+2026-01-30T18:50:32.534250Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
+2026-01-30T18:59:07.840891Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T18:59:07.840937Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:59:07.984340Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T18:59:07.984421Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:59:22.950173Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T18:59:22.951164Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:59:28.236602Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T18:59:28.236689Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:59:32.535862Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T18:59:32.535900Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:59:44.544570Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T18:59:44.544896Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T18:59:46.838519Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T18:59:46.838678Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:00:04.537124Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:00:04.537475Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:00:32.236404Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:00:32.236437Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:03:17.738003Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:03:17.738064Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:03:27.563486Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:03:27.570851Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:03:36.938643Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:03:36.938671Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:03:41.839957Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:03:41.840008Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:07:06.025240Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/validate-seed.ts")}
+2026-01-30T19:07:06.025269Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:07:23.525450Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/package.json")}
+2026-01-30T19:07:23.525487Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:07:45.927375Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/validate-seed.ts"), AnchoredSystemPathBuf("backend/package.json"), AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:07:45.927482Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:10:58.130077Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:10:58.130138Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:11:12.032395Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:11:12.032552Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:11:56.727290Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:11:56.727334Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:12:33.730225Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:12:33.730497Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:16:02.644771Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:16:02.644829Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:16:13.242756Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:16:13.242798Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:16:47.730092Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:16:47.730129Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:17:17.030455Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:17:17.030516Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:17:37.333679Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:17:37.333767Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:17:42.130060Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:17:42.130101Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:17:56.131013Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:17:56.131162Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:30:24.530441Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/compliance/SystemUptimeMonitorService.ts")}
+2026-01-30T19:30:24.530524Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:30:29.430063Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/compliance/SystemUptimeMonitorService.ts")}
+2026-01-30T19:30:29.430088Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:30:42.829734Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/schedulers/complianceScheduler.ts")}
+2026-01-30T19:30:42.829767Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:36:09.632378Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/database/migrations/009_locations.sql")}
+2026-01-30T19:36:09.632410Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:36:17.533083Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/database/migrations/run.ts")}
+2026-01-30T19:36:17.533139Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:36:54.637750Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:36:54.637806Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:37:13.391366Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:37:13.391393Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:37:13.439803Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:37:13.439811Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:37:17.841441Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:37:17.841476Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:37:24.642595Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:37:24.642678Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:37:40.244139Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/api/routes/ketchup/map.ts")}
+2026-01-30T19:37:40.244175Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:37:47.342935Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/api/routes/ketchup/map.ts")}
+2026-01-30T19:37:47.342968Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:37:58.945429Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/api-client/src/ketchup/mapAPI.ts")}
+2026-01-30T19:37:58.945717Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@smartpay/api-client"), path: AnchoredSystemPathBuf("packages/api-client") }}))
+2026-01-30T19:38:10.845399Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:38:10.845442Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:38:27.546069Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/database/migrations/run.ts"), AnchoredSystemPathBuf("packages/api-client/src/ketchup/mapAPI.ts"), AnchoredSystemPathBuf("backend/scripts/seed.ts"), AnchoredSystemPathBuf("backend/src/api/routes/ketchup/map.ts"), AnchoredSystemPathBuf("backend/src/database/migrations/009_locations.sql")}
+2026-01-30T19:38:27.546104Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@smartpay/api-client"), path: AnchoredSystemPathBuf("packages/api-client") }, WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:50:56.651729Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:50:56.651774Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:52:24.857727Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:52:24.857834Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:53:19.965299Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/database/migrations/run.ts")}
+2026-01-30T19:53:19.965342Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:53:30.085838Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/database/migrations/run.ts")}
+2026-01-30T19:53:30.115922Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:54:30.260368Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:54:30.260400Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:54:30.354973Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:54:30.354982Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:54:44.655256Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:54:44.655281Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:54:45.755653Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/database/migrations/run.ts")}
+2026-01-30T19:54:45.755733Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:55:33.159456Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts")}
+2026-01-30T19:55:33.159479Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T19:55:38.055890Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/database/migrations/run.ts")}
+2026-01-30T19:55:38.055998Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:00:10.457493Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/scripts/seed.ts"), AnchoredSystemPathBuf("backend/src/database/migrations/run.ts")}
+2026-01-30T20:00:10.457520Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:06:35.562847Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("README.md")}
+2026-01-30T20:06:35.562902Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:06:46.762147Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("GETTING_STARTED.md")}
+2026-01-30T20:06:46.762191Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:06:56.666704Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("README.md")}
+2026-01-30T20:06:56.666896Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:07:09.155922Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("README.md"), AnchoredSystemPathBuf("GETTING_STARTED.md")}
+2026-01-30T20:07:09.156027Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:09:41.151659Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".github/workflows/backend.yml")}
+2026-01-30T20:09:41.151690Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:09:46.451012Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".github/workflows/ketchup-portal.yml")}
+2026-01-30T20:09:46.451027Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:09:56.851432Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf(".github/workflows/government-portal.yml")}
+2026-01-30T20:09:56.851457Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:11:45.552771Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("IMPLEMENTATION_COMPLETE.md"), AnchoredSystemPathBuf("REFACTORING_PLAN.md"), AnchoredSystemPathBuf("ARCHITECTURE_COMPARISON.md"), AnchoredSystemPathBuf("IMPLEMENTATION_SUMMARY.md"), AnchoredSystemPathBuf("docs/archive/ARCHITECTURE_COMPARISON.md"), AnchoredSystemPathBuf("docs/archive/ARCHIVE_CONSOLIDATION_SUMMARY.md"), AnchoredSystemPathBuf("docs/archive/IMPLEMENTATION_COMPLETE.md"), AnchoredSystemPathBuf("REFACTORING_SUMMARY.md"), AnchoredSystemPathBuf("docs/archive/IMPLEMENTATION_STATUS.md"), AnchoredSystemPathBuf("docs/archive/IMPLEMENTATION_SUMMARY.md"), AnchoredSystemPathBuf("docs/archive/REFACTORING_PLAN.md"), AnchoredSystemPathBuf("docs/archive/REFACTORING_SUMMARY.md"), AnchoredSystemPathBuf("IMPLEMENTATION_STATUS.md"), AnchoredSystemPathBuf("docs/ARCHIVE_CONSOLIDATION_SUMMARY.md")}
+2026-01-30T20:11:45.552811Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:11:46.253056Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("README_NEW.md")}
+2026-01-30T20:11:46.253069Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:12:01.352389Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("docs/archive/README.md")}
+2026-01-30T20:12:01.352421Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:14:24.453466Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/webhook/WebhookRepository.test.ts")}
+2026-01-30T20:14:24.453513Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:14:24.553442Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/webhook/WebhookRepository.test.ts")}
+2026-01-30T20:14:24.553454Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:14:43.954906Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/reconciliation/ReconciliationService.test.ts")}
+2026-01-30T20:14:43.954945Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:14:47.862941Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/reconciliation/ReconciliationService.test.ts")}
+2026-01-30T20:14:47.862954Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:15:12.054182Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/test/setup.ts")}
+2026-01-30T20:15:12.054237Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:15:24.456924Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/reconciliation/ReconciliationService.test.ts")}
+2026-01-30T20:15:24.457004Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:15:28.454889Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/reconciliation/ReconciliationService.test.ts")}
+2026-01-30T20:15:28.454923Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:15:52.154267Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/api-client/src/ketchup/api.test.ts")}
+2026-01-30T20:15:52.154818Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@smartpay/api-client"), path: AnchoredSystemPathBuf("packages/api-client") }}))
+2026-01-30T20:16:05.054491Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("packages/api-client/src/ketchup/api.test.ts")}
+2026-01-30T20:16:05.054625Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("@smartpay/api-client"), path: AnchoredSystemPathBuf("packages/api-client") }}))
+2026-01-30T20:16:27.555272Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/TEST_AUDIT.md")}
+2026-01-30T20:16:27.555386Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:18:03.959545Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/database/migrations/run.ts")}
+2026-01-30T20:18:03.959710Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:18:04.654469Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/test/setup.ts")}
+2026-01-30T20:18:04.654478Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:18:09.854997Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/test/setup.ts")}
+2026-01-30T20:18:09.855027Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:18:20.155213Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/webhook/WebhookRepository.test.ts")}
+2026-01-30T20:18:20.155237Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:19:11.069743Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/test/setup.ts"), AnchoredSystemPathBuf("backend/src/services/webhook/WebhookRepository.test.ts"), AnchoredSystemPathBuf("backend/TEST_AUDIT.md"), AnchoredSystemPathBuf("backend/src/database/migrations/run.ts"), AnchoredSystemPathBuf("backend/src/services/reconciliation/ReconciliationService.test.ts"), AnchoredSystemPathBuf("packages/api-client/src/ketchup/api.test.ts")}
+2026-01-30T20:19:11.069797Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }, WorkspacePackage { name: Other("@smartpay/api-client"), path: AnchoredSystemPathBuf("packages/api-client") }}))
+2026-01-30T20:29:09.560476Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/reconciliation/ReconciliationService.test.ts")}
+2026-01-30T20:29:09.560520Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:29:09.658889Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/reconciliation/ReconciliationService.test.ts")}
+2026-01-30T20:29:09.658899Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:30:04.360036Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/services/reconciliation/ReconciliationService.test.ts")}
+2026-01-30T20:30:04.360087Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:32:17.064119Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/index.ts")}
+2026-01-30T20:32:17.064444Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:32:28.261252Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("backend/src/index.ts")}
+2026-01-30T20:32:28.261289Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Root, path: AnchoredSystemPathBuf("") }}))
+2026-01-30T20:35:40.463127Z  WARN turborepo_lib::package_changes_watcher: changed_files: {AnchoredSystemPathBuf("apps/ketchup-portal/vite.config.ts.timestamp-1769805340343-036d583890334.mjs")}
+2026-01-30T20:35:40.463320Z  WARN turborepo_lib::package_changes_watcher: changed_packages: Ok(Some({WorkspacePackage { name: Other("ketchup-portal"), path: AnchoredSystemPathBuf("apps/ketchup-portal") }}))
